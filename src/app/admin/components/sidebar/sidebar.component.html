@@ -1,0 +1,17 @@
+<nav
+  aria-label="Sidebar"
+  class="hidden lg:block lg:flex-shrink-0 lg:overflow-y-auto lg:bg-gray-800 h-full"
+>
+  <div class="relative flex w-24 flex-col space-y-3">
+    @for (link of navlinks; track $index) {
+    <a
+      routerLink="{{link.path}}"
+      routerLinkActive="active"
+
+      class=" text-white flex-shrink-0 inline-flex items-center justify-center h-14 w-full"
+    >
+      <span class="">{{link.libele}}</span>
+    </a>
+    }
+  </div>
+</nav>

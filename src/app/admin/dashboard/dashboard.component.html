@@ -1,0 +1,121 @@
+<div class="h-[768px] bg-gray-100">
+  <!--
+  This example requires updating your template:
+
+  ```
+  <html class="h-full bg-gray-100">
+  <body class="h-full overflow-hidden">
+  ```
+  -->
+  <div class="flex h-full flex-col">
+    <!-- Top nav-->
+    <header
+      x-data="{ open: false }"
+      keydown.window.escape="open = false"
+      class="relative flex h-16 flex-shrink-0 items-center bg-white"
+    >
+      <!-- Logo area -->
+      <!-- <div class="absolute inset-y-0 left-0 lg:static lg:flex-shrink-0">
+        <a
+          href="#"
+          class="flex h-16 w-16 items-center justify-center bg-cyan-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-600 lg:w-20"
+        >
+          <img
+            class="h-8 w-auto"
+            src="https://tailwindui.com/img/logos/mark.svg?color=white"
+            alt="Your Company"
+          />
+        </a>
+      </div> -->
+
+      <!-- Menu button area -->
+      <div
+        class="absolute inset-y-0 right-0 flex items-center pr-4 sm:pr-6 lg:hidden"
+      >
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="-mr-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-600"
+          (click)="handlopen()"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg
+            class="block h-6 w-6"
+            x-description="Heroicon name: outline/bars-3"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- End Mobile menu button -->
+
+      <!-- Desktop nav area -->
+      <div class="w-full h-full">
+        <app-desktop-navbar></app-desktop-navbar>
+      </div>
+      <!-- Desktop nav area -->
+
+      <!-- Mobile menu, show/hide this `div` based on menu open/closed state -->
+      @if (this.service.open()==true) {
+      <app-mobile-menu></app-mobile-menu>
+
+      }
+
+      <!--End  Mobile menu, show/hide this `div` based on menu open/closed state -->
+    </header>
+
+    <!-- Bottom section -->
+    <div class="flex min-h-0 flex-1 overflow-hidden">
+      <!-- Narrow sidebar-->
+      <app-sidebar></app-sidebar>
+
+      <!-- Main area -->
+      <main class="min-w-0 flex-1 border-t border-gray-200 xl:flex">
+        <section
+          aria-labelledby="message-heading"
+          class="flex h-full min-w-0 flex-1 flex-col overflow-hidden xl:order-last"
+        >
+          <!-- Top section -->
+          <div class="flex-shrink-0 border-b border-gray-200 bg-white">
+            <!-- Toolbar statistic-->
+            <!-- <app-statistic></app-statistic> -->
+            <!-- Message header -->
+          </div>
+
+          <div class="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden">
+
+            <router-outlet></router-outlet>
+          </div>
+        </section>
+
+        <!-- ****************Message list******************-->
+        <aside class="xl:order-first xl:block xl:flex-shrink-0 h-screen">
+          <div
+            class="relative flex h-full w-64 flex-col border-r border-gray-200 bg-white"
+          >
+            @defer (on timer(3s)) {
+
+            <app-new-message></app-new-message>
+
+            }@placeholder {
+            <div class="h-full w-full flex justify-center items-center"><span>wating....</span></div>
+            }
+          </div>
+        </aside>
+
+        <!-- Message list-->
+      </main>
+    </div>
+  </div>
+</div>

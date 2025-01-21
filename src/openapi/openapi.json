@@ -1,0 +1,2905 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenApi doc-brice",
+    "description": "OpenApi documentation for publicité app",
+    "termsOfService": "Terme of service",
+    "contact": {
+      "name": "Efoé Brice",
+      "email": "efo.amegnito@gmail.com"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8088/api/v1",
+      "description": "Local ENV"
+    },
+    {
+      "url": "https://briceefoe.com",
+      "description": "PROD ENV"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Panneau",
+      "description": "Gestion des panneaux"
+    }
+  ],
+  "paths": {
+    "/type-panneau/update/{type-id}": {
+      "put": {
+        "tags": [
+          "TypePanneau"
+        ],
+        "operationId": "updatePanneauById",
+        "parameters": [
+          {
+            "name": "type-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TypePanRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypePanResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/panneau/update/{panneau-id}": {
+      "put": {
+        "tags": [
+          "Panneau"
+        ],
+        "operationId": "updatePanneauById_1",
+        "parameters": [
+          {
+            "name": "panneau-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PanneauRquest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PanneauResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/update/{owner-id}": {
+      "put": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "owner-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationFormRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/update/fidelisation/{owner-id}": {
+      "put": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "updateUserFidelisation",
+        "parameters": [
+          {
+            "name": "owner-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boulevard/update/{boulevard-id}": {
+      "put": {
+        "tags": [
+          "Boulevard"
+        ],
+        "operationId": "updateBoulevard",
+        "parameters": [
+          {
+            "name": "boulevard-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoulevarRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BoulevardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/type-panneau": {
+      "post": {
+        "tags": [
+          "TypePanneau"
+        ],
+        "operationId": "addType",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TypePanRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/role": {
+      "post": {
+        "tags": [
+          "role"
+        ],
+        "operationId": "addRole",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/return": {
+      "get": {
+        "tags": [
+          "transaction-controler"
+        ],
+        "operationId": "returnTo_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "transaction-controler"
+        ],
+        "operationId": "returnTo",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/notification": {
+      "get": {
+        "tags": [
+          "transaction-controler"
+        ],
+        "operationId": "checkStatusNotify_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "transaction-controler"
+        ],
+        "operationId": "checkStatusNotify",
+        "parameters": [
+          {
+            "name": "x-token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cpm_trans_id ",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/link": {
+      "post": {
+        "tags": [
+          "transaction-controler"
+        ],
+        "operationId": "getPaymentLink",
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/TransactionRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LinkPayementRespons"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/panneau": {
+      "post": {
+        "tags": [
+          "Panneau"
+        ],
+        "operationId": "savePanneau",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PanneauRquest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/add-admin": {
+      "post": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/adminFormRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/image/ajout-image/{abonnement-id}": {
+      "post": {
+        "tags": [
+          "Image"
+        ],
+        "operationId": "saveImae",
+        "parameters": [
+          {
+            "name": "abonnement-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boulevard": {
+      "post": {
+        "tags": [
+          "Boulevard"
+        ],
+        "operationId": "saveBoulevard",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoulevarRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "register_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationFormRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh-token": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "refreshToken",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginFormRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginFormResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement": {
+      "post": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "doAbonnement",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AbonnementRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/type-panneau/{type-id}": {
+      "get": {
+        "tags": [
+          "TypePanneau"
+        ],
+        "operationId": "getType",
+        "parameters": [
+          {
+            "name": "type-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypePanneau"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TypePanneau"
+        ],
+        "operationId": "deleteTypePannau",
+        "parameters": [
+          {
+            "name": "type-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/type-panneau/all-type-panneau": {
+      "get": {
+        "tags": [
+          "TypePanneau"
+        ],
+        "summary": "Lister tous les type panneaux",
+        "description": "Cette méthode retourne tous les types panneaux disponibles.",
+        "operationId": "getAllType",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypePanResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/role/update-role/{role-id}": {
+      "get": {
+        "tags": [
+          "role"
+        ],
+        "operationId": "updateRole",
+        "parameters": [
+          {
+            "name": "role-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "roleRequest",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/RoleRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleRespons"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/role/add-role/{role-id}": {
+      "get": {
+        "tags": [
+          "role"
+        ],
+        "operationId": "getRole",
+        "parameters": [
+          {
+            "name": "role-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleRespons"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "role"
+        ],
+        "operationId": "deleteRole",
+        "parameters": [
+          {
+            "name": "role-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/panneau/{panneau-id}": {
+      "get": {
+        "tags": [
+          "Panneau"
+        ],
+        "operationId": "panneauFindById",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PanneauResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Panneau"
+        ],
+        "operationId": "deletePannau",
+        "parameters": [
+          {
+            "name": "panneau-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/panneau/panneaux": {
+      "get": {
+        "tags": [
+          "Panneau"
+        ],
+        "summary": "Lister tous les panneaux",
+        "description": "Cette méthode retourne tous les panneaux disponibles.",
+        "operationId": "getAllPanneaux",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponsePanneauResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/panneau/panneaux-occuper": {
+      "get": {
+        "tags": [
+          "Panneau"
+        ],
+        "operationId": "getAllPanneauxOccuper",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponsePanneauResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/panneau/panneaux-occuper/boulevard/{boulevard}": {
+      "get": {
+        "tags": [
+          "Panneau"
+        ],
+        "operationId": "getAllPanneauxOccuperByBoulevard",
+        "parameters": [
+          {
+            "name": "boulevard",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponsePanneauResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/panneau/panneaux-libre": {
+      "get": {
+        "tags": [
+          "Panneau"
+        ],
+        "operationId": "getAllPanneauxLibre",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponsePanneauResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/panneau/panneaux-libre/boulevard/{boulevard}": {
+      "get": {
+        "tags": [
+          "Panneau"
+        ],
+        "operationId": "getAllPanneauxLibreByBoulevard",
+        "parameters": [
+          {
+            "name": "boulevard",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponsePanneauResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/panneau/boulevard/{boulevard}": {
+      "get": {
+        "tags": [
+          "Panneau"
+        ],
+        "operationId": "getAllPanneauxByBoulevard",
+        "parameters": [
+          {
+            "name": "boulevard",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponsePanneauResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/{owner-email}": {
+      "get": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "getUserByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/all-customer": {
+      "get": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "getAllCustomer",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/all-customer-no-abonnement": {
+      "get": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "getAllCustomerWithAbonnementFalse",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/all-customer-abonnement": {
+      "get": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "getAllCustomerWithAbonnementTrue",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/all-admin": {
+      "get": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "getAllAdmin",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/image": {
+      "get": {
+        "tags": [
+          "Image"
+        ],
+        "operationId": "findAllImages",
+        "parameters": [
+          {
+            "name": "abonnementId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ImageResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/facture/get-facture": {
+      "get": {
+        "tags": [
+          "facture-controler"
+        ],
+        "operationId": "getFactureByTrans",
+        "parameters": [
+          {
+            "name": "transId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Facture"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boulevard/{boulevard-id}": {
+      "get": {
+        "tags": [
+          "Boulevard"
+        ],
+        "operationId": "boulevardFindById",
+        "parameters": [
+          {
+            "name": "boulevard-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BoulevardResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Boulevard"
+        ],
+        "operationId": "deleteBoulevard",
+        "parameters": [
+          {
+            "name": "boulevard-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/boulevard/all-boulevard": {
+      "get": {
+        "tags": [
+          "Boulevard"
+        ],
+        "operationId": "boulevardFindAll",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseBoulevardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/activate-account": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "confirmation",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/abonnement/{abonnement-id}": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAbonnementById",
+        "parameters": [
+          {
+            "name": "abonnement-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement/expired-abonnements": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAllAbonnementExpired",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement/expired-abonnements/{id}": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAllAbonnementExpiredByUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement/by-user/{user-id}": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAbonnementByOwner",
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement/all-abonnements": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAllAbonnement",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TypePanRequest": {
+        "required": [
+          "libellet"
+        ],
+        "type": "object",
+        "properties": {
+          "libellet": {
+            "type": "string"
+          }
+        }
+      },
+      "Abonnement": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateBy": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "prix": {
+            "type": "number",
+            "format": "double"
+          },
+          "mtnPayer": {
+            "type": "number",
+            "format": "double"
+          },
+          "mtnRest": {
+            "type": "number",
+            "format": "double"
+          },
+          "duree": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateAbn": {
+            "type": "string",
+            "format": "date"
+          },
+          "actif": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "niveauAbn": {
+            "type": "string",
+            "enum": [
+              "TOTAL",
+              "PARTIEL"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "transactionsList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            }
+          },
+          "ligneAbonnements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LigneAbonnement"
+            }
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            }
+          },
+          "dureeAbonnement": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "montantTotalAbonnement": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdBy": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Boulevard": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateBy": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "panneaux": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Panneau"
+            }
+          },
+          "nbrDePanneau": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreDePanneau": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdBy": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GrantedAuthority": {
+        "type": "object",
+        "properties": {
+          "authority": {
+            "type": "string"
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateBy": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nomImage": {
+            "type": "string"
+          },
+          "abonnement": {
+            "$ref": "#/components/schemas/Abonnement"
+          },
+          "createdBy": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "LigneAbonnement": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateBy": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "abonnement": {
+            "$ref": "#/components/schemas/Abonnement"
+          },
+          "panneau": {
+            "$ref": "#/components/schemas/Panneau"
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date"
+          },
+          "createdBy": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Panneau": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateBy": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "localisation": {
+            "type": "string"
+          },
+          "taille": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "prixMensuel": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "printPrice": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "occuped": {
+            "type": "boolean"
+          },
+          "boulevard": {
+            "$ref": "#/components/schemas/Boulevard"
+          },
+          "ligneAbonnements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LigneAbonnement"
+            }
+          },
+          "typePanneau": {
+            "$ref": "#/components/schemas/TypePanneau"
+          },
+          "nbreFace": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdBy": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "transactionId": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "XOF (West African CFA Franc)",
+              "XAF (Central African CFA Franc)",
+              "CDF (Congolese Franc)",
+              "GNF (Guinean Franc)",
+              "USD (United States Dollar)"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "dateTrans": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "abonnement": {
+            "$ref": "#/components/schemas/Abonnement"
+          }
+        }
+      },
+      "TypePanResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "writeOnly": true
+          },
+          "libelet": {
+            "type": "string"
+          },
+          "panneau": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Panneau"
+            }
+          }
+        }
+      },
+      "TypePanneau": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updateBy": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "libelet": {
+            "type": "string"
+          },
+          "panneaux": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Panneau"
+            }
+          },
+          "createdBy": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string"
+          },
+          "nonUtilisateur": {
+            "type": "string"
+          },
+          "numero": {
+            "type": "string"
+          },
+          "fidelisation": {
+            "type": "boolean"
+          },
+          "password": {
+            "type": "string"
+          },
+          "accountLocked": {
+            "type": "boolean"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "createdAT": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string"
+          },
+          "accountNonLocked": {
+            "type": "boolean"
+          },
+          "username": {
+            "type": "string"
+          },
+          "authorities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrantedAuthority"
+            }
+          },
+          "accountNonExpired": {
+            "type": "boolean"
+          },
+          "credentialsNonExpired": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PanneauRquest": {
+        "required": [
+          "localisation",
+          "typePanneau"
+        ],
+        "type": "object",
+        "properties": {
+          "localisation": {
+            "type": "string"
+          },
+          "taille": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boulevard_id": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "typePanneau": {
+            "type": "string"
+          },
+          "prixMensuel": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "printPrice": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nbRFace": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PanneauResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "localisation": {
+            "type": "string"
+          },
+          "taille": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "prixMensuel": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "printPrice": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nbrFace": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boulevard": {
+            "$ref": "#/components/schemas/Boulevard"
+          },
+          "typePanneau": {
+            "$ref": "#/components/schemas/TypePanneau"
+          },
+          "occuped": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RegistrationFormRequest": {
+        "required": [
+          "confirmPassword",
+          "email",
+          "nonUtilisateur",
+          "numero",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "nonUtilisateur": {
+            "type": "string"
+          },
+          "numero": {
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 2147483647,
+            "minLength": 4,
+            "type": "string"
+          },
+          "confirmPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string"
+          },
+          "nonUtilisateur": {
+            "type": "string"
+          },
+          "numero": {
+            "type": "string"
+          },
+          "fidelisation": {
+            "type": "boolean"
+          },
+          "accountLocked": {
+            "type": "boolean"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "roleList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "createdAT": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "BoulevarRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "BoulevardResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nombreDePanneau": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RoleRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "userList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "NotificationRequestBody": {
+        "type": "object",
+        "properties": {
+          "cpm_site_id": {
+            "type": "string"
+          },
+          "cpm_trans_id": {
+            "type": "string"
+          },
+          "cpm_trans_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cpm_amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "cpm_currency": {
+            "type": "string"
+          },
+          "signature": {
+            "type": "string"
+          },
+          "payment_method": {
+            "type": "string"
+          },
+          "cel_phone_num": {
+            "type": "string"
+          },
+          "cpm_phone_prefixe": {
+            "type": "string"
+          },
+          "cpm_language": {
+            "type": "string"
+          },
+          "cpm_version": {
+            "type": "string"
+          },
+          "cpm_payment_config": {
+            "type": "string"
+          },
+          "cpm_page_action": {
+            "type": "string"
+          },
+          "cpm_custom": {
+            "type": "string"
+          },
+          "cpm_designation": {
+            "type": "string"
+          },
+          "cpm_error_message": {
+            "type": "string"
+          }
+        }
+      },
+      "TransactionRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "XOF (West African CFA Franc)",
+              "XAF (Central African CFA Franc)",
+              "CDF (Congolese Franc)",
+              "GNF (Guinean Franc)",
+              "USD (United States Dollar)"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "dateTrans": {
+            "type": "string"
+          },
+          "chanel": {
+            "type": "string",
+            "enum": [
+              "ALL",
+              "MOBILE_MONEY",
+              "CREDIT_CARD",
+              "WALLET"
+            ]
+          },
+          "abonnementId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Data": {
+        "type": "object",
+        "properties": {
+          "payment_token": {
+            "type": "string"
+          },
+          "payment_url": {
+            "type": "string"
+          }
+        }
+      },
+      "LinkPayementRespons": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Data"
+          },
+          "api_response_id": {
+            "type": "string"
+          }
+        }
+      },
+      "adminFormRequest": {
+        "required": [
+          "email",
+          "nonUtilisateur",
+          "numero",
+          "password",
+          "userRole"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "nonUtilisateur": {
+            "type": "string"
+          },
+          "numero": {
+            "type": "string"
+          },
+          "userRole": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "password": {
+            "maxLength": 2147483647,
+            "minLength": 4,
+            "type": "string"
+          }
+        }
+      },
+      "LoginFormRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 2147483647,
+            "minLength": 4,
+            "type": "string"
+          }
+        }
+      },
+      "LoginFormResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "AbonnementRequest": {
+        "required": [
+          "dateAbn",
+          "dateDebut",
+          "dateFin",
+          "description",
+          "prix"
+        ],
+        "type": "object",
+        "properties": {
+          "prix": {
+            "type": "number",
+            "format": "double"
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateAbn": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": "string"
+          },
+          "Panneau": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "RoleRespons": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "userList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "PageResponsePanneauResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PanneauResponse"
+            }
+          },
+          "nomber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstPage": {
+            "type": "boolean"
+          },
+          "lastPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PageResponseUserResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserResponse"
+            }
+          },
+          "nomber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstPage": {
+            "type": "boolean"
+          },
+          "lastPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ImageResponse": {
+        "type": "object",
+        "properties": {
+          "picture": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
+          }
+        }
+      },
+      "Facture": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "mtnTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "mtnPayer": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mtnRestant": {
+            "type": "number",
+            "format": "double"
+          },
+          "datePayment": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateDebAbn": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateFinAbn": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateAbn": {
+            "type": "string",
+            "format": "date"
+          },
+          "transaction": {
+            "type": "string"
+          }
+        }
+      },
+      "PageResponseBoulevardResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoulevardResponse"
+            }
+          },
+          "nomber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstPage": {
+            "type": "boolean"
+          },
+          "lastPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AbonnementResponse": {
+        "type": "object",
+        "properties": {
+          "prix": {
+            "type": "number",
+            "format": "double"
+          },
+          "mtnPayer": {
+            "type": "number",
+            "format": "double"
+          },
+          "mtnRest": {
+            "type": "number",
+            "format": "double"
+          },
+          "duree": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateAbn": {
+            "type": "string",
+            "format": "date"
+          },
+          "nbrJrs": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "actif": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "PageResponseAbonnementResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AbonnementResponse"
+            }
+          },
+          "nomber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstPage": {
+            "type": "boolean"
+          },
+          "lastPage": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "description": "JWT token Authentication",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

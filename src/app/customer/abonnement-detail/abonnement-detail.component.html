@@ -1,0 +1,298 @@
+<div class="flex flex-row justify-around items-center ">
+  <div >
+    <mat-form-field >
+      <mat-label> Choisir la date début</mat-label>
+      <input matInput [matDatepicker]="picker"  [(ngModel)]="startDate">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div>
+
+    <mat-form-field >
+      <mat-label> Choisir la date de fin</mat-label>
+      <input matInput [matDatepicker]="picker1" [(ngModel)]="endDate">
+      <mat-datepicker-toggle matIconSuffix [for]="picker1" ></mat-datepicker-toggle>
+      <mat-datepicker #picker1 (click)="dateClicked()"></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>
+
+<div class="flex flex-row justify-center items-center w-full">
+  <div class="max-w-sm space-y-3 w-full">
+    <textarea [(ngModel)]="description" class=" py-3 px-4 block w-full bg-white border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none   " rows="3" placeholder="Veuillez mettre une description concernant votre abonnement"></textarea>
+  </div>
+</div>
+<div class="container p-2 mx-auto sm:p-4 dark:text-gray-800">
+	<div class="flex flex-row justify-around  mb-4">
+    <!-- <h2 class="mb-4 text-2xl font-semibold leading-tight">Les panneaux choisis</h2> -->
+    <div class="w-4/12">
+      <div class="relative">
+        <!-- <label title="Click to upload" for="button2" class="cursor-pointer flex items-center gap-4 px-2 py-2 before:border-gray-400/60 hover:before:border-gray-300 group before:bg-gray-100 before:absolute before:inset-0 before:rounded-3xl before:border before:border-dashed before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95">
+          <div class="w-max relative">
+              <img class="w-12" src="https://www.svgrepo.com/show/485545/upload-cicle.svg" alt="file upload icon" width="512" height="512">
+          </div>
+          <div class="relative">
+              <span class="block text-base font-semibold relative text-blue-900 group-hover:text-blue-500">
+                  Charger le fichier
+              </span>
+              <span class="mt-0.5 block text-sm text-gray-500">Max 2 MB</span>
+          </div>
+         </label> -->
+         <div class="font-[sans-serif] max-w-md mx-auto">
+              <input type="file"
+              (change)="onSelectFile($event)"
+
+              accept="image/*,video/*"
+                class="w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500 rounded" />
+              <p class="text-xs text-gray-400 mt-2 text-center">PNG, JPG, MP4  </p>
+         </div>
+
+    </div>
+    </div>
+    @if (imageUrl || videoUrl) {
+      @if (format==="image" && imageUrl) {
+        <div class=" w-40 border border-indigo-300 rounded-2xl hover:shadow-xl flex flex-col items-center">
+          <img height="100%" width="100%"  [src]="imageUrl" class="shadow rounded-lg overflow-hidden border" >
+        </div>
+
+      }@else if (format==="video" && videoUrl)  {
+        <div class=" w-40 border border-indigo-300 rounded-2xl hover:shadow-xl flex flex-col items-center">
+          <video [src]="videoUrl"  height="100%" width="100%" class="shadow rounded-lg overflow-hidden border" controls></video> <br/>
+        </div>
+      }
+
+    }
+
+
+    <button class=" cursor-text mr-3 h-11 text-xl bg-blue-500 hover:bg-blue-700 text-white mt-2 py-1 px-2 rounded focus:outline-none focus:shadow-outline">{{this.totalAmount}} FCFA</button>
+
+  </div>
+	<div class="overflow-x-auto">
+		<table class="min-w-full text-xs">
+			<colgroup>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col class="w-24">
+			</colgroup>
+			<thead class="dark:bg-gray-300">
+				<tr class="text-center">
+					<th class="p-3">Panneau</th>
+					<th class="p-3">Localisation</th>
+					<th class="p-3">type</th>
+					<th class="p-3">Taille</th>
+					<th class="p-3">Prix/Mois</th>
+					<th class="p-3">Prix Impression</th>
+					<th class="p-3">Imprimer</th>
+				</tr>
+			</thead>
+			<tbody>
+        @for (panneau of selectedPanneauAray; track panneau.id) {
+          <tr class="border-b border-opacity-20 dark:border-gray-300 dark:bg-gray-50">
+            <td class="text-center">
+              <p>{{panneau.id}}</p>
+            </td>
+            <td class="text-center">
+              <p>{{panneau.localisation}}</p>
+            </td>
+            <td class="text-center">
+              <p>{{panneau.typePanneau?.libelet}}</p>
+            </td>
+            <td class="text-center">
+              <p>{{panneau.taille}}</p>
+            </td>
+            <td class="text-center">
+              <p>{{panneau.prixMensuel}}</p>
+            </td>
+            <td class="text-center">
+              <p>{{panneau.printPrice}}</p>
+            </td>
+            <td class="text-right">
+              @if(panneau.typePanneau?.libelet === "statique" ){
+                <div class="flex  space-x-2 rounded p-2 hover:bg-gray-100 accent-teal-600">
+                  <input  (change)="addPrintPrice(panneau, $event)"  type="checkbox" id="cssCheckbox" name="languageCheckbox" class="h-6 w-6 rounded border-gray-300 text-teal-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400" />
+                  <!-- <label for="cssCheckbox" class="flex w-full space-x-2 text-sm"> CSS </label> -->
+                </div>
+              }
+
+            </td>
+          </tr>
+      }
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<!-- <div>
+  <div class="w-1/4 ">
+    <video class="w-full" controls>
+      <source [src]=" pictureSelectedforAbnt " type="video/*">
+      Your browser does not support the video tag.
+      </video>
+  </div>
+
+</div> -->
+
+ <!-- <div  class="fixed z-50 inset-0 overflow-y-auto "
+
+  (click)="openModal()"
+>
+  <div class=" flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+
+      <div class="fixed inset-0 transition-opacity" aria-hidden="true"
+
+      >
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+      </div>
+
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+
+      <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+          role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+          <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
+              <button (click)="openModal()" type="button" data-behavior="cancel" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <span class="sr-only">Close</span>
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+              </button>
+          </div>
+
+          <div class="w-4/6">
+            <div class="relative">
+              <label title="Click to upload" for="button2" class="cursor-pointer flex items-center gap-4 px-6 py-4 before:border-gray-400/60 hover:before:border-gray-300 group before:bg-gray-100 before:absolute before:inset-0 before:rounded-3xl before:border before:border-dashed before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95">
+                <div class="w-max relative">
+                    <img class="w-12" src="https://www.svgrepo.com/show/485545/upload-cicle.svg" alt="file upload icon" width="512" height="512">
+                </div>
+                <div class="relative">
+                    <span class="block text-base font-semibold relative text-blue-900 group-hover:text-blue-500">
+                        Charger le fichier
+                    </span>
+                    <span class="mt-0.5 block text-sm text-gray-500">Max 2 MB</span>
+                </div>
+               </label>
+              <input hidden="" type="file" name="button2" id="button2">
+          </div>
+          </div>
+          <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+              <button type="button" data-behavior="commit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                  Ajouter
+              </button>
+          </div>
+      </div>
+  </div>
+</div> -->
+
+
+
+<!-- <div
+  class="z-1000  overflow-y-auto px-4 absolute bg-gray-900 bg-opacity-30 h-full bottom-0 top-0 left-0 right-0 "
+  [className]="
+    this.open ? 'block ' : 'hidden'
+  "
+>
+  <div class="flex justify-end p-2">
+    <button
+      (click)="openModal()"
+      type="button"
+      class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+    >
+      <svg
+        class="w-5 h-5"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </button>
+    <div class="w-4/6">
+      <div class="relative">
+        <label title="Click to upload" for="button2" class="cursor-pointer flex items-center gap-4 px-6 py-4 before:border-gray-400/60 hover:before:border-gray-300 group before:bg-gray-100 before:absolute before:inset-0 before:rounded-3xl before:border before:border-dashed before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95">
+          <div class="w-max relative">
+              <img class="w-12" src="https://www.svgrepo.com/show/485545/upload-cicle.svg" alt="file upload icon" width="512" height="512">
+          </div>
+          <div class="relative">
+              <span class="block text-base font-semibold relative text-blue-900 group-hover:text-blue-500">
+                  Charger le fichier
+              </span>
+              <span class="mt-0.5 block text-sm text-gray-500">Max 2 MB</span>
+          </div>
+         </label>
+        <input hidden="" type="file" name="button2" id="button2">
+    </div>
+    </div>
+    <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+        <button type="button" data-behavior="commit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+            Ajouter
+        </button>
+    </div>
+  </div>
+
+</div> -->
+@if (haveVideoPan()) {
+<div class="flex flex-row justify-around  mb-4">
+<div class="font-[sans-serif] max-w-md mx-auto">
+  <input type="file"
+  (change)="onSelectFileVideo($event)"
+  accept="image/*,video/*"
+    class="w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500 rounded" />
+  <p class="text-xs text-gray-400 mt-2 text-center">MP4</p>
+</div>
+
+@if (imageUrl || videoUrl) {
+  @if (format==="image" && imageUrl) {
+    <div class=" w-40 border border-indigo-300 rounded-2xl hover:shadow-xl flex flex-col items-center">
+      <img height="100%" width="100%"  [src]="imageUrl" class="shadow rounded-lg overflow-hidden border" >
+    </div>
+
+  }@else if (format==="video" && videoUrl)  {
+    <div class=" w-40 border border-indigo-300 rounded-2xl hover:shadow-xl flex flex-col items-center">
+      <video [src]="videoUrl"  height="100%" width="100%" class="shadow rounded-lg overflow-hidden border" controls></video> <br/>
+    </div>
+  }
+
+}
+</div>
+}
+<button
+(click)="clickOnAbnbtn()"
+[swal]="abonnement"
+(confirm)="saveAbonnement()" type='button' class='py-2.5 pl-6 pr-3.5 text-sm bg-indigo-50 text-indigo-500 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 flex items-center hover:bg-indigo-100'
+
+> Valider votre abonnement <svg class='ml-3' width='6' height='10' viewBox='0 0 6 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
+  <path d='M1 9L3.58579 6.41421C4.25245 5.74755 4.58579 5.41421 4.58579 5C4.58579 4.58579 4.25245 4.25245 3.58579 3.58579L1 1' stroke='#5551FF' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'></path>
+  </svg>
+  </button>
+  <!-- <button
+  [swal]="{ title: 'Save file as...', input: 'text', showDenyButton: true, denyButtonText: 'Don\'t save', showCancelButton: true }"
+>
+My Test
+</button> -->
+
+<swal
+  #abonnement
+  title="Validation"
+  text="Le montant total de votre abonnement s'élève à {{finalAbnAmount()}} FCFA, incluant la péride choisie"
+  icon="info"
+  [showCancelButton]="true"
+  [focusCancel]="true"
+  [buttonsStyling]="false"
+  [allowOutsideClick]="false"
+  [customClass]="{
+    confirmButton: 'btn-confirm',
+    cancelButton: 'btn-cancel'
+  }"
+   [confirmButtonText]="'<span style=\'color: white; background-color: green; padding: 10px; border-radius: 5px;margin:10px;\'>Procéder</span>'"
+   [cancelButtonText]="'<span style=\'color: white; background-color: red; padding: 10px; border-radius: 5px; margin:10px;\'>Annuler</span>'"
+ >
+  >
+</swal>

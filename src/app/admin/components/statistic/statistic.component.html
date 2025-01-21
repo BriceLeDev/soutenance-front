@@ -1,0 +1,49 @@
+<!-- /*
+ *******************************************************************
+ * Composent Affichage des statistiques des models                 *
+ *******************************************************************
+ */ -->
+
+<div class="flex h-16 flex-col justify-center">
+  <div class="">
+    <div class=" justify-between items-center w-full py-3">
+      <!-- Left buttons -->
+      <div>
+        <div
+          class="isolate inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none  w-full"
+        >
+          <span class="inline-flex sm:shadow-sm w-full justify-center items-center">
+         
+            <button
+              type="button"
+              class="relative m-px flex flex-col items-center border border-gray-300 bg-green-500 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-black focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 rounded-md "
+            >
+             <span class="text-2xl font-bold text-white">{{ this.AdminState.AdminClientState.NbrClient()}}</span>
+              <span>Clients</span>
+            </button>
+         
+            <button
+              type="button"
+              class="relative mx-4 flex flex-col items-center border border-gray-300 bg-blue-500 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-black focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 rounded-md "
+            >
+             <span class="text-2xl font-bold text-white">24</span>
+              <span>Panneaux</span>
+            </button>
+         
+            <button
+              type="button"
+              class="relative bg-violet-400 my-2 flex flex-col items-center border border-gray-300 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-black focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 rounded-md "
+            >
+             <span class="text-2xl font-bold text-white  ">24</span>
+              <span>Boulevards</span>
+            </button>
+         
+          </span>
+        </div>
+      </div>
+
+      
+      
+    </div>
+  </div>
+</div>

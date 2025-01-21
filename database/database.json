@@ -1,0 +1,136 @@
+{
+  "client": [
+    {
+      "id": "1",
+      "name": "AMEGNITO Brice",
+      "email": "john@gmail.com",
+      "address": "Sydney, Australia",
+      "verified": true
+    },
+    {
+      "id": "2",
+      "name": "DAG Yao",
+      "email": "yao@gmail.com",
+      "address": "Kotonou, Bénin",
+      "verified": true
+    },
+    {
+      "id": "3",
+      "name": "Kodjo Roy",
+      "email": "kodjo@gmail.com",
+      "address": "Sydney, Australia",
+      "verified": false
+    },
+    {
+      "id": "4",
+      "name": "LANVI Grace",
+      "email": "grace@gmail.com",
+      "address": "Abommey, Bénin",
+      "verified": true
+    },
+    {
+      "id": "5",
+      "name": "John Doe",
+      "email": "john@gmail.com",
+      "address": "Sydney, Australia",
+      "verified": false
+    },
+    {
+      "id": "6",
+      "name": "LAYE Kodjo",
+      "email": "laye@gmail.com",
+      "address": "Sydney, Australia",
+      "verified": true
+    },
+    {
+      "id": "7",
+      "name": "Adam Smith",
+      "email": "adam@gmail.com",
+      "address": "Lomé, Togo",
+      "verified": false
+    },
+    {
+      "id": "8",
+      "name": "Adam Johnson",
+      "email": "john@gmail.com",
+      "address": "Accra, Ghana",
+      "verified": false
+    },
+    {
+      "id": "9",
+      "name": "Adama tassa",
+      "email": "tassa@gmail.com",
+      "address": "koumassi, Ghana",
+      "verified": false
+    },
+    {
+    "id": "10",
+      "name": "Adama tassa",
+      "email": "tassa@gmail.com",
+      "address": "koumassi, Ghana",
+      "verified": false
+    }
+    
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "content": "Doloremque dolorem maiores assumenda dolorem facilis. Velit vel in a rerum natus facere..",
+      "created_at": "7h:30:00",
+      "author": "Lanvi Grace",
+      "verified": true
+    },
+    {
+      "id": "2",
+      "content": "another title Doloremque dolorem maiores assumenda dolorem facilis",
+      "created_at": "7h:30:00",
+      "author": "AMEGNITO Brice",
+      "verified": false
+    },
+    {
+      "id": "3",
+      "content": "another title Doloremque dolorem maiores assumenda dolorem facilis",
+      "created_at": "7h:30:00",
+      "author": "Adam Smith",
+      "verified": true
+    },
+    {
+      "id": "4",
+      "content": "another title Doloremque dolorem maiores assumenda dolorem facilis",
+      "created_at": "7h:30:00",
+      "author": "Kodjo laye",
+      "verified": true
+    },
+    {
+      "id": "4",
+      "content": "another title Doloremque dolorem maiores assumenda dolorem facilis",
+      "created_at": "7h:30:00",
+      "author": "Kodjo laye",
+      "verified": true
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
+  ],
+  "panneau": [
+    {
+      "id": "1",
+      "taille": "12",
+      "avalability": true
+    },
+    {
+         "id": "2",
+         "taille": "12",
+         "avalability": true
+    }
+  ]
+}

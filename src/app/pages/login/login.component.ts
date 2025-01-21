@@ -1,0 +1,85 @@
+import { authGuard } from './../../guards/auth.guard';
+import { Component } from '@angular/core';
+import { LoginFormRequest } from '../../openapi/services/models';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { routes } from '../../app.routes';
+import { TokenService } from '../../token/token.service';
+import { AuthenticationService } from '../../openapi/services/services';
+import { SharedServiceService } from '../../admin/admin-services/shared-service.service';
+import { JwtDecodeService } from '../../jwt/jwt-decode.service';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css',
+})
+export class LoginComponent {
+
+  constructor(
+    private router: Router,
+    private AuthService: AuthenticationService,
+    private tokenService:TokenService,
+    private myservices : SharedServiceService,
+    private jwtService : JwtDecodeService
+  ){}
+
+  // private guardService = inject(authGuard)
+  public AuthReques: LoginFormRequest = {
+    email: '',
+    password: '',
+  };
+  public myerrore: Array<String> = [];
+  public isOkay: boolean = false;
+  private isAuthenticate : boolean =false
+  private profile : string[] | undefined
+  public login() {
+
+    this.myerrore = []
+    this.AuthService.login({
+      body:this.AuthReques
+    }).subscribe({
+      next: resp => {
+        this.tokenService.setItem(resp.token as string)
+        // console.log(resp)
+        this.myservices.isAuthenticate = true
+         this.profile = this.jwtService.getAuthorities()
+        if (this.profile?.some(p => p ==="USER")) {
+          this.router.navigateByUrl("/customer/do-abonnement")
+        }else{
+          this.router.navigateByUrl("/admin/abonnements")
+        }
+        const decodedToken = this.jwtService.getDecodeToken();
+        console.log('Payload complet :', decodedToken);
+
+      },
+      error: err => {
+        if (err.error.validationError) {
+          this.myerrore = err.error.validationError;
+
+          // console.log(this.myerrore)
+          this.isOkay = false;
+
+        } else {
+          this.myerrore.push(err.error.error);
+        console.log("else err")
+          console.log(err.error)
+          this.isOkay = true;
+        }
+
+      }
+    })
+}
+
+  public loggout(){
+    this.myservices.isAuthenticate = false
+
+  }
+
+
+  public register() {
+  this.router.navigate(["register"])
+  }
+}
