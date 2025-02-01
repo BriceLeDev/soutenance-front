@@ -20,6 +20,8 @@ import { refreshToken } from '../fn/authentication/refresh-token';
 import { RefreshToken$Params } from '../fn/authentication/refresh-token';
 import { register1 } from '../fn/authentication/register-1';
 import { Register1$Params } from '../fn/authentication/register-1';
+import { resendToken } from '../fn/authentication/resend-token';
+import { ResendToken$Params } from '../fn/authentication/resend-token';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService extends BaseService {
@@ -103,6 +105,31 @@ export class AuthenticationService extends BaseService {
   login(params: Login$Params, context?: HttpContext): Observable<LoginFormResponse> {
     return this.login$Response(params, context).pipe(
       map((r: StrictHttpResponse<LoginFormResponse>): LoginFormResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `resendToken()` */
+  static readonly ResendTokenPath = '/auth/resender';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `resendToken()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  resendToken$Response(params: ResendToken$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return resendToken(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `resendToken$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  resendToken(params: ResendToken$Params, context?: HttpContext): Observable<void> {
+    return this.resendToken$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 

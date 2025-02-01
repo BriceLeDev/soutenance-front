@@ -1,48 +1,85 @@
-@if(submit){ @if (isOkay) {
-    <div class="flex flex-col justify-center items-center  my-10">
-<div class="bg-green-200 border-green-600 text-green-600 border-l-4 p-4" role="alert">
-    <p class="font-bold">
-        Succès
-    </p>
-    <p>
-        <!-- Félicitation, votre compte est maintenant actif. Veullez clicker sur le bouton ci-dessous pour vous connecter -->
-     {{message}}
-    </p>
-    
+<div class="p-4 text-center">
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 400 300"
+  class="mx-auto mb-6 w-48 h-48 animate-pulse"
+>
+  <circle cx="200" cy="200" r="150" fill="#3B82F6" />
+  <circle cx="200" cy="200" r="120" fill="#FFFFFF" />
+  <circle cx="200" cy="200" r="90" fill="#3B82F6" />
+  <circle cx="200" cy="200" r="60" fill="#FFFFFF" />
+  <text
+    x="200"
+    y="200"
+    text-anchor="middle"
+    fill="#2563EB"
+    font-size="40"
+    font-weight="bold"
+    dy=".3em"
+    class="text-center"
+  >
+    OTP
+  </text>
+</svg>
+
+<h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">
+  Verification par OTP
+</h2>
+<p class="text-sm text-gray-600 dark:text-gray-300 mb-6">
+  Entrer le code de 6 chiffres envoyé sur votre adresse mail
+</p>
 </div>
-<button (click)="login()" class="bg-blue-500 mt-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        <!-- Retour vers la page de connexion -->
-        Retour vers la page de connexion
-</button>
+
+@if(submit){ @if (isOkay) {
+<div class="flex flex-col justify-center items-center my-5">
+  <div
+    class="bg-green-200 border-green-600 text-green-600 border-l-4 p-4"
+    role="alert"
+  >
+    <p class="font-bold">Succès</p>
+    <p>
+      <!-- Félicitation, votre compte est maintenant actif. Veullez clicker sur le bouton ci-dessous pour vous connecter -->
+      {{ message }}
+    </p>
+  </div>
+  <button
+    (click)="login()"
+    class="bg-blue-500 mt-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+  >
+    <!-- Retour vers la page de connexion -->
+    Retour vers la page de connexion
+  </button>
 </div>
 } @else {
-<div class="flex justify-center items-center ">
-  <div class="bg-red-200 border-l-4 border-red-600 text-red-700 p-4 rounded-lg max-w-xl mt-10">
+<div class="flex justify-center items-center">
+  <div
+    class="bg-red-200 border-l-4 border-red-600 text-red-700 p-4 rounded-lg max-w-xl mt-10"
+  >
     <p class="text-lg font-semibold">Code invalide</p>
     <p>
-       {{message}}
-        <!-- Nous vous avions envoyer un nouveau code de vérification par email. Veuillez vérifier votre addresse mail -->
+      {{ message }}
+      <!-- Nous vous avions envoyer un nouveau code de vérification par email. Veuillez vérifier votre addresse mail -->
     </p>
-    <button (click)="activeAccount()" class="bg-blue-500 mt-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        <!-- Retour vers la page de connexion -->
-        Rééssayer
-</button>
-
+    <button
+      (click)="activeAccount()"
+      class="bg-blue-500 mt-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    >
+      <!-- Retour vers la page de connexion -->
+      Rééssayer
+    </button>
   </div>
 </div>
-}
-
-}@else {
+} }@else {
 <div class="flex justify-center items-center">
-  <div class="containermx-auto max-w-xl p-6">
+  <div class="containermx-auto max-w-xl p-3">
     <!-- Coupon Code Card Form -->
     <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
-      <h1 class="text-3xl font-semibold text-gray-900 text-center">
+      <!-- <h1 class="text-3xl font-semibold text-gray-900 text-center">
         Activation
       </h1>
       <p class="mt-2 text-gray-500 text-center my-3">
         saisissez le code pour activer votre compte
-      </p>
+      </p> -->
 
       <code-input
         [isCodeHidden]="false"
@@ -54,5 +91,8 @@
   </div>
 </div>
 }
-
+<div class="text-sm text-gray-600 dark:text-gray-300 mb-6 text-center">
+  Vous n aviez pas reçu de code?
+  <a href="#" class="text-blue-500 hover:underline dark:text-blue-400 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-500">Renvoyez!</a>
+</div>
 <ng-template #codeForm></ng-template>

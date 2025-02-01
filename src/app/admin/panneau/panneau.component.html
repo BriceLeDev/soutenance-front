@@ -116,19 +116,22 @@
               name="Prix"
             />
           </div>
-          <div class="mb-4 w-1/3 ml-1">
-            <label class="block text-gray-700 font-bold mb-2" for="username">
-              Impression
-            </label>
-            <input
-              [(ngModel)]="panneauRequst.printPrice"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
-              id="PrintPrice"
-              type="number"
-              placeholder=""
-              name="PrintPrice"
-            />
-          </div>
+          @if (panneauRequst.typePanneau === "" || panneauRequst.typePanneau ==="Statique-affiche") {
+            <div class="mb-4 w-1/3 ml-1">
+              <label class="block text-gray-700 font-bold mb-2" for="username">
+                Impression
+              </label>
+              <input
+                [(ngModel)]="panneauRequst.printPrice"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                id="PrintPrice"
+                type="number"
+                placeholder=""
+                name="PrintPrice"
+              />
+            </div>
+          }
+
       </div>
       <div class="flex flex-row " >
         <div class="mb-6 w-1/3">
@@ -209,12 +212,12 @@
   <table class="w-full border">
       <thead >
           <tr class="bg-gray-50 border-b">
-
+<!--
               <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
                   <div class="flex items-center justify-center">
                       ID
                   </div>
-              </th>
+              </th> -->
               <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
                   <div class="flex items-center justify-center">
                       Localisation
@@ -256,9 +259,9 @@
           @for (panneau of this.panneauResponse.content; track panneau.id) {
                <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
 
-              <td class="p-2 border-r">{{panneau.id}}</td>
+              <!-- <td class="p-2 border-r">{{panneau.id}}</td> -->
               <td class="p-2 border-r">{{panneau.localisation}}</td>
-              <td class="p-2 border-r">{{panneau.boulevard?.name}}</td>
+              <td class="p-2 border-r">{{panneau.boulevardName}}</td>
               <td class="p-2 border-r">{{panneau.taille}}</td>
               <td class="p-2 border-r">{{panneau.prixMensuel}}</td>
               <td class="p-2 border-r">{{panneau.nbrFace}}</td>

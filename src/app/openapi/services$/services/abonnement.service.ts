@@ -24,12 +24,66 @@ import { getAllAbonnementExpired } from '../fn/abonnement/get-all-abonnement-exp
 import { GetAllAbonnementExpired$Params } from '../fn/abonnement/get-all-abonnement-expired';
 import { getAllAbonnementExpiredByUser } from '../fn/abonnement/get-all-abonnement-expired-by-user';
 import { GetAllAbonnementExpiredByUser$Params } from '../fn/abonnement/get-all-abonnement-expired-by-user';
+import { invalidate } from '../fn/abonnement/invalidate';
+import { Invalidate$Params } from '../fn/abonnement/invalidate';
 import { PageResponseAbonnementResponse } from '../models/page-response-abonnement-response';
+import { validate } from '../fn/abonnement/validate';
+import { Validate$Params } from '../fn/abonnement/validate';
 
 @Injectable({ providedIn: 'root' })
 export class AbonnementService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
+  }
+
+  /** Path part for operation `validate()` */
+  static readonly ValidatePath = '/abonnement/validate';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `validate()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  validate$Response(params: Validate$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return validate(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `validate$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  validate(params: Validate$Params, context?: HttpContext): Observable<void> {
+    return this.validate$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
+    );
+  }
+
+  /** Path part for operation `invalidate()` */
+  static readonly InvalidatePath = '/abonnement/invalidate';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `invalidate()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  invalidate$Response(params: Invalidate$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return invalidate(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `invalidate$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  invalidate(params: Invalidate$Params, context?: HttpContext): Observable<void> {
+    return this.invalidate$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
+    );
   }
 
   /** Path part for operation `doAbonnement()` */

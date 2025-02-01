@@ -1,14 +1,39 @@
-<div class="relative flex min-h-screen flex-wrap items-center justify-around  overflow-hidden bg-gray-50 py-6 sm:py-12">
+<div
+  class="relative flex top-5 flex-wrap items-center justify-around overflow-hidden py-6 sm:py-2"
+>
+  <div class="min-w-full flex flex-row items-center justify-center ">
+    <div class="flex justify-center items-center mt-4">
+      <h4>Filtrer par date d'abonnment</h4>
+    </div>
+    <form
+      class="mx-auto max-w-xl py-2 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300"
+    >
+      <input
+        type="text"
+        placeholder="Date début"
+        class="bg-transparent w-full focus:outline-none pr-4 font-semibold border-0 focus:ring-0 px-0 py-0"
+        name="topic"
+      />
+    </form>
+    <form
 
-  <app-abonnement-card></app-abonnement-card>
-  <app-abonnement-card></app-abonnement-card>
-  <app-abonnement-card></app-abonnement-card>
-  <app-abonnement-card></app-abonnement-card>
-  <app-abonnement-card></app-abonnement-card>
-  <app-abonnement-card></app-abonnement-card>
-  <app-abonnement-card></app-abonnement-card>
-  <app-abonnement-card></app-abonnement-card>
-
-
-
-<!-- https://play.tailwindcss.com/eCfibrSI2X -->
+      class=" mx-auto max-w-xl py-2 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300"
+    >
+      <input
+        type="text"
+        placeholder="Date fin"
+        class="bg-transparent w-full focus:outline-none pr-4 font-semibold border-0 focus:ring-0 px-0 py-0"
+        name="topic"
+      />
+    </form>
+    <button
+        class=" flex flex-row  items-center justify-center min-w-[10px] px-4 rounded-full  border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-gray-800 text-white font-medium tracking-wide border-transparent py-2 h-[38px]"
+      >
+        Rechercher
+      </button>
+  </div>
+  @for (abonnement of lesAbonnements.content; track $index) {
+  <app-abonnement-card [abonnement]="abonnement"></app-abonnement-card>
+  }
+  <!-- https://play.tailwindcss.com/eCfibrSI2X -->
+</div>

@@ -9,8 +9,10 @@ export interface AbonnementResponse {
   dateFin?: string;
   description?: string;
   duree?: number;
+  id?: number;
   mtnPayer?: number;
   mtnRest?: number;
   nbrJrs?: number;
   prix?: number;
+  valid?: boolean;
 }

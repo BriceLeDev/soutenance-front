@@ -39,14 +39,23 @@
               <span class="mt-0.5 block text-sm text-gray-500">Max 2 MB</span>
           </div>
          </label> -->
-         <div class="font-[sans-serif] max-w-md mx-auto">
-              <input type="file"
-              (change)="onSelectFile($event)"
+         @if (totalPrintPrice !=0) {
+          <div class="font-[sans-serif] max-w-md mx-auto">
+            <input type="file"
+            (change)="onSelectFile($event)"
 
-              accept="image/*,video/*"
-                class="w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500 rounded" />
-              <p class="text-xs text-gray-400 mt-2 text-center">PNG, JPG, MP4  </p>
-         </div>
+            accept="image/*,video/*"
+              class="w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500 rounded" />
+            <p class="text-xs text-gray-400 mt-2 text-center">PNG, JPG, MP4  </p>
+
+            <div class="overflow-hidden whitespace-nowrap">
+              <span class="inline-block animate-marquee">
+                Vous aviez la possibilité d'ajouter d'autres images sur cet abonnement après l'avoir effectuer.
+              </span>
+            </div>
+       </div>
+         }
+
 
     </div>
     </div>
@@ -64,8 +73,11 @@
 
     }
 
+    <div class="flex flex-col">
+      <button class=" cursor-text mr-3 h-11 text-xl bg-blue-500 hover:bg-blue-700 text-white mt-2 py-1 px-2 rounded focus:outline-none focus:shadow-outline">Abonnement : {{this.totalAmount}} FCFA</button>
+      <button class=" cursor-text mr-3 h-11 text-xl bg-blue-500 hover:bg-blue-700 text-white mt-2 py-1 px-2 rounded focus:outline-none focus:shadow-outline">Impression : {{this.totalPrintPrice}} FCFA</button>
 
-    <button class=" cursor-text mr-3 h-11 text-xl bg-blue-500 hover:bg-blue-700 text-white mt-2 py-1 px-2 rounded focus:outline-none focus:shadow-outline">{{this.totalAmount}} FCFA</button>
+    </div>
 
   </div>
 	<div class="overflow-x-auto">
@@ -99,19 +111,23 @@
               <p>{{panneau.localisation}}</p>
             </td>
             <td class="text-center">
-              <p>{{panneau.typePanneau?.libelet}}</p>
+              <p>{{panneau.typePanneauLibele}}</p>
             </td>
             <td class="text-center">
               <p>{{panneau.taille}}</p>
             </td>
             <td class="text-center">
+
               <p>{{panneau.prixMensuel}}</p>
+
             </td>
             <td class="text-center">
+              @if(panneau.typePanneauLibele === "Statique-affiche" ){
               <p>{{panneau.printPrice}}</p>
+            }
             </td>
             <td class="text-right">
-              @if(panneau.typePanneau?.libelet === "statique" ){
+              @if(panneau.typePanneauLibele === "Statique-affiche" ){
                 <div class="flex  space-x-2 rounded p-2 hover:bg-gray-100 accent-teal-600">
                   <input  (change)="addPrintPrice(panneau, $event)"  type="checkbox" id="cssCheckbox" name="languageCheckbox" class="h-6 w-6 rounded border-gray-300 text-teal-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400" />
                   <!-- <label for="cssCheckbox" class="flex w-full space-x-2 text-sm"> CSS </label> -->
@@ -281,7 +297,7 @@ My Test
 <swal
   #abonnement
   title="Validation"
-  text="Le montant total de votre abonnement s'élève à {{finalAbnAmount()}} FCFA, incluant la péride choisie"
+  text="Le cout total de votre abonnement s'élève à {{finalAbnAmount()+totalPrintPrice}} FCFA, incluant la péride choisie"
   icon="info"
   [showCancelButton]="true"
   [focusCancel]="true"

@@ -18,6 +18,8 @@ import { BoulevardFindById$Params } from '../fn/boulevard/boulevard-find-by-id';
 import { BoulevardResponse } from '../models/boulevard-response';
 import { deleteBoulevard } from '../fn/boulevard/delete-boulevard';
 import { DeleteBoulevard$Params } from '../fn/boulevard/delete-boulevard';
+import { getBoulByPanneau } from '../fn/boulevard/get-boul-by-panneau';
+import { GetBoulByPanneau$Params } from '../fn/boulevard/get-boul-by-panneau';
 import { PageResponseBoulevardResponse } from '../models/page-response-boulevard-response';
 import { saveBoulevard } from '../fn/boulevard/save-boulevard';
 import { SaveBoulevard$Params } from '../fn/boulevard/save-boulevard';
@@ -127,6 +129,31 @@ export class BoulevardService extends BaseService {
   deleteBoulevard(params: DeleteBoulevard$Params, context?: HttpContext): Observable<void> {
     return this.deleteBoulevard$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
+    );
+  }
+
+  /** Path part for operation `getBoulByPanneau()` */
+  static readonly GetBoulByPanneauPath = '/boulevard/boulevard-by-panneau';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getBoulByPanneau()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getBoulByPanneau$Response(params: GetBoulByPanneau$Params, context?: HttpContext): Observable<StrictHttpResponse<BoulevardResponse>> {
+    return getBoulByPanneau(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getBoulByPanneau$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getBoulByPanneau(params: GetBoulByPanneau$Params, context?: HttpContext): Observable<BoulevardResponse> {
+    return this.getBoulByPanneau$Response(params, context).pipe(
+      map((r: StrictHttpResponse<BoulevardResponse>): BoulevardResponse => r.body)
     );
   }
 

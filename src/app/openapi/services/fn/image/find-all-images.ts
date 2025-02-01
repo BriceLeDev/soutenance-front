@@ -11,7 +11,7 @@ import { RequestBuilder } from '../../request-builder';
 import { ImageResponse } from '../../models/image-response';
 
 export interface FindAllImages$Params {
-  abonnementId: number;
+  abonnementId?: number;
 }
 
 export function findAllImages(http: HttpClient, rootUrl: string, params: FindAllImages$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ImageResponse>>> {

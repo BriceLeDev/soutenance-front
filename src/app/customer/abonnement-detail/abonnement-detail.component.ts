@@ -33,6 +33,7 @@ export class AbonnementDetailComponent implements OnInit {
   public selectedPanneaux: Set<PanneauResponse> = new Set();
   public selectedPanneauAray: Array<PanneauResponse> = []
   public totalAmount: number = 0;
+  public totalPrintPrice : number = 0;
   public open:boolean = false;
   public imageSelected : any | undefined
   public pictureSelectedforAbnt : any | undefined
@@ -76,12 +77,14 @@ export class AbonnementDetailComponent implements OnInit {
     const isChecked = event.target.checked;
 
     if (isChecked) {
-      this.totalAmount += prix;
+      this.totalAmount += 0;
+      this.totalPrintPrice +=prix
       // this.selectedPanneaux.add(panneau);
 
       // console.log(this.selectedPanneaux);
     } else {
-      this.totalAmount -= prix;
+      this.totalAmount -= 0;
+      this.totalPrintPrice -=prix
       // this.selectedPanneaux.delete(panneau);
       // console.log("selectedPanneaux");
       // console.log(this.selectedPanneaux);
@@ -154,7 +157,7 @@ onSelectFileVideo(event:any) {
 
 //POUR LES ABONNEMENT DONT LE FICHIER EST UNE VIDEO
 public haveVideoPan(){
-   return this.selectedPanneauAray.some((selectPan)=>selectPan.typePanneau?.libelet=="vidéo")
+   return this.selectedPanneauAray.some((selectPan)=>selectPan.typePanneauLibele=="vidéo")
 }
 
 
@@ -207,6 +210,7 @@ public clickOnAbnbtn(){
 }
 
 public saveAbonnement(){
+  console.log("doing abonnement")
   this.abonnementRequest.Panneau = this.selectedPanneauAray.flatMap(pan => pan.id != undefined ? [pan.id]:[])
   this.abonnementRequest.dateDebut = this.formatDate(this.startDate);
   this.abonnementRequest.dateFin = this.formatDate(this.endDate);
@@ -218,6 +222,7 @@ public saveAbonnement(){
 }
 
 private addAbonnement(){
+  console.log("dand do abn")
   this.abonnementService.doAbonnement({
     body:this.abonnementRequest
   }).subscribe({
@@ -249,7 +254,7 @@ private addImage(id:number){
     requestBody
   ).subscribe({
     next:(resp)=>{
-      // console.log(resp)
+     console.log(resp)
     },
     error:(err)=>{
       console.log(err)

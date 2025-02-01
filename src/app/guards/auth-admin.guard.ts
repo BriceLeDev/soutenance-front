@@ -11,6 +11,8 @@ export const authAdminGuard: CanActivateFn = () => {
 
    const profile = jwtService.getAuthorities()
   if (jwtService.isTokenExpired()|| !jwtService.getNomUtilisateur()) {
+    const currentUrl = route.url; // Récupérer l'URL actuelle
+    localStorage.setItem('redirectUrl', currentUrl);
     route.navigateByUrl("/login")
    return false
   }else if (!profile?.some(p=>p==="ADMIN")) {

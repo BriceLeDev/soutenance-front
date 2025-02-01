@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../openapi/services/services';
 import { Route, Router } from '@angular/router';
 import { CodeInputModule } from 'angular-code-input';
@@ -11,15 +11,20 @@ import { Token } from '../../model/Token';
   templateUrl: './activat-account.component.html',
   styleUrl: './activat-account.component.css',
 })
-export class ActivatAccountComponent {
+export class ActivatAccountComponent implements OnInit {
   public message: string = '';
   isOkay: boolean = false;
   submit: boolean = false;
+  public registerEmail : string | null = ""
 
   constructor(
     private authService: AuthenticationService,
     private route: Router
   ) {}
+
+  ngOnInit(): void {
+      this.registerEmail = localStorage.getItem("registerEmail")
+  }
 
   public onCodeCompleted(code: string) {
     this.confirmateAccount(code);
@@ -38,7 +43,7 @@ export class ActivatAccountComponent {
       next: (resp) => {
         this.submit = true;
         this.isOkay = true;
-        this.message = 'Your account has been activated, you can now login';
+        this.message = 'Votre compte est à présent activez veuillez vous connectez!';
         console.log(resp + 'success');
       },
       error: (err) => {

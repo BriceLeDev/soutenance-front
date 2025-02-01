@@ -13,6 +13,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { findAllImages } from '../fn/image/find-all-images';
 import { FindAllImages$Params } from '../fn/image/find-all-images';
+import { getImageByAbonnement } from '../fn/image/get-image-by-abonnement';
+import { GetImageByAbonnement$Params } from '../fn/image/get-image-by-abonnement';
 import { ImageResponse } from '../models/image-response';
 import { saveImae } from '../fn/image/save-imae';
 import { SaveImae$Params } from '../fn/image/save-imae';
@@ -73,6 +75,31 @@ export class ImageService extends BaseService {
    */
   findAllImages(params: FindAllImages$Params, context?: HttpContext): Observable<Array<ImageResponse>> {
     return this.findAllImages$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<ImageResponse>>): Array<ImageResponse> => r.body)
+    );
+  }
+
+  /** Path part for operation `getImageByAbonnement()` */
+  static readonly GetImageByAbonnementPath = '/image/get-image-by-abonnement';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getImageByAbonnement()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getImageByAbonnement$Response(params: GetImageByAbonnement$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ImageResponse>>> {
+    return getImageByAbonnement(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getImageByAbonnement$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getImageByAbonnement(params: GetImageByAbonnement$Params, context?: HttpContext): Observable<Array<ImageResponse>> {
+    return this.getImageByAbonnement$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<ImageResponse>>): Array<ImageResponse> => r.body)
     );
   }

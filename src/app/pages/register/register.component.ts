@@ -37,12 +37,14 @@ export class RegisterComponent {
     }).subscribe({
       next: resp => {
         this.route.navigate(['activate-account']);
+        localStorage.setItem("registerEmail",this.registerRequest.email)
+        console.log("res "+resp);
       },
       error: err => {
         if (err.error?.validationError) {
           this.myerrore = err.error.validationError;
           this.isOkay = false;
-          console.log(err);
+          console.log("Error "+err);
         }
       }
     })

@@ -1,9 +1,10 @@
+import { Panneau } from './../../openapi/services/models/panneau';
 import { ActivatedRoute } from '@angular/router';
 import { Component, inject, OnInit } from '@angular/core';
 import { InvoiceService } from '../services/invoice.service';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
-import { Facture, Role, User, UserResponse } from '../../openapi/services/models';
-import { AbonnementService, FactureControlerService, OwnerService } from '../../openapi/services/services';
+import { BoulevardResponse, Facture, LigneAbonnementResponse, Role, User, UserResponse } from '../../openapi/services/models';
+import { AbonnementService, BoulevardService, FactureControlerService, LigneAbonnmentService, OwnerService } from '../../openapi/services/services';
 import { error } from 'console';
 import { publicDecrypt } from 'crypto';
 import { GetAbonnementById$Params } from '../../openapi/services/fn/abonnement/get-abonnement-by-id';
@@ -24,7 +25,10 @@ export class AbonnementComponent implements OnInit {
     private decoder : JwtDecodeService,
     private userService : OwnerService,
     private factureService : FactureControlerService,
-    private abonnementService: AbonnementService
+    private abonnementService: AbonnementService,
+    private ligneAbnService: LigneAbonnmentService,
+    private boulevardService : BoulevardService
+
     ){}
   public transactionId : string | null = ""
   public abonnementId : string | null = ""
@@ -55,6 +59,9 @@ export class AbonnementComponent implements OnInit {
     transaction: ""
 
   }
+
+  private lignAbn: LigneAbonnementResponse[] = [];
+  private boulResp: Array<BoulevardResponse>= [];
 ngOnInit(): void {
 
   // console.log("ActivatedRoute snapshot:", this.activatedRoute.snapshot);
@@ -66,10 +73,12 @@ ngOnInit(): void {
   this.getUser();
   this.getFacture();
   this.getAbonnement()
-
-  console.log("my transactionId")
-  console.log(this.transactionId)
-  console.log(this.abonnementId)
+  this.getAllLigneAbn()
+  // this.setBoulevard()
+  console.log("my boulevard responses in init")
+  // console.log(this.transactionId)
+  // console.log(this.abonnementId)
+  console.log(this.boulResp)
 
 }
 
@@ -104,6 +113,25 @@ public getFacture(){
 
 }
 
+public getAllLigneAbn(){
+  this.ligneAbnService.getAllLigneAbn(
+    {
+      abonnementId : 2
+    }
+  ).subscribe({
+    next: (resp)=>{
+      this.lignAbn = resp
+      console.log("this.lignAbn")
+      // console.log(this.lignAbn)
+      console.log("this.setBoulevard()")
+      this.setBoulevard()
+    },
+    error:(err)=>{
+      console.log(err)
+    }
+  })
+}
+
 private toNumber(value: string | null): number {
   return value !== null ? Number(value) : 0;
 }
@@ -130,7 +158,37 @@ public getAbonnement(){
 
 }
 
+public getBoulevard(id: number | undefined){
+  this.boulevardService
+  .getBoulByPanneau({
+    panneauId: id,
+  })
+  .subscribe({
+    next: (data) => {
+  console.log("my boulevard responses in methode")
+      this.boulResp.push(data);
+      console.log("facture boulevard")
+      console.log(data)
+    },
+    error: (err) => {
+      console.log(err);
+    },
+  });
+}
+
+public setBoulevard(){
+  // console.log("lign abonn")
+  // console.log(this.lignAbn)
+  // console.log("lign abonn")
+  this.lignAbn.forEach((item,idex)=>{
+    this.getBoulevard(item.panneau.id)
+  })
+  console.log("le tableau abonnment")
+  console.log(this.boulResp)
+}
+
+
 public getInvoice(){
-  this.invoiceService.generateInvoice(this.user,this.facture,this.toNumber(this.abonnementId))
+  this.invoiceService.generateInvoice(this.user,this.facture,this.boulResp,this.lignAbn)
 }
 }

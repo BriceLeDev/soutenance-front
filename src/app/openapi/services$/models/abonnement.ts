@@ -24,9 +24,9 @@ export interface Abonnement {
   mtnRest?: number;
   niveauAbn?: 'TOTAL' | 'PARTIEL';
   prix?: number;
-  status?: string;
   transactionsList?: Array<Transaction>;
   updateAt?: string;
   updateBy?: number;
   user?: User;
+  valid?: boolean;
 }

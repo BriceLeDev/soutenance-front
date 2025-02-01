@@ -10,11 +10,13 @@ import { TypePanneauService } from './services/type-panneau.service';
 import { PanneauService } from './services/panneau.service';
 import { OwnerService } from './services/owner.service';
 import { BoulevardService } from './services/boulevard.service';
+import { AbonnementService } from './services/abonnement.service';
 import { RoleService } from './services/role.service';
 import { TransactionControlerService } from './services/transaction-controler.service';
 import { ImageService } from './services/image.service';
 import { AuthenticationService } from './services/authentication.service';
-import { AbonnementService } from './services/abonnement.service';
+import { MessageControllerService } from './services/message-controller.service';
+import { LigneAbonnmentService } from './services/ligne-abonnment.service';
 import { FactureControlerService } from './services/facture-controler.service';
 
 /**
@@ -29,11 +31,13 @@ import { FactureControlerService } from './services/facture-controler.service';
     PanneauService,
     OwnerService,
     BoulevardService,
+    AbonnementService,
     RoleService,
     TransactionControlerService,
     ImageService,
     AuthenticationService,
-    AbonnementService,
+    MessageControllerService,
+    LigneAbonnmentService,
     FactureControlerService,
     ApiConfiguration
   ],

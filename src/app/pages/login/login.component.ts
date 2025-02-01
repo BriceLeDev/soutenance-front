@@ -47,9 +47,13 @@ export class LoginComponent {
         this.myservices.isAuthenticate = true
          this.profile = this.jwtService.getAuthorities()
         if (this.profile?.some(p => p ==="USER")) {
-          this.router.navigateByUrl("/customer/do-abonnement")
+          const redirectUrl = localStorage.getItem('redirectUrl') || '/customer/do-abonnement'; // URL sauvegardée ou page d'accueil
+          localStorage.removeItem('redirectUrl');
+          this.router.navigateByUrl(redirectUrl)
         }else{
-          this.router.navigateByUrl("/admin/abonnements")
+          const redirectUrl = localStorage.getItem('redirectUrl') || '/admin/abonnements'; // URL sauvegardée ou page d'accueil
+          localStorage.removeItem('redirectUrl');
+          this.router.navigateByUrl(redirectUrl)
         }
         const decodedToken = this.jwtService.getDecodeToken();
         console.log('Payload complet :', decodedToken);

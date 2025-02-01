@@ -32,6 +32,7 @@ export class DoAbonnementComponent implements OnInit{
   public selectedPanneaux: Set<PanneauResponse> = new Set();
   public selectedPanneauAray: Array<PanneauResponse> = []
   ngOnInit(): void {
+      localStorage.removeItem('paymentUrl');
       this.updateLocalStorage()
       this.getAllBoulevard()
 
@@ -143,6 +144,7 @@ export class DoAbonnementComponent implements OnInit{
       this.selectedPanneaux = new Set();
       this.totalAmount = 0;
      localStorage.removeItem('selectedPanneaux');
+     localStorage.removeItem('paymentUrl');
      localStorage.removeItem('totalAmount');
      this.selectedPanneauAray=[]
      this.reloadComponent()
