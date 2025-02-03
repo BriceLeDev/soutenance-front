@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageControllerService } from '../../openapi/services/services';
-import { Message } from '../../openapi/services/models';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
-
+import { MessageResponse } from '../../openapi/services/models';
+import { formatDistanceToNow } from 'date-fns';
+import { fr } from 'date-fns/locale';
 @Component({
   selector: 'app-inbox',
   standalone: true,
@@ -16,13 +17,17 @@ export class InboxComponent implements OnInit{
     private jwtService: JwtDecodeService
   ) {}
 
-  public messages: Array<Message> = [];
+  public messages: Array<MessageResponse> = [];
   public email: string = '';
 
   ngOnInit(): void {
       this.getAllMessage()
   }
-
+  transformDate(dateString: string ): string {
+    const date = new Date(dateString);
+    console.log(formatDistanceToNow(date, { locale: fr }))
+    return `Reçu il y a ${formatDistanceToNow(date, { locale: fr })}`;
+  }
   getAllMessage() {
     this.email = this.jwtService.getEmail()
     this.messageService

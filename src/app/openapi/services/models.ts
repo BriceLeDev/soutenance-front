@@ -19,7 +19,7 @@ export { LigneAbonnementResponse } from './models/ligne-abonnement-response';
 export { LinkPayementRespons } from './models/link-payement-respons';
 export { LoginFormRequest } from './models/login-form-request';
 export { LoginFormResponse } from './models/login-form-response';
-export { Message } from './models/message';
+export { MessageResponse } from './models/message-response';
 export { NotificationRequestBody } from './models/notification-request-body';
 export { PageResponseAbonnementResponse } from './models/page-response-abonnement-response';
 export { PageResponseBoulevardResponse } from './models/page-response-boulevard-response';

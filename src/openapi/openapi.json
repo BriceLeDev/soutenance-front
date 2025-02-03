@@ -86,7 +86,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -240,7 +240,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -264,7 +264,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -298,7 +298,7 @@
               "application/json": {
                 "schema": {
                   "type": "integer",
-                  "format": "int32"
+                  "format": "int64"
                 }
               }
             }
@@ -512,7 +512,7 @@
               "application/json": {
                 "schema": {
                   "type": "integer",
-                  "format": "int32"
+                  "format": "int64"
                 }
               }
             }
@@ -563,7 +563,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -622,7 +622,7 @@
               "application/json": {
                 "schema": {
                   "type": "integer",
-                  "format": "int32"
+                  "format": "int64"
                 }
               }
             }
@@ -726,7 +726,7 @@
               "application/json": {
                 "schema": {
                   "type": "integer",
-                  "format": "int32"
+                  "format": "int64"
                 }
               }
             }
@@ -936,7 +936,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -1447,7 +1447,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Message"
+                    "$ref": "#/components/schemas/MessageResponse"
                   }
                 }
               }
@@ -1470,7 +1470,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Message"
+                    "$ref": "#/components/schemas/MessageResponse"
                   }
                 }
               }
@@ -1492,7 +1492,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -1526,7 +1526,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -1560,7 +1560,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -1677,7 +1677,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -1796,7 +1796,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -2019,7 +2019,7 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "libelet": {
             "type": "string"
@@ -2067,7 +2067,7 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "localisation": {
             "type": "string"
@@ -2193,19 +2193,19 @@
           "name": {
             "type": "string"
           },
-          "username": {
-            "type": "string"
-          },
           "authorities": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GrantedAuthority"
             }
           },
-          "credentialsNonExpired": {
-            "type": "boolean"
+          "username": {
+            "type": "string"
           },
           "accountNonExpired": {
+            "type": "boolean"
+          },
+          "credentialsNonExpired": {
             "type": "boolean"
           },
           "accountNonLocked": {
@@ -2270,7 +2270,7 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "name": {
             "type": "string"
@@ -2387,7 +2387,7 @@
           },
           "abonnementId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           }
         }
       },
@@ -2515,7 +2515,7 @@
             "type": "array",
             "items": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         }
@@ -2525,7 +2525,7 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -2623,7 +2623,7 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -2646,11 +2646,11 @@
               "$ref": "#/components/schemas/Panneau"
             }
           },
-          "nbrDePanneau": {
+          "nombreDePanneau": {
             "type": "integer",
             "format": "int32"
           },
-          "nombreDePanneau": {
+          "nbrDePanneau": {
             "type": "integer",
             "format": "int32"
           },
@@ -2665,7 +2665,7 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -2696,7 +2696,7 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -2735,7 +2735,7 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -2833,7 +2833,7 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -2946,21 +2946,18 @@
           }
         }
       },
-      "Message": {
+      "MessageResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
           "message": {
             "type": "string"
           },
-          "receiver": {
-            "$ref": "#/components/schemas/User"
+          "receiverMail": {
+            "type": "string"
           },
-          "abonnement": {
-            "$ref": "#/components/schemas/Abonnement"
+          "abonnementId": {
+            "type": "integer",
+            "format": "int64"
           },
           "localDateTime": {
             "type": "string",
@@ -2978,8 +2975,27 @@
       "LigneAbonnementResponse": {
         "type": "object",
         "properties": {
-          "panneau": {
-            "$ref": "#/components/schemas/Panneau"
+          "panneauId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "boulevardName": {
+            "type": "string"
+          },
+          "emplacement": {
+            "type": "string"
+          },
+          "nbrFace": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "printPrice": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -3076,7 +3092,7 @@
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "prix": {
             "type": "number",

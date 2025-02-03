@@ -11,5 +11,6 @@ export interface PanneauResponse {
   printPrice?: number;
   prixMensuel?: number;
   taille?: number;
+  enabled?:boolean
   typePanneauLibele?: string;
 }

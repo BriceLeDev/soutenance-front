@@ -18,6 +18,7 @@ export interface Panneau {
   prixMensuel?: number;
   taille?: number;
   typePanneau?: TypePanneau;
+  enabled? : boolean
   updateAt?: string;
   updateBy?: number;
 }

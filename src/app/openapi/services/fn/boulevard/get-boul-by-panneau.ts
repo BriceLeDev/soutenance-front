@@ -11,7 +11,7 @@ import { RequestBuilder } from '../../request-builder';
 import { BoulevardResponse } from '../../models/boulevard-response';
 
 export interface GetBoulByPanneau$Params {
-  panneauId: number | undefined;
+  panneauId?: number;
 }
 
 export function getBoulByPanneau(http: HttpClient, rootUrl: string, params: GetBoulByPanneau$Params, context?: HttpContext): Observable<StrictHttpResponse<BoulevardResponse>> {

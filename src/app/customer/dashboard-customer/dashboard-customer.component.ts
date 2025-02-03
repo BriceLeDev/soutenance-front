@@ -6,7 +6,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MessageControllerService } from '../../openapi/services/services';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
-import { Message } from '../../openapi/services/models';
+import { MessageResponse } from '../../openapi/services/models';
 
 @Component({
   selector: 'app-dashboard-customer',
@@ -25,10 +25,10 @@ export class DashboardCustomerComponent implements OnInit {
   messaService = inject(MessageControllerService)
   jwtService = inject(JwtDecodeService)
   public email : string = this.jwtService.getEmail()
-  public nbrOfMsg = signal(2)
-  public messages : Array<Message> = []
-  public newMessageLength : number = 0
-  public oldMessageLength : number = 0
+  public nbrOfMsg = signal(0)
+  public messages : Array<MessageResponse> = []
+  public newMessageLength = signal(0)
+  public oldMessageLength = signal(0)
   ngOnInit(): void {
     //this.router.navigate(['/customer/do-abonnement']);  // Navigation vers 'home' dès le chargement
     this.getAllMessageByUser()
@@ -42,25 +42,41 @@ export class DashboardCustomerComponent implements OnInit {
 
   updateNotification(){
     console.log("verification en cours")
-    if(this.oldMessageLength==this.newMessageLength){
-      console.log("verification en cours et aboutis")
+    if(this.oldMessageLength()==this.newMessageLength()){
+      console.log(this.newMessageLength)
+      console.log("verification en cours et aboutis if ")
       this.nbrOfMsg.set(0)
-    }else if (this.newMessageLength > this.oldMessageLength ) {
-      this.nbrOfMsg.set(this.newMessageLength - this.oldMessageLength)
+      console.log(this.nbrOfMsg.set(0) + "  ***verification en cours ***- if")
+    }else if (this.newMessageLength() > this.oldMessageLength() ) {
+      console.log(this.newMessageLength)
+      this.nbrOfMsg.set(this.newMessageLength() - this.oldMessageLength())
+      console.log(this.nbrOfMsg.set(0) + "  ***verification en cours et aboutis***- else")
     }
   }
 
   public getAllMessageByUser(){
     console.log("changement en cours")
-    this.oldMessageLength = this.newMessageLength
+    this.oldMessageLength.set(this.newMessageLength())
+    console.log(this.oldMessageLength())
     console.log("recupération en cours")
     this.messaService.getMessageByUser({
       userId : this.email
     }).subscribe({
       next : (data)=>{
         this.messages = data
-        this.newMessageLength = this.messages.length
-        console.log(data)
+        this.newMessageLength.set(this.messages.length)
+        console.log("Length du data "+this.messages.length)
+        console.log(this.newMessageLength() + "  in getMethod")
+        if(this.oldMessageLength()==this.newMessageLength()){
+          console.log(this.newMessageLength())
+          console.log("verification en cours et aboutis if ")
+          this.nbrOfMsg.set(0)
+          console.log(this.nbrOfMsg.set(0) + "  ***verification en cours ***- if")
+        }else if (this.newMessageLength() > this.oldMessageLength() ) {
+          console.log(this.newMessageLength)
+          this.nbrOfMsg.set(this.newMessageLength() - this.oldMessageLength())
+          console.log(this.nbrOfMsg.set(0) + "  ***verification en cours et aboutis***- else")
+        }
       },
       error : (err)=>{
         console.log(err)

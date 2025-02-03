@@ -15,7 +15,7 @@ import { getAllMessage } from '../fn/message-controller/get-all-message';
 import { GetAllMessage$Params } from '../fn/message-controller/get-all-message';
 import { getMessageByUser } from '../fn/message-controller/get-message-by-user';
 import { GetMessageByUser$Params } from '../fn/message-controller/get-message-by-user';
-import { Message } from '../models/message';
+import { MessageResponse } from '../models/message-response';
 
 @Injectable({ providedIn: 'root' })
 export class MessageControllerService extends BaseService {
@@ -32,7 +32,7 @@ export class MessageControllerService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getMessageByUser$Response(params: GetMessageByUser$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Message>>> {
+  getMessageByUser$Response(params: GetMessageByUser$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<MessageResponse>>> {
     return getMessageByUser(this.http, this.rootUrl, params, context);
   }
 
@@ -42,9 +42,9 @@ export class MessageControllerService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getMessageByUser(params: GetMessageByUser$Params, context?: HttpContext): Observable<Array<Message>> {
+  getMessageByUser(params: GetMessageByUser$Params, context?: HttpContext): Observable<Array<MessageResponse>> {
     return this.getMessageByUser$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<Message>>): Array<Message> => r.body)
+      map((r: StrictHttpResponse<Array<MessageResponse>>): Array<MessageResponse> => r.body)
     );
   }
 
@@ -57,7 +57,7 @@ export class MessageControllerService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getAllMessage$Response(params?: GetAllMessage$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Message>>> {
+  getAllMessage$Response(params?: GetAllMessage$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<MessageResponse>>> {
     return getAllMessage(this.http, this.rootUrl, params, context);
   }
 
@@ -67,9 +67,9 @@ export class MessageControllerService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getAllMessage(params?: GetAllMessage$Params, context?: HttpContext): Observable<Array<Message>> {
+  getAllMessage(params?: GetAllMessage$Params, context?: HttpContext): Observable<Array<MessageResponse>> {
     return this.getAllMessage$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<Message>>): Array<Message> => r.body)
+      map((r: StrictHttpResponse<Array<MessageResponse>>): Array<MessageResponse> => r.body)
     );
   }
 

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, inject, OnInit } from '@angular/core';
 import { InvoiceService } from '../services/invoice.service';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
-import { BoulevardResponse, Facture, LigneAbonnementResponse, Role, User, UserResponse } from '../../openapi/services/models';
+import { AbonnementResponse, BoulevardResponse, Facture, LigneAbonnementResponse, Role, User, UserResponse } from '../../openapi/services/models';
 import { AbonnementService, BoulevardService, FactureControlerService, LigneAbonnmentService, OwnerService } from '../../openapi/services/services';
 import { error } from 'console';
 import { publicDecrypt } from 'crypto';
@@ -60,8 +60,9 @@ export class AbonnementComponent implements OnInit {
 
   }
 
-  private lignAbn: LigneAbonnementResponse[] = [];
+  public lignAbn: LigneAbonnementResponse[] = [];
   private boulResp: Array<BoulevardResponse>= [];
+  public abonnement  : AbonnementResponse ={}
 ngOnInit(): void {
 
   // console.log("ActivatedRoute snapshot:", this.activatedRoute.snapshot);
@@ -116,15 +117,15 @@ public getFacture(){
 public getAllLigneAbn(){
   this.ligneAbnService.getAllLigneAbn(
     {
-      abonnementId : 2
+      abonnementId : 1
     }
   ).subscribe({
     next: (resp)=>{
       this.lignAbn = resp
       console.log("this.lignAbn")
-      // console.log(this.lignAbn)
+      console.log(this.lignAbn)
       console.log("this.setBoulevard()")
-      this.setBoulevard()
+      // this.setBoulevard()
     },
     error:(err)=>{
       console.log(err)
@@ -149,6 +150,7 @@ public getAbonnement(){
     this.abnParam
   ).subscribe({
     next:(data)=>{
+      this.abonnement = data
       console.log(data)
     },
     error:(error)=>{
@@ -176,19 +178,23 @@ public getBoulevard(id: number | undefined){
   });
 }
 
-public setBoulevard(){
-  // console.log("lign abonn")
-  // console.log(this.lignAbn)
-  // console.log("lign abonn")
-  this.lignAbn.forEach((item,idex)=>{
-    this.getBoulevard(item.panneau.id)
-  })
-  console.log("le tableau abonnment")
-  console.log(this.boulResp)
-}
+// public setBoulevard(){
+//   // console.log("lign abonn")
+//   // console.log(this.lignAbn)
+//   // console.log("lign abonn")
+//   this.lignAbn.forEach((item,idex)=>{
+//     if (item.panneau != undefined) {
+//       this.getBoulevard(item.panneau.id)
+//     }
+
+//   })
+//   console.log("le tableau abonnment")
+//   console.log(this.boulResp)
+// }
 
 
 public getInvoice(){
+  console.log(this.lignAbn)
   this.invoiceService.generateInvoice(this.user,this.facture,this.boulResp,this.lignAbn)
 }
 }

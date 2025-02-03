@@ -8,12 +8,12 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { Message } from '../../models/message';
+import { MessageResponse } from '../../models/message-response';
 
 export interface GetAllMessage$Params {
 }
 
-export function getAllMessage(http: HttpClient, rootUrl: string, params?: GetAllMessage$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Message>>> {
+export function getAllMessage(http: HttpClient, rootUrl: string, params?: GetAllMessage$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<MessageResponse>>> {
   const rb = new RequestBuilder(rootUrl, getAllMessage.PATH, 'get');
   if (params) {
   }
@@ -23,7 +23,7 @@ export function getAllMessage(http: HttpClient, rootUrl: string, params?: GetAll
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<Message>>;
+      return r as StrictHttpResponse<Array<MessageResponse>>;
     })
   );
 }

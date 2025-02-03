@@ -335,7 +335,7 @@ export class InvoiceService {
     const pageHeight = doc.internal.pageSize.height; // Hauteur de la page
 
     // Entête du tableau
-    const headers = ['Boulevards', 'Panneaux', 'Emplacement', 'Face'];
+    const headers = ['Boulevards', 'Panneaux', 'Emplacement', 'Face','Prix'];
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
 
@@ -343,7 +343,7 @@ export class InvoiceService {
     const margin = 10; // Marge de chaque côté
     const columnWidth = (pageWidth - margin * 2) / headers.length; // Largeur dynamique pour chaque colonne
 
-    const columnWidths = [50, 20, 60, 20]; // Largeurs spécifiques pour chaque colonne
+    const columnWidths = [50, 20, 60, 20, 20]; // Largeurs spécifiques pour chaque colonne
     const totalWidth = columnWidths.reduce((a, b) => a + b, 0);
     const startX = (pageWidth - totalWidth) / 2;
     let xPosition = startX; // Position initiale pour les en-têtes
@@ -372,13 +372,14 @@ export class InvoiceService {
 
       // Centrer chaque cellule horizontalement
 
-      console.log(this.boulevard.name)
-      console.log("this.boulevard.name")
+      // console.log(this.boulevard.name)
+      // console.log("this.boulevard.name")
       const data = [
-        boulevards[rowIndex].name || 'N/A',
-        (item.panneau.id || 0).toString(),
-        item.panneau.localisation || 'N/A',
-        (item.panneau.nbreFace || 0).toString(),
+        item.boulevardName || 'N/A',
+        (item.panneauId || 0).toString(),
+        item.emplacement || 'N/A',
+        (item.nbrFace || 0).toString(),
+        (item.price || 0).toString()
       ];
 
       data.forEach((cell, index) => {

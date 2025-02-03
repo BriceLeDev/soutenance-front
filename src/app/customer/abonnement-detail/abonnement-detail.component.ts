@@ -155,9 +155,13 @@ onSelectFileVideo(event:any) {
   }
 }
 
-//POUR LES ABONNEMENT DONT LE FICHIER EST UNE VIDEO
-public haveVideoPan(){
-   return this.selectedPanneauAray.some((selectPan)=>selectPan.typePanneauLibele=="vidéo")
+//Vérifie si la liste des panneau contient un panneau Numérique-vidéo
+public haveVideoPan() : boolean{
+   return this.selectedPanneauAray.some((selectPan)=>selectPan.typePanneauLibele=="Numérique-vidéo")
+}
+//Vérifie si la liste des panneau contient un panneau Numérique-image
+public haveImagePan() : boolean{
+   return this.selectedPanneauAray.some((selectPan)=>selectPan.typePanneauLibele=="Numérique-image")
 }
 
 
@@ -277,13 +281,14 @@ private addPayement(idAbn:number){
   }).subscribe({
     next:(resp)=>{
       this.sharedService.paymentLink = resp.data?.payment_url
+
       if (resp.data?.payment_url) {
       localStorage.setItem('paymentUrl', resp.data.payment_url);
 
       }
-      //  console.info(resp)
-      //  console.info(resp.data?.payment_url)
-      //  console.info(resp.api_response_id)
+       console.info(resp)
+       console.info(resp.data?.payment_url)
+       console.info(resp.api_response_id)
     },
     error:(err)=>{
       console.error(err.error)

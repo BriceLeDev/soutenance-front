@@ -5,10 +5,10 @@ import {
   OwnerService,
 } from '../../openapi/services/services';
 import {
-  AbonnementResponse,
+  
+  PageResponseAbonnementResponse,
   UserResponse,
 } from '../../openapi/services/models';
-import { PageResponseAbonnementResponse } from '../../openapi/services$/models';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
 @Component({
   selector: 'app-all-abonnement',
