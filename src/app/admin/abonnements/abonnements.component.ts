@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AbonnementService } from '../../openapi/services/services';
 import { PageResponseAbonnementResponse } from '../../openapi/services/models';
+import { AbonnementCardComponent } from '../../components/abonnement-card/abonnement-card.component';
 
 @Component({
   selector: 'app-abonnements',
   standalone: true,
-  imports: [],
+  imports: [AbonnementCardComponent],
   templateUrl: './abonnements.component.html',
   styleUrl: './abonnements.component.css'
 })
@@ -16,9 +17,10 @@ constructor(private abnService : AbonnementService){}
  public lesAbonnements: PageResponseAbonnementResponse = {};
 ngOnInit(): void {
 
+  this.getAbonByAll()
 }
 
-  public getAbonById() {
+  public getAbonByAll() {
 
     this.abnService
       .getAllAbonnement({

@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.router.navigate(['/admin/show-abonnement']);  // Navigation vers 'home' dès le chargement
+    this.router.navigate(['/admin/abonnements']);  // Navigation vers 'home' dès le chargement
   }
 }
 

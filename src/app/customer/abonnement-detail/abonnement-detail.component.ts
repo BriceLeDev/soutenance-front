@@ -215,11 +215,14 @@ public clickOnAbnbtn(){
 
 public saveAbonnement(){
   console.log("doing abonnement")
+  console.log("date debut : " + this.formatDate(this.startDate))
+  console.log("date fin : " + this.formatDate(this.startDate))
+  console.log("price : "  + this.finalAbnAmount())
   this.abonnementRequest.Panneau = this.selectedPanneauAray.flatMap(pan => pan.id != undefined ? [pan.id]:[])
   this.abonnementRequest.dateDebut = this.formatDate(this.startDate);
   this.abonnementRequest.dateFin = this.formatDate(this.endDate);
   this.abonnementRequest.dateAbn = this.formatDate(new Date());
-  this.abonnementRequest.prix = this.finalAbnAmount()
+  this.abonnementRequest.prix = this.finalAbnAmount() + this.totalPrintPrice
   this.abonnementRequest.description =this.description
   this.addAbonnement();
 

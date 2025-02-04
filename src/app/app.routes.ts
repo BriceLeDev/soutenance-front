@@ -25,6 +25,8 @@ import { authAdminGuard } from './guards/auth-admin.guard';
 import { NoFoundComponent } from './pages/no-found/no-found.component';
 import { UnauthorizeComponent } from './pages/unauthorize/unauthorize.component';
 import { LoadingComponent } from './shared/components/loading/loading.component';
+import { StatisticComponent } from './admin/components/statistic/statistic.component';
+import { AdministrationComponent } from './admin/administration/administration.component';
 
 export const routes: Routes = [
   {
@@ -51,6 +53,14 @@ export const routes: Routes = [
       {
         path: 'panneau',
         component: PanneauComponent,
+      },
+      {
+        path: 'statistic',
+        component: StatisticComponent,
+      },
+      {
+        path: 'administration',
+        component: AdministrationComponent,
       },
       {
         path: 'client/detail/:id',

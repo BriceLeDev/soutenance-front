@@ -8,6 +8,7 @@ import { AbonnementService, BoulevardService, FactureControlerService, LigneAbon
 import { error } from 'console';
 import { publicDecrypt } from 'crypto';
 import { GetAbonnementById$Params } from '../../openapi/services/fn/abonnement/get-abonnement-by-id';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class AbonnementComponent implements OnInit {
     private factureService : FactureControlerService,
     private abonnementService: AbonnementService,
     private ligneAbnService: LigneAbonnmentService,
-    private boulevardService : BoulevardService
+    private boulevardService : BoulevardService,
 
     ){}
   public transactionId : string | null = ""
@@ -63,6 +64,7 @@ export class AbonnementComponent implements OnInit {
   public lignAbn: LigneAbonnementResponse[] = [];
   private boulResp: Array<BoulevardResponse>= [];
   public abonnement  : AbonnementResponse ={}
+  formattedDate: string | null ="";
 ngOnInit(): void {
 
   // console.log("ActivatedRoute snapshot:", this.activatedRoute.snapshot);
@@ -81,7 +83,13 @@ ngOnInit(): void {
   // console.log(this.abonnementId)
   console.log(this.boulResp)
 
+
 }
+
+// public transformDate(dates : string | undefined ){
+//   const date = new Date(dates);
+//   return this.datePipe.transform(date, 'EEEE le dd MMMM yyyy', 'fr');
+// }
 
 private getUser(){
   const email : string  = this.decoder.getEmail()
@@ -117,7 +125,7 @@ public getFacture(){
 public getAllLigneAbn(){
   this.ligneAbnService.getAllLigneAbn(
     {
-      abonnementId : 1
+      abonnementId : Number(this.abonnementId)
     }
   ).subscribe({
     next: (resp)=>{
