@@ -3,45 +3,94 @@
  * Composent Affichage des statistiques des models                 *
  *******************************************************************
  */ -->
-
-<div class="flex h-16 flex-col justify-center">
-  <div class="">
-    <div class=" justify-between items-center w-full py-3">
-      <!-- Left buttons -->
-      <div>
-        <div
-          class="isolate inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none  w-full"
-        >
-          <span class="inline-flex sm:shadow-sm w-full justify-center items-center">
-
-            <button
-              type="button"
-              class="relative m-px flex flex-col items-center border border-gray-300 bg-green-500 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-black focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 rounded-md "
+<div class="p-4">
+  <div class="flex h-16 flex-col justify-center">
+    <div class="">
+      <div class="justify-between items-center w-full py-3">
+        <!-- Left buttons -->
+        <div>
+          <div
+            class="isolate inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none w-full"
+          >
+            <span
+              class="inline-flex sm:shadow-sm w-full justify-center items-center"
             >
-             <span class="text-2xl font-bold text-white">{{ this.AdminState.AdminClientState.NbrClient()}}</span>
-              <span>Clients</span>
-            </button>
+              <button
+                type="button"
+                class="relative m-px flex flex-col items-center border border-gray-300 bg-green-500 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-black focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 rounded-md"
+              >
+                <span class="text-2xl font-bold text-white">{{
+                  this.NbrTotalClient
+                }}</span>
+                <span>Clients</span>
+              </button>
 
-            <button
-              type="button"
-              class="relative mx-4 flex flex-col items-center border border-gray-300 bg-blue-500 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-black focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 rounded-md "
-            >
-             <span class="text-2xl font-bold text-white">24</span>
-              <span>Panneaux</span>
-            </button>
+              <button
+                type="button"
+                class="relative mx-4 flex flex-col items-center border border-gray-300 bg-blue-500 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-black focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 rounded-md"
+              >
+                <span class="text-2xl font-bold text-white">{{NbrTotalPanneau}}</span>
+                <span>Panneaux</span>
+              </button>
 
-            <button
-              type="button"
-              class="relative bg-violet-400 my-2 flex flex-col items-center border border-gray-300 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-black focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 rounded-md "
-            >
-             <span class="text-2xl font-bold text-white  ">24</span>
-              <span>Boulevards</span>
-            </button>
-
-          </span>
+              <button
+                type="button"
+                class="relative bg-violet-400 my-2 flex flex-col items-center border border-gray-300 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-black focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 rounded-md"
+              >
+                <span class="text-2xl font-bold text-white">{{NbrTotalBoulevard}}</span>
+                <span>Boulevards</span>
+              </button>
+            </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
+  <div
+    class="flex  flex-wrap items-center justify-around overflow-hidden py-6"
+  >
+    <div
+      class=" w-1/2 mb-16 md:md-0 col-span-12 sm:col-span-6 lg:col-span-4 border p-4 rounded-lg shadow-lg"
+    >
+      <div class="flex items-center mb-3">
+        <canvas id="barchart"></canvas>
+      </div>
+      <p class="font-display text-2xl font-bold leading-tight w-full text-center">
+        Les itinéraire selon leur demande
+      </p>
+    </div>
+
+    <div
+      class="  w-1/2 mb-16 md:md-0 col-span-12 sm:col-span-6 lg:col-span-4 border p-4 rounded-lg shadow-lg"
+    >
+      <div class="flex items-center mb-3">
+        <canvas id="linechart"></canvas>
+      </div>
+      <p class="font-display text-2xl font-bold leading-tight w-full text-center">
+        Chiffre d'affaire mensuel
+      </p>
+    </div>
+    <div
+      class="w-1/2 mb-16 md:md-0 col-span-12 sm:col-span-6 lg:col-span-4 border p-4 rounded-lg shadow-lg"
+    >
+      <div class="flex items-center mb-3">
+        <canvas id="panneau"></canvas>
+      </div>
+      <p class="font-display text-2xl font-bold leading-tight w-full text-center">
+       Les panneaux les plus solicités
+      </p>
+    </div>
+    <div
+      class=" w-1/2 mb-16 md:md-0 col-span-12 sm:col-span-6 lg:col-span-4 border p-4 rounded-lg shadow-lg"
+    >
+      <div class="flex items-center mb-3">
+        <canvas id="barchart"></canvas>
+      </div>
+      <p class="text-center font-display text-2xl font-bold leading-tight w-full">
+        Chiffre d'affaire par client
+      </p>
+    </div>
+  </div>
+
+</div>

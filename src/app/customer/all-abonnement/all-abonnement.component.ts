@@ -5,15 +5,21 @@ import {
   OwnerService,
 } from '../../openapi/services/services';
 import {
-  
+
+  Abonnement,
   PageResponseAbonnementResponse,
   UserResponse,
 } from '../../openapi/services/models';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @Component({
   selector: 'app-all-abonnement',
   standalone: true,
-  imports: [AbonnementCardComponent],
+  imports: [AbonnementCardComponent,MatFormFieldModule,MatInputModule,MatDatepickerModule,FormsModule],
   templateUrl: './all-abonnement.component.html',
   styleUrl: './all-abonnement.component.css',
 })
@@ -21,7 +27,8 @@ export class AllAbonnementComponent implements OnInit {
   constructor(
     private abonnementService: AbonnementService,
     private decoderService: JwtDecodeService,
-    private userService: OwnerService
+    private userService: OwnerService,
+    private route : Router
   ) {}
 
   public lesAbonnements: PageResponseAbonnementResponse = {};
@@ -37,11 +44,21 @@ export class AllAbonnementComponent implements OnInit {
     roleList: [],
     updateAt: '',
   };
+  public startDate: Date | null = null;
+  public endDate: Date | null = null;
   ngOnInit(): void {
 
     this.getUser()
     // this.getAbonById()
   }
+
+  public dateClicked(){
+    if (this.startDate === null) {
+      alert(" Veuillez Choisir d'abord la date début!")
+
+    }
+  }
+
 
   private getUser() {
     const email: string = this.decoderService.getEmail();

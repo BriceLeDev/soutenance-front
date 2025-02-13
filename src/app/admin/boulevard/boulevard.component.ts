@@ -4,11 +4,14 @@ import { BoulevarRequest, BoulevardResponse, PageResponseBoulevardResponse } fro
 import { FormsModule, NgModel } from '@angular/forms';
 import { SharedServiceService } from '../admin-services/shared-service.service';
 import { BoulevardService } from '../../openapi/services/services';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-boulevard',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,MatFormFieldModule,MatInputModule,MatDatepickerModule],
   templateUrl: './boulevard.component.html',
   styleUrl: './boulevard.component.css',
 })
@@ -26,10 +29,19 @@ export class BoulevardComponent implements OnInit {
   constructor(private boulevardService: BoulevardService) {}
   public boulevardsState = inject(SharedServiceService);
 
+  public startDate: Date | null = null;
+  public endDate: Date | null = null;
+
   ngOnInit(): void {
     this.getAllBoulevard();
   }
 
+  public dateClicked(){
+    if (this.startDate === null) {
+      alert(" Veuillez Choisir d'abord la date début!")
+
+    }
+  }
   public addBoulevard() {
     this.myerrore = [];
     this.boulevardService

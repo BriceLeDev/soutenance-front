@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { SharedServiceService } from '../../admin/admin-services/shared-service.service';
 import { Route, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css'
 })
-export class PaymentComponent implements OnInit {
+export class PaymentComponent implements OnInit, OnDestroy {
 
   constructor(
     public sharedService : SharedServiceService,
@@ -27,6 +27,12 @@ export class PaymentComponent implements OnInit {
     this.reloadComponent()
   }
 
+  ngOnDestroy(): void {
+    localStorage.removeItem('selectedPanneaux');
+    localStorage.removeItem('totalAmount');
+  }
+
+
 
 
   public navigateTo() {
@@ -41,9 +47,11 @@ export class PaymentComponent implements OnInit {
       console.error('Payment link is undefined or invalid');
     }
   }
-
   reloadComponent(): void {
     this.showComponent = false;
     setTimeout(() => this.showComponent = true,500);
   }
+
+
+
 }

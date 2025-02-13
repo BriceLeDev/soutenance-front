@@ -4,6 +4,7 @@
 
 export interface PanneauResponse {
   boulevardName?: string;
+  enabled?: boolean;
   id?: number;
   localisation?: string;
   nbrFace?: number;
@@ -11,6 +12,5 @@ export interface PanneauResponse {
   printPrice?: number;
   prixMensuel?: number;
   taille?: number;
-  enabled?:boolean
   typePanneauLibele?: string;
 }

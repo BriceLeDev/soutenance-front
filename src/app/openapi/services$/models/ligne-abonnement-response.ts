@@ -7,6 +7,9 @@ export interface LigneAbonnementResponse {
   emplacement?: string;
   nbrFace?: number;
   panneauId?: number;
+  picture?: Array<string>;
   price?: number;
   printPrice?: number;
+  taille?: number;
+  type?: string;
 }

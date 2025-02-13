@@ -1225,6 +1225,37 @@
         }
       }
     },
+    "/owner/{owner-id}": {
+      "get": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "owner-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/owner/{owner-email}": {
       "get": {
         "tags": [
@@ -1479,12 +1510,35 @@
         }
       }
     },
-    "/line-abonnement/all": {
+    "/line-abonnement/all-line": {
       "get": {
         "tags": [
           "Ligne-Abonnment"
         ],
         "operationId": "getAllLigneAbn",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LigneAbonnementResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/line-abonnement/all-by-user": {
+      "get": {
+        "tags": [
+          "Ligne-Abonnment"
+        ],
+        "operationId": "getAllLigneAbn_1",
         "parameters": [
           {
             "name": "abonnementId",
@@ -2094,6 +2148,9 @@
           "typePanneauLibele": {
             "type": "string"
           },
+          "enabled": {
+            "type": "boolean"
+          },
           "occuped": {
             "type": "boolean"
           }
@@ -2193,12 +2250,6 @@
           "name": {
             "type": "string"
           },
-          "authorities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GrantedAuthority"
-            }
-          },
           "username": {
             "type": "string"
           },
@@ -2207,6 +2258,12 @@
           },
           "credentialsNonExpired": {
             "type": "boolean"
+          },
+          "authorities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrantedAuthority"
+            }
           },
           "accountNonLocked": {
             "type": "boolean"
@@ -2646,11 +2703,11 @@
               "$ref": "#/components/schemas/Panneau"
             }
           },
-          "nombreDePanneau": {
+          "nbrDePanneau": {
             "type": "integer",
             "format": "int32"
           },
-          "nbrDePanneau": {
+          "nombreDePanneau": {
             "type": "integer",
             "format": "int32"
           },
@@ -2684,6 +2741,20 @@
           },
           "abonnement": {
             "$ref": "#/components/schemas/Abonnement"
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date"
+          },
+          "ligneAbonnements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LigneAbonnement"
+            }
           },
           "createdBy": {
             "type": "integer",
@@ -2723,6 +2794,9 @@
           "dateDebut": {
             "type": "string",
             "format": "date"
+          },
+          "theImage": {
+            "$ref": "#/components/schemas/Image"
           },
           "createdBy": {
             "type": "integer",
@@ -2765,6 +2839,9 @@
             "format": "int64"
           },
           "occuped": {
+            "type": "boolean"
+          },
+          "enabled": {
             "type": "boolean"
           },
           "boulevard": {
@@ -2989,6 +3066,13 @@
             "type": "integer",
             "format": "int32"
           },
+          "taille": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string"
+          },
           "price": {
             "type": "integer",
             "format": "int64"
@@ -2996,6 +3080,13 @@
           "printPrice": {
             "type": "integer",
             "format": "int64"
+          },
+          "picture": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
           }
         }
       },
@@ -3008,6 +3099,18 @@
               "type": "string",
               "format": "byte"
             }
+          },
+          "panneauId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date"
           }
         }
       },
@@ -3134,6 +3237,19 @@
           },
           "description": {
             "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "picture": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "byte"
+              }
+            }
           }
         }
       },

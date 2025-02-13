@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RefreshService } from '../../admin-services/refresh.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,13 +11,17 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class SidebarComponent {
 
+  constructor(private refreshService : RefreshService){}
+
   navlinks = [
     {path:"abonnements", libele:"Abonnements"},
     {path:"client", libele:"Clients"},
-    {path:"panneau", libele:"Panneaux"},
+    {path:"panneau/panneau-affiche", libele:"Panneaux"},
     {path:"boulevard", libele:"Boulevards"},
     {path:"statistic", libele:"Statistique"},
     {path:"administration", libele:"Administration"},
   ]
+
+
 
 }

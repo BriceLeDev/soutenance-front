@@ -13,6 +13,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { getAllLigneAbn } from '../fn/ligne-abonnment/get-all-ligne-abn';
 import { GetAllLigneAbn$Params } from '../fn/ligne-abonnment/get-all-ligne-abn';
+import { getAllLigneAbn1 } from '../fn/ligne-abonnment/get-all-ligne-abn-1';
+import { GetAllLigneAbn1$Params } from '../fn/ligne-abonnment/get-all-ligne-abn-1';
 import { LigneAbonnementResponse } from '../models/ligne-abonnement-response';
 
 @Injectable({ providedIn: 'root' })
@@ -22,7 +24,7 @@ export class LigneAbonnmentService extends BaseService {
   }
 
   /** Path part for operation `getAllLigneAbn()` */
-  static readonly GetAllLigneAbnPath = '/line-abonnement/all';
+  static readonly GetAllLigneAbnPath = '/line-abonnement/all-line';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -30,7 +32,7 @@ export class LigneAbonnmentService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getAllLigneAbn$Response(params: GetAllLigneAbn$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<LigneAbonnementResponse>>> {
+  getAllLigneAbn$Response(params?: GetAllLigneAbn$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<LigneAbonnementResponse>>> {
     return getAllLigneAbn(this.http, this.rootUrl, params, context);
   }
 
@@ -40,8 +42,33 @@ export class LigneAbonnmentService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getAllLigneAbn(params: GetAllLigneAbn$Params, context?: HttpContext): Observable<Array<LigneAbonnementResponse>> {
+  getAllLigneAbn(params?: GetAllLigneAbn$Params, context?: HttpContext): Observable<Array<LigneAbonnementResponse>> {
     return this.getAllLigneAbn$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<LigneAbonnementResponse>>): Array<LigneAbonnementResponse> => r.body)
+    );
+  }
+
+  /** Path part for operation `getAllLigneAbn1()` */
+  static readonly GetAllLigneAbn1Path = '/line-abonnement/all-by-user';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllLigneAbn1()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllLigneAbn1$Response(params: GetAllLigneAbn1$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<LigneAbonnementResponse>>> {
+    return getAllLigneAbn1(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllLigneAbn1$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllLigneAbn1(params: GetAllLigneAbn1$Params, context?: HttpContext): Observable<Array<LigneAbonnementResponse>> {
+    return this.getAllLigneAbn1$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<LigneAbonnementResponse>>): Array<LigneAbonnementResponse> => r.body)
     );
   }

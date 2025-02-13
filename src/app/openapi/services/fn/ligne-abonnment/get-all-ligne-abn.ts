@@ -11,13 +11,11 @@ import { RequestBuilder } from '../../request-builder';
 import { LigneAbonnementResponse } from '../../models/ligne-abonnement-response';
 
 export interface GetAllLigneAbn$Params {
-  abonnementId: number;
 }
 
-export function getAllLigneAbn(http: HttpClient, rootUrl: string, params: GetAllLigneAbn$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<LigneAbonnementResponse>>> {
+export function getAllLigneAbn(http: HttpClient, rootUrl: string, params?: GetAllLigneAbn$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<LigneAbonnementResponse>>> {
   const rb = new RequestBuilder(rootUrl, getAllLigneAbn.PATH, 'get');
   if (params) {
-    rb.query('abonnementId', params.abonnementId, {});
   }
 
   return http.request(
@@ -30,4 +28,4 @@ export function getAllLigneAbn(http: HttpClient, rootUrl: string, params: GetAll
   );
 }
 
-getAllLigneAbn.PATH = '/line-abonnement/all';
+getAllLigneAbn.PATH = '/line-abonnement/all-line';

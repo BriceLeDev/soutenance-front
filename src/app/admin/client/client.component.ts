@@ -5,7 +5,10 @@ import { OwnerService } from '../../openapi/services/services';
 import { PageResponseUserResponse } from '../../openapi/services/models';
 import { HttpClient,  } from '@angular/common/http';
 import { TokenService } from '../../token/token.service';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 /*
  ***************************************************************
  * Composent table de la liste des clients                     *
@@ -15,12 +18,12 @@ import { TokenService } from '../../token/token.service';
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [],
+  imports: [MatFormFieldModule,MatInputModule,MatDatepickerModule,FormsModule],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css',
 })
 export class ClientComponent implements OnInit {
-  adminService = inject(OwnerService);
+  UserService = inject(OwnerService);
   public AdminState = inject(SharedServiceService);
   public http = inject(HttpClient);
   public tokenS = inject(TokenService);
@@ -28,15 +31,12 @@ export class ClientComponent implements OnInit {
   private intervelId!: number;
   private page = 1
   private size = 5
+  public startDate: Date | null = null;
+  public endDate: Date | null = null;
   public customerResponse:PageResponseUserResponse={};
 
   ngOnInit(): void {
-    // console.log("initiation.....")
-    //const  myToken = this.tokenS.getItem
-    // console.log(myToken)
-    // console.log("myToken")
-
-      this.adminService.getAllCustomer(
+      this.UserService.getAllCustomer(
         {
           page: 0,
           size: 10,
@@ -46,16 +46,21 @@ export class ClientComponent implements OnInit {
           next: (data) => {
             // console.log(data)
             this.customerResponse=data
+            this.AdminState.NbrTotalClient = data.content?.length
           },
           error: (err) => {
             console.error('My Erreur:', err);
           }
         });
-        // console.log("ma $$$$ this.http.request$$$ $$")
-        // console.log(this.http.request.name)
 
   }
 
+  public dateClicked(){
+    if (this.startDate === null) {
+      alert(" Veuillez Choisir d'abord la date début!")
+
+    }
+  }
 
   /*public getAllCustomers(){
     const  myToken = localStorage.getItem("token")

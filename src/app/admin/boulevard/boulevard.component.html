@@ -3,19 +3,45 @@
  * Composent affichage liste et ajout des panneaux             *
  ***************************************************************
  */ -->
+ @if (!open) {
 <button
-  class="bg-rose-500 text-white rounded-md px-4 py-2 hover:bg-blue-700 transition"
+  class="bg-rose-500 text-white rounded-md px-4 py-2 hover:bg-gray-500 transition"
   (click)="openModal()"
 >
   {{ this.open ? "Fermer" : "Ajouter un Boulevard" }}
 </button>
+ }
 <hr />
 <div class="min-w-full flex flex-col items-center justify-center mb-4 px-2">
-  <div class="min-w-full flex flex-row items-center justify-center mb-4 ">
+  <div class="min-w-full flex flex-row items-center justify-around mb-4 ">
     <div class="flex  justify-center items-center mt-4">
       <h4>Filtrer par date de création</h4>
     </div>
-    <form
+    <div class="flex flex-row justify-around items-center">
+      <div class="mr-3">
+        <mat-form-field>
+          <mat-label> Du : </mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="ml-3">
+        <mat-form-field>
+          <mat-label> Au : </mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="endDate" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1 (click)="dateClicked()"></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- <form
       class="mx-auto max-w-xl py-2 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300"
     >
       <input
@@ -34,7 +60,7 @@
         class="bg-transparent w-full focus:outline-none pr-4 font-semibold border-0 focus:ring-0 px-0 py-0"
         name="topic"
       />
-    </form>
+    </form> -->
     <button
       class="flex flex-row items-center justify-center min-w-[10px] px-4 rounded-full border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-gray-800 text-white font-medium tracking-wide border-transparent py-2 h-[38px]"
     >
@@ -70,16 +96,16 @@
   </div>
 </div>
 <div
-  class="z-50 inset-0 overflow-y-auto px-4"
+  class="  z-1000  overflow-y-auto px-4"
   [className]="
-    this.open ? 'block bg-gray-900 bg-opacity-30 h-full w-full ' : 'hidden'
+    this.open ? 'fixed block inset-0 bg-gray-900 bg-opacity-30 h-full w-full' : 'hidden'
   "
 >
   <div class="flex justify-end p-2">
     <button
       (click)="openModal()"
       type="button"
-      class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+      class="text-gray-400 bg-transparent bg-white hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
     >
       <svg
         class="w-5 h-5"
@@ -146,6 +172,10 @@
  * Composent table de la liste des clients                     *
  ***************************************************************
  */ -->
+ <button
+  class="ml-8 text-white rounded-md px-4 py-2 bg-blue-700 transition"
+> Imprimer</button>
+
 <div class="table w-full p-2">
   <table class="w-full border mb-8">
     <thead>

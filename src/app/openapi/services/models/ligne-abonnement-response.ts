@@ -6,9 +6,10 @@ export interface LigneAbonnementResponse {
   boulevardName?: string;
   emplacement?: string;
   nbrFace?: number;
-  taille?: number;
-  type?: string;
   panneauId?: number;
+  picture?: Array<string>;
   price?: number;
   printPrice?: number;
+  taille?: number;
+  type?: string;
 }

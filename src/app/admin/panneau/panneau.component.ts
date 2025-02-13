@@ -1,15 +1,17 @@
 import { PageResponsePanneauResponse } from './../../openapi/services/models/page-response-panneau-response';
 import { Component, inject, OnInit } from '@angular/core';
-import {  PanneauRquest, TypePanRequest, TypePanResponse } from '../../openapi/services/models';
+import {  PanneauRquest, TypePanResponse } from '../../openapi/services/models';
 import { SharedServiceService } from '../admin-services/shared-service.service';
 import { FormsModule } from '@angular/forms';
-import { BoulevardComponent } from '../boulevard/boulevard.component';
 import { BoulevardService, PanneauService, TypePanneauService } from '../../openapi/services/services';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-panneau',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,MatFormFieldModule,MatInputModule,MatDatepickerModule],
   templateUrl: './panneau.component.html',
   styleUrl: './panneau.component.css',
 })
@@ -23,6 +25,8 @@ export class PanneauComponent implements OnInit{
   public boulevardService = inject(BoulevardService);
   public boulevardresponse = this.state.boulevardresponse;
   public panneauResponse = this.state.panneauResponse;
+  public startDate: Date | null = null;
+  public endDate: Date | null = null;
   public panneauRequst: PanneauRquest = {
     boulevard_id: 0,
     localisation: '',
@@ -47,6 +51,12 @@ export class PanneauComponent implements OnInit{
     this.getAllBoulevard()
   }
 
+  public dateClicked(){
+    if (this.startDate === null) {
+      alert(" Veuillez Choisir d'abord la date début!")
+
+    }
+  }
   public addPanneau() {
     console.log("in add")
     console.log(" log in add "+this.panneauRequst.typePanneau)

@@ -31,4 +31,8 @@ export class SharedServiceService {
   public paymentLink :string | undefined = ""
 
   public isAuthenticate : boolean = false
+
+  public NbrTotalBoulevard?: number;
+  public NbrTotalPanneau?: number;
+  public NbrTotalClient?: number;
 }

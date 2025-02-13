@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, inject, OnInit } from '@angular/core';
 import { InvoiceService } from '../services/invoice.service';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
-import { AbonnementResponse, BoulevardResponse, Facture, LigneAbonnementResponse, Role, User, UserResponse } from '../../openapi/services/models';
-import { AbonnementService, BoulevardService, FactureControlerService, LigneAbonnmentService, OwnerService } from '../../openapi/services/services';
+import { AbonnementResponse, BoulevardResponse, Facture, ImageResponse, LigneAbonnementResponse, Role, User, UserResponse } from '../../openapi/services/models';
+import { AbonnementService, BoulevardService, FactureControlerService, ImageService, LigneAbonnmentService, OwnerService } from '../../openapi/services/services';
 import { error } from 'console';
 import { publicDecrypt } from 'crypto';
 import { GetAbonnementById$Params } from '../../openapi/services/fn/abonnement/get-abonnement-by-id';
@@ -29,11 +29,14 @@ export class AbonnementComponent implements OnInit {
     private abonnementService: AbonnementService,
     private ligneAbnService: LigneAbonnmentService,
     private boulevardService : BoulevardService,
+    private imageService: ImageService,
 
     ){}
   public transactionId : string | null = ""
   public abonnementId : string | null = ""
   public code : string = ""
+  public imageUrl: string = '';
+  public _image: ImageResponse[] = [];
 
   private user : UserResponse ={
       accountLocked: false,
@@ -77,6 +80,7 @@ ngOnInit(): void {
   this.getFacture();
   this.getAbonnement()
   this.getAllLigneAbn()
+  this.getImage()
   // this.setBoulevard()
   console.log("my boulevard responses in init")
   // console.log(this.transactionId)
@@ -123,7 +127,7 @@ public getFacture(){
 }
 
 public getAllLigneAbn(){
-  this.ligneAbnService.getAllLigneAbn(
+  this.ligneAbnService.getAllLigneAbn1(
     {
       abonnementId : Number(this.abonnementId)
     }
@@ -199,10 +203,28 @@ public getBoulevard(id: number | undefined){
 //   console.log("le tableau abonnment")
 //   console.log(this.boulResp)
 // }
-
+public getImage() {
+  this.imageService
+    .findAllImages({
+      abonnementId: this.abonnement.id,
+    })
+    .subscribe({
+      next: (data) => {
+        this._image = data;
+        console.log('this._image[0].picture');
+        console.log(this._image[0].picture);
+        // this.imageUrl = 'data:image/jpg;base64,' + this._image[0].picture;
+        // console.log('this.imageUrl');
+        // console.log(this.imageUrl);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+}
 
 public getInvoice(){
-  console.log(this.lignAbn)
+  // console.log(this.lignAbn)
   this.invoiceService.generateInvoice(this.user,this.facture,this.boulResp,this.lignAbn)
 }
 }

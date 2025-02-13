@@ -9,6 +9,7 @@ export interface Panneau {
   boulevard?: Boulevard;
   createdAt?: string;
   createdBy?: number;
+  enabled?: boolean;
   id?: number;
   ligneAbonnements?: Array<LigneAbonnement>;
   localisation?: string;
@@ -18,7 +19,6 @@ export interface Panneau {
   prixMensuel?: number;
   taille?: number;
   typePanneau?: TypePanneau;
-  enabled? : boolean
   updateAt?: string;
   updateBy?: number;
 }

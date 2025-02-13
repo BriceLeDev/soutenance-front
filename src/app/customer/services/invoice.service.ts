@@ -321,10 +321,10 @@ export class InvoiceService {
     doc.text(user.email, 10, 55);
     doc.text(user.numero, 10, 60);
 
-    doc.text('Date', 140, 40);
+    doc.text('Date ', 140, 40);
     doc.text(facture.datePayment, 170, 40);
 
-    doc.text('N° Facture', 140, 45);
+    doc.text('Référence', 140, 45);
     doc.text(facture.reference, 170, 45);
 
     doc.text('Payer le :', 140, 55);
@@ -335,7 +335,7 @@ export class InvoiceService {
     const pageHeight = doc.internal.pageSize.height; // Hauteur de la page
 
     // Entête du tableau
-    const headers = ['Boulevards', 'Panneaux', 'Emplacement', 'Face','Prix'];
+    const headers = ['Boulevards','Panneaux','Emplacement','Face','Prix','Impression'];
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
 
@@ -343,7 +343,7 @@ export class InvoiceService {
     const margin = 10; // Marge de chaque côté
     const columnWidth = (pageWidth - margin * 2) / headers.length; // Largeur dynamique pour chaque colonne
 
-    const columnWidths = [50, 20, 60, 20, 20]; // Largeurs spécifiques pour chaque colonne
+    const columnWidths = [50, 20, 60, 20, 20,20]; // Largeurs spécifiques pour chaque colonne
     const totalWidth = columnWidths.reduce((a, b) => a + b, 0);
     const startX = (pageWidth - totalWidth) / 2;
     let xPosition = startX; // Position initiale pour les en-têtes
@@ -379,7 +379,8 @@ export class InvoiceService {
         (item.panneauId || 0).toString(),
         item.emplacement || 'N/A',
         (item.nbrFace || 0).toString(),
-        (item.price || 0).toString()
+        (item.price || 0).toString(),
+        (item.printPrice || 0).toString()
       ];
 
       data.forEach((cell, index) => {
@@ -427,7 +428,7 @@ export class InvoiceService {
 
     startY += 10;
     doc.setFontSize(10);
-    doc.text('The product will be there soon!', 10, startY);
+    // doc.text('The product will be there soon!', 10, startY);
 
     try {
       const qrCodeData = 'Facture de Brice';

@@ -7,7 +7,7 @@ import { WelcomComponent } from './pages/welcom/welcom.component';
 import { ClientComponent } from './admin/client/client.component';
 import { BoulevardComponent } from './admin/boulevard/boulevard.component';
 import { PanneauComponent } from './admin/panneau/panneau.component';
-import { VoirPlusComponent } from './admin/components/voir-plus/voir-plus.component';
+import { VoirPlusComponent } from './admin/components/user-detail/voir-plus.component';
 import { DetailMessageComponent } from './admin/components/detail-message/detail-message.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
@@ -27,6 +27,10 @@ import { UnauthorizeComponent } from './pages/unauthorize/unauthorize.component'
 import { LoadingComponent } from './shared/components/loading/loading.component';
 import { StatisticComponent } from './admin/components/statistic/statistic.component';
 import { AdministrationComponent } from './admin/administration/administration.component';
+import { PanneauDetailsComponent } from './admin/voirPlusComponents/panneau-details/panneau-details.component';
+import { AbonnementDetailsComponent } from './admin/voirPlusComponents/abonnement-details/abonnement-details.component';
+import { BoulevardsDetailsComponent } from './admin/voirPlusComponents/boulevards-details/boulevards-details.component';
+import { ShowMoreAbonnementComponent } from './customer/show-more-abonnement/show-more-abonnement.component';
 
 export const routes: Routes = [
   {
@@ -51,7 +55,7 @@ export const routes: Routes = [
         component: BoulevardComponent,
       },
       {
-        path: 'panneau',
+        path: 'panneau/panneau-affiche',
         component: PanneauComponent,
       },
       {
@@ -67,8 +71,16 @@ export const routes: Routes = [
         component: VoirPlusComponent,
       },
       {
-        path: 'detail/message/:id',
-        component: DetailMessageComponent,
+        path: 'pannneau/detail/:id',
+        component: PanneauDetailsComponent,
+      },
+      {
+        path: 'abonnement/detail/:id',
+        component: AbonnementDetailsComponent,
+      },
+      {
+        path: 'boulevard/detail/:id',
+        component: BoulevardsDetailsComponent,
       },
     ],
   },
@@ -111,6 +123,11 @@ export const routes: Routes = [
       },
 
     ]
+  },
+  {
+    path: 'abonnement/:abonnementId',
+    component: ShowMoreAbonnementComponent,
+    canActivate: [authAdminGuard],
   },
   {
     path: 'login',

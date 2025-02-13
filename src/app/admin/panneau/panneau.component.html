@@ -3,22 +3,51 @@
  * Composent affichage liste et ajout des panneaux             *
  ***************************************************************
  */ -->
-<button
-  class="bg-rose-500 text-white rounded-md px-4 py-2 hover:bg-rose-700 transition"
+ @if (!open) {
+  <button
+  class="bg-rose-500 text-white rounded-md px-4 py-2 hover:bg-gray-500 transition"
   (click)="openModal()"
+
 >
   {{ this.open ? "Fermer" : "Ajouter un panneau" }}
 </button>
-<hr>
+ }
+
+<hr />
 
 <div class="min-w-full flex flex-col items-center justify-center mb-4 px-2">
-  <div class="min-w-full flex flex-row items-center justify-center mb-4 ">
-    <div class="flex  justify-center items-center mt-4">
-      <h4>Filtrer par date d'implémentation</h4>
+  <div class="min-w-full flex flex-row items-center justify-around mb-4">
+    <div class="flex justify-center items-center mt-4">
+      <h4>Filtrer par date d'implantation </h4>
     </div>
-    <form
+    <div class="flex flex-row justify-around items-center">
+      <div class="mr-3">
+        <mat-form-field>
+          <mat-label> Du : </mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="ml-3">
+        <mat-form-field>
+          <mat-label> Au : </mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="endDate" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1 (click)="dateClicked()"></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- <form
       class="mx-auto max-w-xl py-2 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300"
     >
+
       <input
         type="text"
         placeholder="Date début"
@@ -35,7 +64,7 @@
         class="bg-transparent w-full focus:outline-none pr-4 font-semibold border-0 focus:ring-0 px-0 py-0"
         name="topic"
       />
-    </form>
+    </form> -->
     <button
       class="flex flex-row items-center justify-center min-w-[10px] px-4 rounded-full border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-gray-800 text-white font-medium tracking-wide border-transparent py-2 h-[38px]"
     >
@@ -65,6 +94,9 @@
         <option value="All" selected="">Tout</option>
         <option value="Freemium">Libre</option>
         <option value="Free">Occupé</option>
+        <option value="Free">Statique-affiche</option>
+        <option value="Free">Numérique-image</option>
+        <option value="Free">Numérique-vidéo</option>
       </select>
     </form>
   </div>
@@ -73,14 +105,16 @@
 <div
   class="z-50 inset-0 overflow-y-auto px-4"
   [className]="
-    this.open ? 'block bg-gray-900 bg-opacity-30 h-full w-full ' : 'hidden'
+    this.open
+      ? ' fixed inset-0 block bg-gray-900 bg-opacity-30 h-full w-full '
+      : 'hidden'
   "
 >
   <div class="flex justify-end p-2">
     <button
       (click)="openModal()"
       type="button"
-      class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+      class="text-gray-400 bg-transparent bg-white hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
     >
       <svg
         class="w-5 h-5"
@@ -118,7 +152,7 @@
         <span class="text-red-800"> {{ msg }} </span>
       </div>
       }}@else {
-        <!-- <div
+      <!-- <div
         class="bg-red-200 px-6 py-4 my-4 rounded-md text-lg flex items-center mx-auto max-w-lg"
       >
         <svg
@@ -148,8 +182,7 @@
             name="Localisation"
           />
         </div>
-        <div class="flex flex-row" >
-
+        <div class="flex flex-row">
           <div class="mb-4 mr-1 w-1/3">
             <label class="block text-gray-700 font-bold mb-2" for="username">
               Taille en m²
@@ -176,84 +209,84 @@
               name="Prix"
             />
           </div>
-          @if (panneauRequst.typePanneau === "" || panneauRequst.typePanneau ==="Statique-affiche") {
-            <div class="mb-4 w-1/3 ml-1">
-              <label class="block text-gray-700 font-bold mb-2" for="username">
-                Impression
-              </label>
-              <input
-                [(ngModel)]="panneauRequst.printPrice"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
-                id="PrintPrice"
-                type="number"
-                placeholder=""
-                name="PrintPrice"
-              />
-            </div>
-          }
-
-      </div>
-      <div class="flex flex-row " >
-        <div class="mb-6 w-1/3">
-          <label class="block text-gray-700 font-bold mb-2" for="password">
-            Type
-          </label>
-          <select
-            [(ngModel)]="panneauRequst.typePanneau"
-            name="Type de panneau"
-            id="Type de panneau"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          >
-            @for ( response of this.TypepanneauResponse; track
-            response.id) {
-
-            <option value="{{response.libelet}}">
-              <span>{{ response.libelet }}</span>
-            </option>
-
-            } @if (TypepanneauResponse.length==0) {
-                <span>Aucun Type panneau</span>
-            }
-          </select>
-        </div>
-        <div class="mb-6 w-1/3 ml-1">
-          <label class="block text-gray-700 font-bold mb-2" for="password">
-            Boulevard
-          </label>
-          <select
-            [(ngModel)]="panneauRequst.boulevard_id"
-            name="Boulevard"
-            id="Boulevard"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          >
-            @for ( response of this.boulevardresponse.content; track
-            response.id) {
-
-            <option value="{{ response.id }}">
-              <span>{{ response.name }}</span>
-            </option>
-
-            } @if (boulevardresponse.content?.length==0) {
-            <span>Aucun Boulevard</span>
-            }
-          </select>
-        </div>
-        <div>
-          <div class="mb-4  ml-1">
+          @if (panneauRequst.typePanneau === "" || panneauRequst.typePanneau
+          ==="Statique-affiche") {
+          <div class="mb-4 w-1/3 ml-1">
             <label class="block text-gray-700 font-bold mb-2" for="username">
-              Nombre de face
+              Impression
             </label>
             <input
-              [(ngModel)]="panneauRequst.nbRFace"
+              [(ngModel)]="panneauRequst.printPrice"
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
-              id="NbrFace"
+              id="PrintPrice"
               type="number"
               placeholder=""
-              name="NbrFace"
+              name="PrintPrice"
             />
           </div>
+          }
         </div>
-      </div>
+        <div class="flex flex-row">
+          <div>
+            <div class="mb-4 ml-1">
+              <label class="block text-gray-700 font-bold mb-2" for="username">
+                Face
+              </label>
+              <input
+                [(ngModel)]="panneauRequst.nbRFace"
+                class="shadow appearance-none border rounded w-full py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                id="NbrFace"
+                type="number"
+                placeholder=""
+                name="NbrFace"
+              />
+            </div>
+          </div>
+          <div class="mb-6 w-1/3">
+            <label class="block text-gray-700 font-bold mb-2" for="password">
+              Type
+            </label>
+            <select
+              [(ngModel)]="panneauRequst.typePanneau"
+              name="Type de panneau"
+              id="Type de panneau"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              @for ( response of this.TypepanneauResponse; track response.id) {
+
+              <option value="{{ response.libelet }}">
+                <span>{{ response.libelet }}</span>
+              </option>
+
+              } @if (TypepanneauResponse.length==0) {
+              <span>Aucun Type panneau</span>
+              }
+            </select>
+          </div>
+          <div class="mb-6 w-1/3 ml-1">
+            <label class="block text-gray-700 font-bold mb-2" for="password">
+              Boulevard
+            </label>
+            <select
+              [(ngModel)]="panneauRequst.boulevard_id"
+              name="Boulevard"
+              id="Boulevard"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              @for ( response of this.boulevardresponse.content; track
+              response.id) {
+
+              <option value="{{ response.id }}">
+                <span>{{ response.name }}</span>
+              </option>
+
+              } @if (boulevardresponse.content?.length==0) {
+              <span>Aucun Boulevard</span>
+              }
+            </select>
+          </div>
+
+        </div>
 
         <div class="flex items-center justify-between">
           <button
@@ -268,72 +301,72 @@
     </div>
   </div>
 </div>
-<div class="table w-full p-2" >
+
+<button
+class="ml-8 text-white rounded-md px-4 py-2 bg-blue-700 transition"
+> Imprimer</button>
+
+<div class="table w-full p-2">
   <table class="w-full border mb-8">
-      <thead >
-          <tr class="bg-gray-50 border-b">
-<!--
+    <thead>
+      <tr class="bg-gray-50 border-b">
+        <!--
               <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
                   <div class="flex items-center justify-center">
                       ID
                   </div>
               </th> -->
-              <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                  <div class="flex items-center justify-center">
-                      Localisation
-                  </div>
-              </th>
-              <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                  <div class="flex items-center justify-center">
-                      Boulevard
-                  </div>
-              </th>
-              <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                  <div class="flex items-center justify-center">
-                      Taille
-                  </div>
-              </th>
-              <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                  <div class="flex items-center justify-center">
-                      Prix Mensuel
-                  </div>
-              </th>
-              <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                  <div class="flex items-center justify-center">
-                    Nombre de Face
-                  </div>
-              </th>
-              <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                  <div class="flex items-center justify-center">
-                      Libre
-                  </div>
-              </th>
-              <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                  <div class="flex items-center justify-center">
-                      Action
-                  </div>
-              </th>
-          </tr>
-      </thead>
-      <tbody>
-          @for (panneau of this.panneauResponse.content; track panneau.id) {
-               <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
-
-              <!-- <td class="p-2 border-r">{{panneau.id}}</td> -->
-              <td class="p-2 border-r">{{panneau.localisation}}</td>
-              <td class="p-2 border-r">{{panneau.boulevardName}}</td>
-              <td class="p-2 border-r">{{panneau.taille}}</td>
-              <td class="p-2 border-r">{{panneau.prixMensuel}}</td>
-              <td class="p-2 border-r">{{panneau.nbrFace}}</td>
-              <td class="p-2 border-r">{{panneau.occuped ?"Non" :"Oui"}}</td>
-              <td>
-                  <a class=" cursor-pointer bg-blue-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin">Voir+</a>
-                  <a href="#" class="bg-red-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin">Suprimer</a>
-              </td>
-          </tr>
-          }
-
-      </tbody>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Localisation</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Boulevard</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Taille</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Type</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Prix Mensuel</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Nombre de Face</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Libre</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Action</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (panneau of this.panneauResponse.content; track panneau.id) {
+      <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+        <!-- <td class="p-2 border-r">{{panneau.id}}</td> -->
+        <td class="p-2 border-r">{{ panneau.localisation }}</td>
+        <td class="p-2 border-r">{{ panneau.boulevardName }}</td>
+        <td class="p-2 border-r">{{ panneau.taille }}</td>
+        <td class="p-2 border-r">{{ panneau.typePanneauLibele }}</td>
+        <td class="p-2 border-r">{{ panneau.prixMensuel }}</td>
+        <td class="p-2 border-r">{{ panneau.nbrFace }}</td>
+        <td class="p-2 border-r">{{ panneau.occuped ? "Non" : "Oui" }}</td>
+        <td>
+          <a
+            class="cursor-pointer bg-blue-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin"
+            >Voir+</a
+          >
+          <!-- <a
+            href="#"
+            class="bg-red-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin"
+            >Suprimer</a
+          > -->
+        </td>
+      </tr>
+      }
+    </tbody>
   </table>
 
   <div class="container mx-auto px-4">
@@ -424,7 +457,4 @@
       </a>
     </nav>
   </div>
-
-
-
 </div>

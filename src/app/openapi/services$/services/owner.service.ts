@@ -21,6 +21,8 @@ import { getAllCustomerWithAbonnementTrue } from '../fn/owner/get-all-customer-w
 import { GetAllCustomerWithAbonnementTrue$Params } from '../fn/owner/get-all-customer-with-abonnement-true';
 import { getUserByEmail } from '../fn/owner/get-user-by-email';
 import { GetUserByEmail$Params } from '../fn/owner/get-user-by-email';
+import { getUserById } from '../fn/owner/get-user-by-id';
+import { GetUserById$Params } from '../fn/owner/get-user-by-id';
 import { PageResponseUserResponse } from '../models/page-response-user-response';
 import { register } from '../fn/owner/register';
 import { Register$Params } from '../fn/owner/register';
@@ -116,6 +118,31 @@ export class OwnerService extends BaseService {
       map((r: StrictHttpResponse<{
 }>): {
 } => r.body)
+    );
+  }
+
+  /** Path part for operation `getUserById()` */
+  static readonly GetUserByIdPath = '/owner/{owner-id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getUserById()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getUserById$Response(params: GetUserById$Params, context?: HttpContext): Observable<StrictHttpResponse<UserResponse>> {
+    return getUserById(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getUserById$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getUserById(params: GetUserById$Params, context?: HttpContext): Observable<UserResponse> {
+    return this.getUserById$Response(params, context).pipe(
+      map((r: StrictHttpResponse<UserResponse>): UserResponse => r.body)
     );
   }
 

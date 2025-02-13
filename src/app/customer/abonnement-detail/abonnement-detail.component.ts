@@ -33,7 +33,7 @@ export class AbonnementDetailComponent implements OnInit {
   public selectedPanneaux: Set<PanneauResponse> = new Set();
   public selectedPanneauAray: Array<PanneauResponse> = []
   public totalAmount: number = 0;
-  public totalPrintPrice : number = 0;
+  public totalPrintPrice  = signal(0);
   public open:boolean = false;
   public imageSelected : any | undefined
   public pictureSelectedforAbnt : any | undefined
@@ -78,13 +78,13 @@ export class AbonnementDetailComponent implements OnInit {
 
     if (isChecked) {
       this.totalAmount += 0;
-      this.totalPrintPrice +=prix
+      this.totalPrintPrice.set(this.totalPrintPrice() +prix)
       // this.selectedPanneaux.add(panneau);
 
       // console.log(this.selectedPanneaux);
     } else {
       this.totalAmount -= 0;
-      this.totalPrintPrice -=prix
+      this.totalPrintPrice.set(this.totalPrintPrice()-prix)
       // this.selectedPanneaux.delete(panneau);
       // console.log("selectedPanneaux");
       // console.log(this.selectedPanneaux);
@@ -222,7 +222,7 @@ public saveAbonnement(){
   this.abonnementRequest.dateDebut = this.formatDate(this.startDate);
   this.abonnementRequest.dateFin = this.formatDate(this.endDate);
   this.abonnementRequest.dateAbn = this.formatDate(new Date());
-  this.abonnementRequest.prix = this.finalAbnAmount() + this.totalPrintPrice
+  this.abonnementRequest.prix = this.finalAbnAmount() + this.totalPrintPrice()
   this.abonnementRequest.description =this.description
   this.addAbonnement();
 
@@ -272,7 +272,7 @@ private addImage(id:number){
 private addPayement(idAbn:number){
 
   this.transactionRequest.abonnementId = idAbn
-  this.transactionRequest.amount = this.finalAbnAmount()
+  this.transactionRequest.amount = this.finalAbnAmount() + this.totalPrintPrice()
   this.transactionRequest.chanel="ALL"
   this.transactionRequest.currency="XOF"
   this.transactionRequest.dateTrans =this.formatDate(new Date)

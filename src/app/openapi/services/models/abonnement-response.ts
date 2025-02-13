@@ -13,6 +13,8 @@ export interface AbonnementResponse {
   mtnPayer?: number;
   mtnRest?: number;
   nbrJrs?: number;
+  picture?: Array<Array<string>>;
   prix?: number;
+  user?: string;
   valid?: boolean;
 }

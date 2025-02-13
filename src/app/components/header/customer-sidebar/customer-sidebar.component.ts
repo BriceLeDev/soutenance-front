@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
+import { UserResponse } from '../../../openapi/services/models';
+import { OwnerService } from '../../../openapi/services/services';
+import { JwtDecodeService } from '../../../jwt/jwt-decode.service';
 @Component({
   selector: 'app-customer-sidebar',
   standalone: true,
@@ -11,6 +14,45 @@ import { RouterLinkActive } from '@angular/router';
   templateUrl: './customer-sidebar.component.html',
   styleUrl: './customer-sidebar.component.css'
 })
-export class CustomerSidebarComponent {
+export class CustomerSidebarComponent implements OnInit{
+
+
+  constructor(private userService : OwnerService,private decoder : JwtDecodeService,){}
+
+  public user : UserResponse ={
+      accountLocked: false,
+      createdAT: "",
+      email: "",
+      enabled: true,
+      fidelisation: false,
+      id: 0,
+      nonUtilisateur: "",
+      numero: "",
+      roleList: [],
+      updateAt: "",
+  }
+
+  public username : string = ""
+
+ngOnInit(): void {
+    this.getUser()
+}
+  private getUser(){
+    const email : string  = this.decoder.getEmail()
+    this.userService.getUserByEmail({
+      email: email
+    }).subscribe({
+      next : (data) =>{
+        this.user = data
+        this.username = this.user.nonUtilisateur.substring(0,2).toUpperCase()
+        console.log(this.user)
+      },
+      error: (error)=>{
+        console.log(error)
+      }
+    })
+  }
+
+
 
 }

@@ -8,7 +8,7 @@ export interface UserResponse {
   createdAT: string;
   email: string;
   enabled: boolean;
-  fidelisation?: boolean;
+  fidelisation: boolean;
   id: number;
   nonUtilisateur: string;
   numero: string;
