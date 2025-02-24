@@ -38,19 +38,8 @@ export class AbonnementCardComponent implements OnInit, OnDestroy {
   public isValid: boolean = true;
   public dateDuJour: string = '';
   statutAbonnement: string = '';
-  @Input() abonnement: AbonnementResponse = {
-    actif: false,
-    dateAbn: '',
-    dateDebut: '',
-    dateFin: '',
-    description: '',
-    duree: 0,
-    id: 0,
-    mtnPayer: 0,
-    mtnRest: 0,
-    nbrJrs: 0,
-    prix: 0,
-    valid: false,
+  @Input() abonnement?: AbonnementResponse = {
+
   };
 
   ngOnInit(): void {
@@ -58,8 +47,9 @@ export class AbonnementCardComponent implements OnInit, OnDestroy {
     console.log(this.abonnement);
     this.getImage();
     this.startSlider();
-    console.log(this.abonnement.dateDebut);
-    console.log(this.abonnement.dateFin);
+    // console.log(this.abonnement.dateDebut);
+    // console.log(this.abonnement.dateFin);
+    if(this.abonnement != undefined)
     this.getAbonnementStatus(
       this.abonnement.dateDebut,
       this.abonnement.dateFin
@@ -88,6 +78,7 @@ export class AbonnementCardComponent implements OnInit, OnDestroy {
   }
 
   public getImage() {
+    if (this.abonnement != undefined)
     this.imageService
       .findAllImages({
         abonnementId: this.abonnement.id,

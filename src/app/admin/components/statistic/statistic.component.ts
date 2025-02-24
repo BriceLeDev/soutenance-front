@@ -116,6 +116,7 @@ export class StatisticComponent implements OnInit {
         // console.log(' all abonne line');
         console.log(this.lignAbn);
         this.getAllBoulevard();
+        this.creatChartPanneau()
       },
       error: (err) => {
         console.log(err);
@@ -128,7 +129,6 @@ export class StatisticComponent implements OnInit {
       next: (resp) => {
         this.abonResponse = resp
         this.creatChartAbn()
-        this.creatChartPanneau()
       },
       error: (err) => {
         console.log(err);
@@ -322,7 +322,7 @@ export class StatisticComponent implements OnInit {
         // console.log(this.colors + ' colors');
       });
     }
-    this.myChart = new Chart('linechart', {
+    this.myChart = new Chart('linechartclient', {
       type: 'line',
       data: {
         labels: this.lesMois,
@@ -345,7 +345,7 @@ export class StatisticComponent implements OnInit {
       },
     });
   }
-
+  public nbr2 : number | undefined = 0;
   // Graph des panneaux les plus solicité
   public creatChartPanneau() {
     // console.log("this.lespanneaux")
@@ -354,18 +354,25 @@ export class StatisticComponent implements OnInit {
     // console.log("this.lignAbn")
     // console.log(this.lignAbn)
     if (this.panneauResponsePage && this.lignAbn) {
-      // console.log('in all abonnement verifie b and al');
+      console.log('in all panneauResponsePage verifie b and lignAbn');
+      console.log("*this.panneauResponsePage.content****");
+      console.log(this.panneauResponsePage.content);
+      console.log("**********this.lignAbn**");
+      console.log(this.lignAbn);
+      console.log("************");
       this.panneauResponsePage.content?.map((blr, bkrx) => {
         this.nbr = 0;
-        this.lignAbn.forEach((lg, idx) => {
-          if (lg.panneauId === blr.id) {
 
-              this.nbr = 1 + this.nbr ;
+        this.lignAbn.forEach((lg, idx) => {
+          if (blr.id===lg.panneauId  ) {
+              this.nbr =this.nbr + 1;
 
           }
+          console.log(blr.id +" ************ " + lg.panneauId)
           // console.log('lg.dateAbn?.substring(8, 10) ' + lg.dateAbn?.substring(8, 10) + 'blr.numero ' + blr.numero);
-          // console.log('nbrFois ' + this.nbr + 'idx ' + idx);
         });
+
+        console.log('nbrFois ' + this.nbr );
         this.lespanneaux.push(blr.id)
         console.log("this.lespanneaux")
         console.log(this.lespanneaux)
@@ -377,7 +384,7 @@ export class StatisticComponent implements OnInit {
         // console.log(this.colors + ' colors');
       });
     }
-    this.myChart = new Chart('panneau', {
+    this.myChart = new Chart('panneauchart', {
       type: 'bar',
       data: {
         labels: this.lespanneaux,

@@ -7,6 +7,7 @@ import { BoulevardService } from '../../openapi/services/services';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { Boulevard } from '../../model/Boulevard';
 
 @Component({
   selector: 'app-boulevard',
@@ -23,6 +24,9 @@ export class BoulevardComponent implements OnInit {
   }
 
   public boulevardresponse: PageResponseBoulevardResponse = {};
+  public boulevardsFilter?: Array<BoulevardResponse> = [];
+  public boulevards?: Array<BoulevardResponse> = [];
+  public filterItem : string = ""
   public boulevarRequest: BoulevarRequest = {
     name: '',
   };
@@ -74,9 +78,52 @@ export class BoulevardComponent implements OnInit {
         next: (resp) => {
           this.boulevardresponse = resp;
           this.boulevardsState.boulevardresponse = resp;
+          if(resp.content != undefined){
+            this.boulevards = resp.content
+            this.boulevardsFilter = [...this.boulevards || [] ]
+
+
+          }
           console.log(resp)
         },
         error: (err) => {},
       });
   }
+
+  formatDate(date: Date | null): string {
+    if (date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    return "";
+  }
+
+
+  public reserachBetween2Date(){
+
+  }
+
+  public onClickItem(){
+
+  }
+
+  public getByFilterItems(){
+    alert("clicked")
+    console.log(this.filterItem)
+    if (!this.filterItem?.trim()) {
+      // Si le champ est vide, on affiche tous les boulevards
+      this.boulevardsFilter = [...this.boulevards || []];
+      return;
+    }
+    this.boulevardsFilter = this.boulevards?.filter(p => p.name === this.filterItem)
+
+    this.boulevardsFilter = this.boulevards?.filter(p =>
+      p.name?.toLowerCase().includes(this.filterItem.toLowerCase())
+    ) || [];
+
+  }
+
+
 }
