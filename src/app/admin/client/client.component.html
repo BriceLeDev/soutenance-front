@@ -7,7 +7,7 @@
  <div class="min-w-full flex flex-col items-center justify-center mb-4 px-2  mt-8 ">
   <div class="min-w-full flex flex-row items-center justify-around mb-4 ">
     <div class="flex  justify-center items-center mt-4">
-      <h4>Filtrer par date d'inscrption</h4>
+      <h4>Filtrer par date d'inscription</h4>
     </div>
 
     <div class="flex flex-row justify-around items-center">
@@ -62,32 +62,37 @@
     </button>
   </div>
   <div>
-    <form class="flex flex-col md:flex-row gap-3">
+    <div class="flex flex-col md:flex-row gap-3">
       <div class="flex">
         <input
+         [(ngModel)]="filterItem"
+         (ngModelChange)="getByFilterEmail()"
           type="text"
           placeholder="Rechercher par mail"
           class="w-full md:w-80 px-3 h-10 rounded-l border-2 border-sky-500 focus:outline-none focus:border-sky-500"
         />
         <button
-          type="submit"
+          type="button"
           class="bg-sky-500 text-white rounded-r px-2 md:px-3 py-0 md:py-1"
-          (click)="reserachByEmail()"
+          (click)="getByFilterEmail()"
         >
           Rechercher
         </button>
       </div>
       <select
+        [(ngModel)]="filterSelectItem"
+        (ngModelChange)="getByFilterSelect()"
         id="pricingType"
         name="pricingType"
         class="w-full h-10 border-2 border-sky-500 focus:outline-none focus:border-sky-500 text-sky-500 rounded px-2 md:px-3 py-0 md:py-1 tracking-wider"
       >
-        <option value="All" selected="">Tout</option>
-        <option value="Freemium">Avec Abonnement</option>
-        <option value="Free">Sans Abonnement</option>
-        <option value="Paid">Compte non vérifié</option>
+        <option value="Tout" selected="">Tout</option>
+        <option value="Avec Abonnement">Avec Abonnement</option>
+        <option value="Sans Abonnement">Sans Abonnement</option>
+        <option value="Compte non vérifié">Compte non vérifié</option>
+        <option value="Inéligible">Inéligible</option>
       </select>
-    </form>
+    </div>
   </div>
 </div>
 <button
@@ -132,8 +137,8 @@ class=" text-white rounded-md px-4 py-2 bg-blue-700 transition ml-8"
                 </tr>
             </thead>
             <tbody>
-                @for (client of this.customerResponse.content; track client.id) {
-                     <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+                @for (client of this.customerResponseArrayFilter; track client.id) {
+                     <tr class="bg-gray-100 text-center border-b text-sm text-gray-600 hover:bg-white">
 
                     <td class="p-2 border-r">{{client.id}}</td>
                     <td class="p-2 border-r">{{client.nonUtilisateur}}</td>
@@ -141,7 +146,7 @@ class=" text-white rounded-md px-4 py-2 bg-blue-700 transition ml-8"
                     <td class="p-2 border-r">{{client.numero}}</td>
                     <td class="p-2 border-r">{{client.enabled}}</td>
                     <td>
-                        <a class=" cursor-pointer bg-blue-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin">Voir+</a>
+                        <a (click)="clickOnclient(client)" class=" cursor-pointer bg-blue-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin">Voir+</a>
                         <a href="#" class="bg-red-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin">Suprimer</a>
                     </td>
                 </tr>

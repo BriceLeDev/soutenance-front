@@ -1,6 +1,6 @@
 import { PageResponsePanneauResponse } from './../../openapi/services/models/page-response-panneau-response';
 import { Component, inject, OnInit } from '@angular/core';
-import {  PanneauRquest, TypePanResponse } from '../../openapi/services/models';
+import {  PanneauResponse, PanneauRquest, TypePanResponse } from '../../openapi/services/models';
 import { SharedServiceService } from '../admin-services/shared-service.service';
 import { FormsModule } from '@angular/forms';
 import { BoulevardService, PanneauService, TypePanneauService } from '../../openapi/services/services';
@@ -37,6 +37,11 @@ export class PanneauComponent implements OnInit{
   public myerrore: Array<String> = [];
   public panneauResponsePage: PageResponsePanneauResponse = {};
   public TypepanneauResponse: Array<TypePanResponse> = [];
+  public panneauResponseArray?: Array<PanneauResponse> = [];
+  public panneauResponseArrayFilter?: Array<PanneauResponse> = [];
+  public filterItem : string = ""
+  public filterSelectItem : string = "Tout"
+  public filterItemId : number = 0
   // public typePanneauResponse: TypePanRes
   constructor(private panneauService: PanneauService, private typePanneauService: TypePanneauService) {}
 
@@ -96,6 +101,8 @@ export class PanneauComponent implements OnInit{
         next: (resp) => {
           this.panneauResponse = resp;
           this.state.panneauResponse = resp;
+          this.panneauResponseArray = resp.content
+          this.panneauResponseArrayFilter = [...(this.panneauResponseArray || [])]
           console.log(resp)
         },
         error: (err) => {
@@ -159,6 +166,74 @@ formatDate(date: Date | null): string {
 
 
 public reserachBetween2Date(){
+
+}
+
+public getByFilterBlvName() {
+
+  if (!this.filterItem?.trim()) {
+    // Si le champ est vide, on affiche tous les boulevards
+    console.warn('Valeur de filterItem: dans if', this.panneauResponseArray);
+
+    this.panneauResponseArrayFilter = [...(this.panneauResponseArray || [])];
+    return;
+  }
+  this.panneauResponseArrayFilter =
+    this.panneauResponseArray?.filter((b) =>
+      b.boulevardName?.toLowerCase().includes(this.filterItem.toLowerCase())
+    ) || [];
+  console.warn('Valeur de filterItem: dans else', this.panneauResponseArray);
+}
+
+public getByFilterBlvId() {
+
+  if (this.filterItemId == 0) {
+    // Si le champ est vide, on affiche tous les boulevards
+
+
+    this.panneauResponseArrayFilter = [...(this.panneauResponseArray || [])];
+    return;
+  }
+  this.panneauResponseArrayFilter =
+    this.panneauResponseArray?.filter((b)=> b.id === this.filterItemId);
+
+}
+
+public getByFilterSelect() {
+
+  if (this.filterSelectItem === "Tout") {
+    this.panneauResponseArrayFilter = [...(this.panneauResponseArray || [])];
+    return;
+  }
+  if (this.filterSelectItem === "Libre") {
+    this.panneauResponseArrayFilter =
+    this.panneauResponseArray?.filter((b)=> b.occuped === false);
+    return;
+  }
+  if (this.filterSelectItem === "Occupé") {
+    this.panneauResponseArrayFilter =
+    this.panneauResponseArray?.filter((b)=>  b.occuped === true);
+
+    return;
+  }
+  if (this.filterSelectItem === "Statique-affiche") {
+    this.panneauResponseArrayFilter =
+    this.panneauResponseArray?.filter((b)=> b.typePanneauLibele ==="Statique-affiche");
+
+    return;
+  }
+  if (this.filterSelectItem === "Numérique-image") {
+    this.panneauResponseArrayFilter =
+    this.panneauResponseArray?.filter((b)=>b.typePanneauLibele ==="Numérique-image");
+
+    return;
+  }
+  if (this.filterSelectItem === "Numérique-vidéo") {
+    this.panneauResponseArrayFilter =
+    this.panneauResponseArray?.filter((b)=>b.typePanneauLibele ==="Numérique-vidéo");
+
+    return;
+  }
 
 }
   }

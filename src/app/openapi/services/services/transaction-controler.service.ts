@@ -15,9 +15,14 @@ import { checkStatusNotify } from '../fn/transaction-controler/check-status-noti
 import { CheckStatusNotify$Params } from '../fn/transaction-controler/check-status-notify';
 import { checkStatusNotify1 } from '../fn/transaction-controler/check-status-notify-1';
 import { CheckStatusNotify1$Params } from '../fn/transaction-controler/check-status-notify-1';
+import { getAllTransaction } from '../fn/transaction-controler/get-all-transaction';
+import { GetAllTransaction$Params } from '../fn/transaction-controler/get-all-transaction';
+import { getAllTransactionByAbonnement } from '../fn/transaction-controler/get-all-transaction-by-abonnement';
+import { GetAllTransactionByAbonnement$Params } from '../fn/transaction-controler/get-all-transaction-by-abonnement';
 import { getPaymentLink } from '../fn/transaction-controler/get-payment-link';
 import { GetPaymentLink$Params } from '../fn/transaction-controler/get-payment-link';
 import { LinkPayementRespons } from '../models/link-payement-respons';
+import { PageResponseTransactionResponse } from '../models/page-response-transaction-response';
 import { returnTo } from '../fn/transaction-controler/return-to';
 import { ReturnTo$Params } from '../fn/transaction-controler/return-to';
 import { returnTo1 } from '../fn/transaction-controler/return-to-1';
@@ -167,6 +172,56 @@ export class TransactionControlerService extends BaseService {
   getPaymentLink(params: GetPaymentLink$Params, context?: HttpContext): Observable<LinkPayementRespons> {
     return this.getPaymentLink$Response(params, context).pipe(
       map((r: StrictHttpResponse<LinkPayementRespons>): LinkPayementRespons => r.body)
+    );
+  }
+
+  /** Path part for operation `getAllTransaction()` */
+  static readonly GetAllTransactionPath = '/payment/all-transaction';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllTransaction()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllTransaction$Response(params?: GetAllTransaction$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseTransactionResponse>> {
+    return getAllTransaction(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllTransaction$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllTransaction(params?: GetAllTransaction$Params, context?: HttpContext): Observable<PageResponseTransactionResponse> {
+    return this.getAllTransaction$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseTransactionResponse>): PageResponseTransactionResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `getAllTransactionByAbonnement()` */
+  static readonly GetAllTransactionByAbonnementPath = '/payment/all-transaction-by-abnmt/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllTransactionByAbonnement()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllTransactionByAbonnement$Response(params: GetAllTransactionByAbonnement$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseTransactionResponse>> {
+    return getAllTransactionByAbonnement(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllTransactionByAbonnement$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllTransactionByAbonnement(params: GetAllTransactionByAbonnement$Params, context?: HttpContext): Observable<PageResponseTransactionResponse> {
+    return this.getAllTransactionByAbonnement$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseTransactionResponse>): PageResponseTransactionResponse => r.body)
     );
   }
 

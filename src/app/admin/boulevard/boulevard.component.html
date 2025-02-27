@@ -69,7 +69,7 @@
     </button>
   </div>
   <div>
-    <form class="flex flex-col md:flex-row gap-3">
+    <div class="flex flex-col md:flex-row gap-3">
       <div class="flex">
         <input
           [(ngModel)]="filterItem"
@@ -79,7 +79,7 @@
           class="w-full md:w-80 px-3 h-10 rounded-l border-2 border-sky-500 focus:outline-none focus:border-sky-500"
         />
         <button
-          type="submit"
+          type="button"
           class="bg-sky-500 text-white rounded-r px-2 md:px-3 py-0 md:py-1"
           (click)="getByFilterItems()"
         >
@@ -87,7 +87,7 @@
         </button>
       </div>
 
-    </form>
+    </div>
   </div>
 </div>
 <div
@@ -163,12 +163,15 @@
 
 <!-- /*
  ***************************************************************
- * Composent table de la liste des clients                     *
+ ******      Composent table de la liste des clients     *******
  ***************************************************************
  */ -->
  <button
   class="ml-8 text-white rounded-md px-4 py-2 bg-blue-700 transition"
+  (click)="printTable()"
 > Imprimer</button>
+
+
 
 <div class="table w-full p-2">
   <table class="w-full border mb-8">
@@ -188,15 +191,18 @@
     <tbody>
       @for (bouleResponse of boulevardsFilter;
       track bouleResponse.id) {
-      <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+      <tr class="bg-gray-100 text-center border-b text-sm text-gray-600 hover:bg-white">
         <td class="p-2 border-r">{{ bouleResponse.id }}</td>
         <td class="p-2 border-r">{{ bouleResponse.name }}</td>
         <td class="p-2 border-r">{{ bouleResponse.nombreDePanneau }}</td>
         <td>
-          <button
+          @if (bouleResponse.id != undefined) {
+            <button
             class="cursor-pointer bg-blue-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin"
-            (click)="onClickItem()"
+             (click)="onClickItem(bouleResponse)"
             >Voir+</button>
+          }
+
       </td>
       </tr>
       }

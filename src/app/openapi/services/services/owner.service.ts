@@ -19,17 +19,23 @@ import { getAllCustomerWithAbonnementFalse } from '../fn/owner/get-all-customer-
 import { GetAllCustomerWithAbonnementFalse$Params } from '../fn/owner/get-all-customer-with-abonnement-false';
 import { getAllCustomerWithAbonnementTrue } from '../fn/owner/get-all-customer-with-abonnement-true';
 import { GetAllCustomerWithAbonnementTrue$Params } from '../fn/owner/get-all-customer-with-abonnement-true';
+import { getTheUserById } from '../fn/owner/get-the-user-by-id';
+import { GetTheUserById$Params } from '../fn/owner/get-the-user-by-id';
 import { getUserByEmail } from '../fn/owner/get-user-by-email';
 import { GetUserByEmail$Params } from '../fn/owner/get-user-by-email';
-import { getUserById } from '../fn/owner/get-user-by-id';
-import { GetUserById$Params } from '../fn/owner/get-user-by-id';
 import { PageResponseUserResponse } from '../models/page-response-user-response';
 import { register } from '../fn/owner/register';
 import { Register$Params } from '../fn/owner/register';
+import { removeUserFidelisation } from '../fn/owner/remove-user-fidelisation';
+import { RemoveUserFidelisation$Params } from '../fn/owner/remove-user-fidelisation';
 import { updateUser } from '../fn/owner/update-user';
 import { UpdateUser$Params } from '../fn/owner/update-user';
-import { updateUserFidelisation } from '../fn/owner/update-user-fidelisation';
-import { UpdateUserFidelisation$Params } from '../fn/owner/update-user-fidelisation';
+import { updateUserBlocked } from '../fn/owner/update-user-blocked';
+import { UpdateUserBlocked$Params } from '../fn/owner/update-user-blocked';
+import { updateUserDeBlocked } from '../fn/owner/update-user-de-blocked';
+import { UpdateUserDeBlocked$Params } from '../fn/owner/update-user-de-blocked';
+import { updateUserFidelisationToFalse } from '../fn/owner/update-user-fidelisation-to-false';
+import { UpdateUserFidelisationToFalse$Params } from '../fn/owner/update-user-fidelisation-to-false';
 import { UserResponse } from '../models/user-response';
 
 @Injectable({ providedIn: 'root' })
@@ -63,29 +69,116 @@ export class OwnerService extends BaseService {
     );
   }
 
-  /** Path part for operation `updateUserFidelisation()` */
-  static readonly UpdateUserFidelisationPath = '/owner/update/fidelisation/{owner-id}';
+  /** Path part for operation `updateUserFidelisationToFalse()` */
+  static readonly UpdateUserFidelisationToFalsePath = '/owner/update/set-fidelisation/{owner-id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `updateUserFidelisation()` instead.
+   * To access only the response body, use `updateUserFidelisationToFalse()` instead.
    *
    * This method doesn't expect any request body.
    */
-  updateUserFidelisation$Response(params: UpdateUserFidelisation$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+  updateUserFidelisationToFalse$Response(params: UpdateUserFidelisationToFalse$Params, context?: HttpContext): Observable<StrictHttpResponse<{
 }>> {
-    return updateUserFidelisation(this.http, this.rootUrl, params, context);
+    return updateUserFidelisationToFalse(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `updateUserFidelisation$Response()` instead.
+   * To access the full response (for headers, for example), `updateUserFidelisationToFalse$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  updateUserFidelisation(params: UpdateUserFidelisation$Params, context?: HttpContext): Observable<{
+  updateUserFidelisationToFalse(params: UpdateUserFidelisationToFalse$Params, context?: HttpContext): Observable<{
 }> {
-    return this.updateUserFidelisation$Response(params, context).pipe(
+    return this.updateUserFidelisationToFalse$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
+    );
+  }
+
+  /** Path part for operation `removeUserFidelisation()` */
+  static readonly RemoveUserFidelisationPath = '/owner/update/remove-fidelisation/{owner-id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `removeUserFidelisation()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  removeUserFidelisation$Response(params: RemoveUserFidelisation$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return removeUserFidelisation(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `removeUserFidelisation$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  removeUserFidelisation(params: RemoveUserFidelisation$Params, context?: HttpContext): Observable<{
+}> {
+    return this.removeUserFidelisation$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
+    );
+  }
+
+  /** Path part for operation `updateUserDeBlocked()` */
+  static readonly UpdateUserDeBlockedPath = '/owner/update/de-blocked-user/{owner-id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `updateUserDeBlocked()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  updateUserDeBlocked$Response(params: UpdateUserDeBlocked$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return updateUserDeBlocked(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `updateUserDeBlocked$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  updateUserDeBlocked(params: UpdateUserDeBlocked$Params, context?: HttpContext): Observable<{
+}> {
+    return this.updateUserDeBlocked$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
+    );
+  }
+
+  /** Path part for operation `updateUserBlocked()` */
+  static readonly UpdateUserBlockedPath = '/owner/update/blocked-user/{owner-id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `updateUserBlocked()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  updateUserBlocked$Response(params: UpdateUserBlocked$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return updateUserBlocked(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `updateUserBlocked$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  updateUserBlocked(params: UpdateUserBlocked$Params, context?: HttpContext): Observable<{
+}> {
+    return this.updateUserBlocked$Response(params, context).pipe(
       map((r: StrictHttpResponse<{
 }>): {
 } => r.body)
@@ -121,31 +214,6 @@ export class OwnerService extends BaseService {
     );
   }
 
-  /** Path part for operation `getUserById()` */
-  static readonly GetUserByIdPath = '/owner/{owner-id}';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `getUserById()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  getUserById$Response(params: GetUserById$Params, context?: HttpContext): Observable<StrictHttpResponse<UserResponse>> {
-    return getUserById(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `getUserById$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  getUserById(params: GetUserById$Params, context?: HttpContext): Observable<UserResponse> {
-    return this.getUserById$Response(params, context).pipe(
-      map((r: StrictHttpResponse<UserResponse>): UserResponse => r.body)
-    );
-  }
-
   /** Path part for operation `getUserByEmail()` */
   static readonly GetUserByEmailPath = '/owner/{owner-email}';
 
@@ -167,6 +235,31 @@ export class OwnerService extends BaseService {
    */
   getUserByEmail(params: GetUserByEmail$Params, context?: HttpContext): Observable<UserResponse> {
     return this.getUserByEmail$Response(params, context).pipe(
+      map((r: StrictHttpResponse<UserResponse>): UserResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `getTheUserById()` */
+  static readonly GetTheUserByIdPath = '/owner/user-by-id';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getTheUserById()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getTheUserById$Response(params: GetTheUserById$Params, context?: HttpContext): Observable<StrictHttpResponse<UserResponse>> {
+    return getTheUserById(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getTheUserById$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getTheUserById(params: GetTheUserById$Params, context?: HttpContext): Observable<UserResponse> {
+    return this.getTheUserById$Response(params, context).pipe(
       map((r: StrictHttpResponse<UserResponse>): UserResponse => r.body)
     );
   }

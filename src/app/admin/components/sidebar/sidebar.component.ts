@@ -19,7 +19,9 @@ export class SidebarComponent {
     {path:"panneau/panneau-affiche", libele:"Panneaux"},
     {path:"boulevard", libele:"Boulevards"},
     {path:"statistic", libele:"Statistique"},
+    {path:"transaction", libele:"Tansaction"},
     {path:"administration", libele:"Administration"},
+
   ]
 
 

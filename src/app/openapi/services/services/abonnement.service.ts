@@ -20,10 +20,24 @@ import { getAbonnementByOwner } from '../fn/abonnement/get-abonnement-by-owner';
 import { GetAbonnementByOwner$Params } from '../fn/abonnement/get-abonnement-by-owner';
 import { getAllAbonnement } from '../fn/abonnement/get-all-abonnement';
 import { GetAllAbonnement$Params } from '../fn/abonnement/get-all-abonnement';
+import { getAllAbonnementBetween2Date } from '../fn/abonnement/get-all-abonnement-between-2-date';
+import { GetAllAbonnementBetween2Date$Params } from '../fn/abonnement/get-all-abonnement-between-2-date';
+import { getAllAbonnementByDate } from '../fn/abonnement/get-all-abonnement-by-date';
+import { GetAllAbonnementByDate$Params } from '../fn/abonnement/get-all-abonnement-by-date';
+import { getAllAbonnementComingSoon } from '../fn/abonnement/get-all-abonnement-coming-soon';
+import { GetAllAbonnementComingSoon$Params } from '../fn/abonnement/get-all-abonnement-coming-soon';
 import { getAllAbonnementExpired } from '../fn/abonnement/get-all-abonnement-expired';
 import { GetAllAbonnementExpired$Params } from '../fn/abonnement/get-all-abonnement-expired';
+import { getAllAbonnementExpiredBetween2Date } from '../fn/abonnement/get-all-abonnement-expired-between-2-date';
+import { GetAllAbonnementExpiredBetween2Date$Params } from '../fn/abonnement/get-all-abonnement-expired-between-2-date';
 import { getAllAbonnementExpiredByUser } from '../fn/abonnement/get-all-abonnement-expired-by-user';
 import { GetAllAbonnementExpiredByUser$Params } from '../fn/abonnement/get-all-abonnement-expired-by-user';
+import { getAllAbonnementExpireInMouth } from '../fn/abonnement/get-all-abonnement-expire-in-mouth';
+import { GetAllAbonnementExpireInMouth$Params } from '../fn/abonnement/get-all-abonnement-expire-in-mouth';
+import { getAllBecomeAbonnementInPrevMouth } from '../fn/abonnement/get-all-become-abonnement-in-prev-mouth';
+import { GetAllBecomeAbonnementInPrevMouth$Params } from '../fn/abonnement/get-all-become-abonnement-in-prev-mouth';
+import { getAllExpiredAbonnementInMouth } from '../fn/abonnement/get-all-expired-abonnement-in-mouth';
+import { GetAllExpiredAbonnementInMouth$Params } from '../fn/abonnement/get-all-expired-abonnement-in-mouth';
 import { invalidate } from '../fn/abonnement/invalidate';
 import { Invalidate$Params } from '../fn/abonnement/invalidate';
 import { PageResponseAbonnementResponse } from '../models/page-response-abonnement-response';
@@ -186,6 +200,31 @@ export class AbonnementService extends BaseService {
     );
   }
 
+  /** Path part for operation `getAllAbonnementExpiredBetween2Date()` */
+  static readonly GetAllAbonnementExpiredBetween2DatePath = '/abonnement/expired-abonnements-between-dates';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllAbonnementExpiredBetween2Date()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllAbonnementExpiredBetween2Date$Response(params?: GetAllAbonnementExpiredBetween2Date$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseAbonnementResponse>> {
+    return getAllAbonnementExpiredBetween2Date(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllAbonnementExpiredBetween2Date$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllAbonnementExpiredBetween2Date(params?: GetAllAbonnementExpiredBetween2Date$Params, context?: HttpContext): Observable<PageResponseAbonnementResponse> {
+    return this.getAllAbonnementExpiredBetween2Date$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseAbonnementResponse>): PageResponseAbonnementResponse => r.body)
+    );
+  }
+
   /** Path part for operation `getAbonnementByOwner()` */
   static readonly GetAbonnementByOwnerPath = '/abonnement/by-user/{user-id}';
 
@@ -232,6 +271,156 @@ export class AbonnementService extends BaseService {
    */
   getAllAbonnement(params?: GetAllAbonnement$Params, context?: HttpContext): Observable<PageResponseAbonnementResponse> {
     return this.getAllAbonnement$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseAbonnementResponse>): PageResponseAbonnementResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `getAllExpiredAbonnementInMouth()` */
+  static readonly GetAllExpiredAbonnementInMouthPath = '/abonnement/abonnements-expired-in-mouth';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllExpiredAbonnementInMouth()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllExpiredAbonnementInMouth$Response(params?: GetAllExpiredAbonnementInMouth$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseAbonnementResponse>> {
+    return getAllExpiredAbonnementInMouth(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllExpiredAbonnementInMouth$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllExpiredAbonnementInMouth(params?: GetAllExpiredAbonnementInMouth$Params, context?: HttpContext): Observable<PageResponseAbonnementResponse> {
+    return this.getAllExpiredAbonnementInMouth$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseAbonnementResponse>): PageResponseAbonnementResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `getAllAbonnementComingSoon()` */
+  static readonly GetAllAbonnementComingSoonPath = '/abonnement/abonnements-coming-soon';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllAbonnementComingSoon()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllAbonnementComingSoon$Response(params?: GetAllAbonnementComingSoon$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseAbonnementResponse>> {
+    return getAllAbonnementComingSoon(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllAbonnementComingSoon$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllAbonnementComingSoon(params?: GetAllAbonnementComingSoon$Params, context?: HttpContext): Observable<PageResponseAbonnementResponse> {
+    return this.getAllAbonnementComingSoon$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseAbonnementResponse>): PageResponseAbonnementResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `getAllAbonnementByDate()` */
+  static readonly GetAllAbonnementByDatePath = '/abonnement/abonnements-by-date/{date}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllAbonnementByDate()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllAbonnementByDate$Response(params: GetAllAbonnementByDate$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseAbonnementResponse>> {
+    return getAllAbonnementByDate(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllAbonnementByDate$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllAbonnementByDate(params: GetAllAbonnementByDate$Params, context?: HttpContext): Observable<PageResponseAbonnementResponse> {
+    return this.getAllAbonnementByDate$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseAbonnementResponse>): PageResponseAbonnementResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `getAllAbonnementBetween2Date()` */
+  static readonly GetAllAbonnementBetween2DatePath = '/abonnement/abonnements-between-two-date';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllAbonnementBetween2Date()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllAbonnementBetween2Date$Response(params?: GetAllAbonnementBetween2Date$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseAbonnementResponse>> {
+    return getAllAbonnementBetween2Date(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllAbonnementBetween2Date$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllAbonnementBetween2Date(params?: GetAllAbonnementBetween2Date$Params, context?: HttpContext): Observable<PageResponseAbonnementResponse> {
+    return this.getAllAbonnementBetween2Date$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseAbonnementResponse>): PageResponseAbonnementResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `getAllAbonnementExpireInMouth()` */
+  static readonly GetAllAbonnementExpireInMouthPath = '/abonnement/abonnements-become-one-week';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllAbonnementExpireInMouth()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllAbonnementExpireInMouth$Response(params?: GetAllAbonnementExpireInMouth$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseAbonnementResponse>> {
+    return getAllAbonnementExpireInMouth(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllAbonnementExpireInMouth$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllAbonnementExpireInMouth(params?: GetAllAbonnementExpireInMouth$Params, context?: HttpContext): Observable<PageResponseAbonnementResponse> {
+    return this.getAllAbonnementExpireInMouth$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseAbonnementResponse>): PageResponseAbonnementResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `getAllBecomeAbonnementInPrevMouth()` */
+  static readonly GetAllBecomeAbonnementInPrevMouthPath = '/abonnement/abonnements-become-in-prev-mouth';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllBecomeAbonnementInPrevMouth()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllBecomeAbonnementInPrevMouth$Response(params?: GetAllBecomeAbonnementInPrevMouth$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseAbonnementResponse>> {
+    return getAllBecomeAbonnementInPrevMouth(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllBecomeAbonnementInPrevMouth$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllBecomeAbonnementInPrevMouth(params?: GetAllBecomeAbonnementInPrevMouth$Params, context?: HttpContext): Observable<PageResponseAbonnementResponse> {
+    return this.getAllBecomeAbonnementInPrevMouth$Response(params, context).pipe(
       map((r: StrictHttpResponse<PageResponseAbonnementResponse>): PageResponseAbonnementResponse => r.body)
     );
   }

@@ -155,12 +155,105 @@
         }
       }
     },
-    "/owner/update/fidelisation/{owner-id}": {
+    "/owner/update/set-fidelisation/{owner-id}": {
       "put": {
         "tags": [
           "owner"
         ],
-        "operationId": "updateUserFidelisation",
+        "operationId": "updateUserFidelisationToFalse",
+        "parameters": [
+          {
+            "name": "owner-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/update/remove-fidelisation/{owner-id}": {
+      "put": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "removeUserFidelisation",
+        "parameters": [
+          {
+            "name": "owner-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/update/de-blocked-user/{owner-id}": {
+      "put": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "updateUserDeBlocked",
+        "parameters": [
+          {
+            "name": "owner-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/update/blocked-user/{owner-id}": {
+      "put": {
+        "tags": [
+          "owner"
+        ],
+        "operationId": "updateUserBlocked",
         "parameters": [
           {
             "name": "owner-id",
@@ -904,6 +997,99 @@
         }
       }
     },
+    "/payment/all-transaction": {
+      "get": {
+        "tags": [
+          "transaction-controler"
+        ],
+        "operationId": "getAllTransaction",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseTransactionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/all-transaction-by-abnmt/{id}": {
+      "get": {
+        "tags": [
+          "transaction-controler"
+        ],
+        "operationId": "getAllTransactionByAbonnement",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseTransactionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/panneau/{panneau-id}": {
       "get": {
         "tags": [
@@ -1225,20 +1411,19 @@
         }
       }
     },
-    "/owner/{owner-id}": {
+    "/owner/{owner-email}": {
       "get": {
         "tags": [
           "owner"
         ],
-        "operationId": "getUserById",
+        "operationId": "getUserByEmail",
         "parameters": [
           {
-            "name": "owner-id",
-            "in": "path",
+            "name": "email",
+            "in": "query",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -1256,19 +1441,20 @@
         }
       }
     },
-    "/owner/{owner-email}": {
+    "/owner/user-by-id": {
       "get": {
         "tags": [
           "owner"
         ],
-        "operationId": "getUserByEmail",
+        "operationId": "getTheUserById",
         "parameters": [
           {
-            "name": "email",
+            "name": "userId",
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
@@ -1961,6 +2147,48 @@
         }
       }
     },
+    "/abonnement/expired-abonnements-between-dates": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAllAbonnementExpiredBetween2Date",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/abonnement/by-user/{user-id}": {
       "get": {
         "tags": [
@@ -2018,6 +2246,267 @@
           "Abonnement"
         ],
         "operationId": "getAllAbonnement",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement/abonnements-expired-in-mouth": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAllExpiredAbonnementInMouth",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement/abonnements-coming-soon": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAllAbonnementComingSoon",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement/abonnements-by-date/{date}": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAllAbonnementByDate",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement/abonnements-between-two-date": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAllAbonnementBetween2Date",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement/abonnements-become-one-week": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAllAbonnementExpireInMouth",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseAbonnementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abonnement/abonnements-become-in-prev-mouth": {
+      "get": {
+        "tags": [
+          "Abonnement"
+        ],
+        "operationId": "getAllBecomeAbonnementInPrevMouth",
         "parameters": [
           {
             "name": "page",
@@ -2250,8 +2739,8 @@
           "name": {
             "type": "string"
           },
-          "username": {
-            "type": "string"
+          "accountNonLocked": {
+            "type": "boolean"
           },
           "accountNonExpired": {
             "type": "boolean"
@@ -2259,14 +2748,14 @@
           "credentialsNonExpired": {
             "type": "boolean"
           },
+          "username": {
+            "type": "string"
+          },
           "authorities": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GrantedAuthority"
             }
-          },
-          "accountNonLocked": {
-            "type": "boolean"
           }
         }
       },
@@ -2661,13 +3150,13 @@
               "$ref": "#/components/schemas/Image"
             }
           },
-          "dureeAbonnement": {
-            "type": "integer",
-            "format": "int32"
-          },
           "montantTotalAbonnement": {
             "type": "integer",
             "format": "int64"
+          },
+          "dureeAbonnement": {
+            "type": "integer",
+            "format": "int32"
           },
           "createdBy": {
             "type": "integer",
@@ -2912,18 +3401,6 @@
             "type": "integer",
             "format": "int64"
           },
-          "createdAt": {
-            "type": "string",
-            "format": "date"
-          },
-          "updateAt": {
-            "type": "string",
-            "format": "date"
-          },
-          "updateBy": {
-            "type": "integer",
-            "format": "int32"
-          },
           "libelet": {
             "type": "string"
           },
@@ -2932,10 +3409,6 @@
             "items": {
               "$ref": "#/components/schemas/Panneau"
             }
-          },
-          "createdBy": {
-            "type": "integer",
-            "format": "int32"
           }
         }
       },
@@ -2954,6 +3427,78 @@
             "items": {
               "$ref": "#/components/schemas/User"
             }
+          }
+        }
+      },
+      "PageResponseTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionResponse"
+            }
+          },
+          "nomber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstPage": {
+            "type": "boolean"
+          },
+          "lastPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TransactionResponse": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "XOF (West African CFA Franc)",
+              "XAF (Central African CFA Franc)",
+              "CDF (Congolese Franc)",
+              "GNF (Guinean Franc)",
+              "USD (United States Dollar)"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "payment_method": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "userEmail": {
+            "type": "string"
+          },
+          "localDateTimeTrans": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "abonnementId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -3046,6 +3591,21 @@
               "CONFIRMATION",
               "VERIFICATION"
             ]
+          },
+          "dateDebAbn": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateFinAbn": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateAbn": {
+            "type": "string",
+            "format": "date"
+          },
+          "descriptionAbn": {
+            "type": "string"
           }
         }
       },
@@ -3227,7 +3787,7 @@
           },
           "nbrJrs": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "actif": {
             "type": "boolean"

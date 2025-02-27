@@ -1,3 +1,4 @@
+import { UserResponse } from './../../openapi/services/models/user-response';
 import { Component, OnInit, inject } from '@angular/core';
 import { SharedServiceService } from '../admin-services/shared-service.service';
 import { Router } from '@angular/router';
@@ -34,7 +35,10 @@ export class ClientComponent implements OnInit {
   public startDate: Date | null = null;
   public endDate: Date | null = null;
   public customerResponse:PageResponseUserResponse={};
-
+  public customerResponseArray? : Array<UserResponse> = []
+  public customerResponseArrayFilter : Array<UserResponse> = []
+  public filterItem : string = ""
+  public filterSelectItem : string = "Tout"
   ngOnInit(): void {
       this.UserService.getAllCustomer(
         {
@@ -48,6 +52,8 @@ export class ClientComponent implements OnInit {
            console.log("data")
             this.customerResponse=data
             this.AdminState.NbrTotalClient = data.content?.length
+            this.customerResponseArray =data.content
+            this.customerResponseArrayFilter = [...(this.customerResponseArray || [])]
           },
           error: (err) => {
             console.error('My Erreur:', err);
@@ -78,17 +84,101 @@ export class ClientComponent implements OnInit {
 
   }
 
-  public reserachByEmail(){
+  public clickOnclient(client : UserResponse){
+    this.router.navigate(['/admin/client/detail', client.id]);
+  }
+
+  public getByFilterEmail(){
+    // alert("cliked")
+    console.log(this.filterItem)
+    if (!this.filterItem?.trim()) {
+      // Si le champ est vide, on affiche tous les customer
+      this.customerResponseArrayFilter = [...(this.customerResponseArray || [])];
+      return;
+    }
+    console.log(this.customerResponseArrayFilter)
+    this.customerResponseArrayFilter =
+      this.customerResponseArray?.filter((c) =>
+        c.email?.toLowerCase().includes(this.filterItem.toLowerCase())
+      ) || [];
+  }
+
+  public getByFilterSelect() {
+
+
+    if (this.filterSelectItem === "Tout") {
+
+    console.log("this.filterSelectItem === ")
+      this.customerResponseArrayFilter = [...(this.customerResponseArray || [])];
+      return;
+    }
+
+    if (this.filterSelectItem === "Avec Abonnement") {
+      this.UserService.getAllCustomerWithAbonnementTrue(
+        {
+          page: 0,
+          size: 10,
+        }
+      )
+        .subscribe({
+          next: (data) => {
+           console.log(data)
+           console.log("data")
+            this.customerResponse=data
+            this.AdminState.NbrTotalClient = data.content?.length
+            this.customerResponseArray =data.content
+            this.customerResponseArrayFilter = [...(this.customerResponseArray || [])]
+          },
+          error: (err) => {
+            console.error('My Erreur:', err);
+          }
+        });
+      return;
+    }
+    if (this.filterSelectItem === "Sans Abonnement") {
+      this.UserService.getAllCustomerWithAbonnementFalse(
+        {
+          page: 0,
+          size: 10,
+        }
+      )
+        .subscribe({
+          next: (data) => {
+           console.log(data)
+           console.log("data")
+            this.customerResponse=data
+            this.AdminState.NbrTotalClient = data.content?.length
+            this.customerResponseArray =data.content
+            this.customerResponseArrayFilter = [...(this.customerResponseArray || [])]
+          },
+          error: (err) => {
+            console.error('My Erreur:', err);
+          }
+        });
+
+      return;
+    }
+
+    if (this.filterSelectItem === "Compte non vérifié") {
+
+    console.log("this.filterSelectItem === ")
+      this.customerResponseArrayFilter =
+      this.customerResponseArray?.filter((b)=> b.enabled === false) || [];
+
+      return;
+    }
+    if (this.filterSelectItem === "Inéligible") {
+
+    console.log("this.filterSelectItem === ")
+      this.customerResponseArrayFilter =
+      this.customerResponseArray?.filter((b)=>b.accountLocked === true)|| [];
+
+      return;
+    }
+
 
   }
 
-  public clickOnclient(){
-
-  }
-
-  public getSelectItems(){
-
-  }
 
   /*public getAllCustomers(){
     const  myToken = localStorage.getItem("token")

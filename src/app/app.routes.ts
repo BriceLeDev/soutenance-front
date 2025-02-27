@@ -31,6 +31,7 @@ import { PanneauDetailsComponent } from './admin/voirPlusComponents/panneau-deta
 import { AbonnementDetailsComponent } from './admin/voirPlusComponents/abonnement-details/abonnement-details.component';
 import { BoulevardsDetailsComponent } from './admin/voirPlusComponents/boulevards-details/boulevards-details.component';
 import { ShowMoreAbonnementComponent } from './customer/show-more-abonnement/show-more-abonnement.component';
+import { TransactionComponent } from './admin/transaction/transaction.component';
 
 export const routes: Routes = [
   {
@@ -65,6 +66,10 @@ export const routes: Routes = [
       {
         path: 'administration',
         component: AdministrationComponent,
+      },
+      {
+        path: 'transaction',
+        component: TransactionComponent,
       },
       {
         path: 'client/detail/:id',

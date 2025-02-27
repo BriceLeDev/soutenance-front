@@ -4,11 +4,7 @@
 
 import { Panneau } from '../models/panneau';
 export interface TypePanneau {
-  createdAt?: string;
-  createdBy?: number;
   id?: number;
   libelet?: string;
   panneaux?: Array<Panneau>;
-  updateAt?: string;
-  updateBy?: number;
 }

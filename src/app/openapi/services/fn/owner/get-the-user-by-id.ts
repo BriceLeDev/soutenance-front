@@ -8,16 +8,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { BoulevardResponse } from '../../models/boulevard-response';
+import { UserResponse } from '../../models/user-response';
 
-export interface GetBoulByPanneau$Params {
-  panneauId: number | undefined;
+export interface GetTheUserById$Params {
+  userId: number;
 }
 
-export function getBoulByPanneau(http: HttpClient, rootUrl: string, params: GetBoulByPanneau$Params, context?: HttpContext): Observable<StrictHttpResponse<BoulevardResponse>> {
-  const rb = new RequestBuilder(rootUrl, getBoulByPanneau.PATH, 'get');
+export function getTheUserById(http: HttpClient, rootUrl: string, params: GetTheUserById$Params, context?: HttpContext): Observable<StrictHttpResponse<UserResponse>> {
+  const rb = new RequestBuilder(rootUrl, getTheUserById.PATH, 'get');
   if (params) {
-    rb.query('panneauId', params.panneauId, {});
+    rb.query('userId', params.userId, {});
   }
 
   return http.request(
@@ -25,9 +25,9 @@ export function getBoulByPanneau(http: HttpClient, rootUrl: string, params: GetB
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<BoulevardResponse>;
+      return r as StrictHttpResponse<UserResponse>;
     })
   );
 }
 
-getBoulByPanneau.PATH = '/boulevard/boulevard-by-panneau';
+getTheUserById.PATH = '/owner/user-by-id';
