@@ -5,7 +5,7 @@
  */ -->
  @if (!open) {
   <button
-  class="bg-rose-500 text-white rounded-md px-4 py-2 hover:bg-gray-500 transition"
+  class="bg-rose-500 text-white rounded-md px-4 py-2 hover:bg-gray-500 transition m-4"
   (click)="openModal()"
 
 >
@@ -79,6 +79,7 @@
             [(ngModel)]="filterItemId"
             (ngModelChange)="getByFilterBlvId()"
             type="number"
+            min="0"
             placeholder="Rechercher par numéro panneau"
             class="w-full md:w-80 px-3 h-10 rounded-l border-2 border-sky-500 focus:outline-none focus:border-sky-500"
           />

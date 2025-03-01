@@ -58,6 +58,9 @@ export class AbonnementDetailComponent implements OnInit {
     prix: 0
   }
 
+
+
+
   ngOnInit(): void {
     const savedPanneaux = localStorage.getItem('selectedPanneaux');
     const savedAmount = localStorage.getItem('totalAmount');
@@ -71,6 +74,44 @@ export class AbonnementDetailComponent implements OnInit {
       this.totalAmount = this.totalAmount*this.calculateAbnAmount(this.startDate,this.endDate);
     }
   }
+
+  htmlContent = `
+  <p>Le coût total de votre abonnement, calculé en fonction de la durée définie, s'élève à ${
+    this.finalAbnAmount() + this.totalPrintPrice()
+  }</p>
+  <button  id="customButton" style="color: white; background-color: blue; padding: 10px; border-radius: 5px; margin:10px;">Voir Détails</button>
+`;
+
+  onSwalOpen() {
+    setTimeout(() => {
+      const btn = document.getElementById('customButton');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          this.onThirdButtonClick();
+        });
+      }
+    }, 0);
+  }
+
+
+  onThirdButtonClick() {
+    // 🔢 Exécuter ton calcul ici
+    const newTotal = this.recalculateTotal();
+
+    // 💬 Afficher le résultat dans une alerte ou dans la console
+    Swal.fire({
+      title: 'Nouveau montant',
+      text: `Le nouveau coût après reduction est : ${newTotal}`,
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
+  }
+
+  // ✅ Méthode pour recalculer le total
+recalculateTotal(): number {
+  // ⚙️ Ajoute ton propre calcul ici
+  return (this.finalAbnAmount() + this.totalPrintPrice() )/2; // Exemple : ajout de 100
+}
 
   public addPrintPrice(panneau: PanneauResponse, event: any) {
     const prix = panneau.printPrice || 0; // Prix du panneau

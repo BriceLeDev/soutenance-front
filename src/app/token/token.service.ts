@@ -34,6 +34,7 @@ export class TokenService {
   removeItem(): void {
     if (this.isLocalStorageAvailable()) {
       localStorage.removeItem("token");
+      
     }
   }
 

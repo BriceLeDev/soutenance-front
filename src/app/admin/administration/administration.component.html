@@ -1,1 +1,300 @@
-<p>administration works!</p>
+@if (!open) {
+  <button
+    class="bg-rose-500 text-white rounded-md px-4 py-2 hover:bg-gray-500 transition m-4"
+    (click)="openModal()"
+  >
+    {{ this.open ? "Fermer" : "Ajouter un employé" }}
+  </button>
+   }
+   <hr>
+<div
+  class="min-w-full flex flex-col items-center justify-center mb-4 px-2 mt-8"
+>
+  <div class="min-w-full flex flex-row items-center justify-around mb-4">
+    <div class="flex justify-center items-center mt-4">
+      <h4>Filtrer par date d'inscription</h4>
+    </div>
+
+    <div class="flex flex-row justify-around items-center">
+      <div class="mr-3">
+        <mat-form-field>
+          <mat-label> Du : </mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="ml-3">
+        <mat-form-field>
+          <mat-label> Au : </mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="endDate" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1 (click)="dateClicked()"></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div
+    class="  z-1000  overflow-y-auto px-4"
+    [className]="
+      this.open ? 'fixed block inset-0 bg-gray-900 bg-opacity-30 h-full w-full' : 'hidden'
+    "
+  >
+    <div class="flex justify-end p-2">
+      <button
+        (click)="openModal()"
+        type="button"
+        class="text-gray-400 bg-transparent bg-white hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="max-w-sm bg-white rounded-lg overflow-hidden shadow-lg mx-auto">
+      @if (myerrore.length) { @for (msg of myerrore; track $index) {
+      <div
+        class="bg-red-200 px-6 py-4 my-4 rounded-md text-lg flex items-center mx-auto max-w-lg"
+      >
+        <svg viewBox="0 0 24 24" class="text-red-600 w-5 h-5 sm:w-5 sm:h-5 mr-3">
+          <path
+            fill="currentColor"
+            d="M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z"
+          ></path>
+        </svg>
+        <span class="text-red-800"> {{ msg }} </span>
+      </div>
+      }}
+      <div class="p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Ajouter un boulevard</h2>
+        <form>
+          <div class="mb-6">
+            <label class="block text-gray-700 font-bold mb-2" for="password">
+              Nom du boulevard
+            </label>
+            <input
+              [(ngModel)]="adminRequest.email"
+              name="Boulevard"
+              id="Boulevard"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          <div class="flex items-center justify-between">
+            <button
+              (click)="addAdmin()"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="button"
+            >
+              Ajouter
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+    <button
+      (click)="reserachBetween2Date()"
+      class="flex flex-row items-center justify-center min-w-[10px] px-4 rounded-full border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-gray-800 text-white font-medium tracking-wide border-transparent py-2 h-[38px]"
+    >
+      Rechercher
+    </button>
+  </div>
+  <div>
+    <div class="flex flex-col md:flex-row gap-3">
+      <div class="flex">
+        <input
+          [(ngModel)]="filterItem"
+          (ngModelChange)="getByFilterEmail()"
+          type="text"
+          placeholder="Rechercher par mail"
+          class="w-full md:w-80 px-3 h-10 rounded-l border-2 border-sky-500 focus:outline-none focus:border-sky-500"
+        />
+        <button
+          type="button"
+          class="bg-sky-500 text-white rounded-r px-2 md:px-3 py-0 md:py-1"
+          (click)="getByFilterEmail()"
+        >
+          Rechercher
+        </button>
+      </div>
+      <!-- <select
+        [(ngModel)]="filterSelectItem"
+        (ngModelChange)="getByFilterSelect()"
+        id="pricingType"
+        name="pricingType"
+        class="w-full h-10 border-2 border-sky-500 focus:outline-none focus:border-sky-500 text-sky-500 rounded px-2 md:px-3 py-0 md:py-1 tracking-wider"
+      >
+        <option value="Tout" selected="">Tout</option>
+        <option value="Avec Abonnement">Avec Abonnement</option>
+        <option value="Sans Abonnement">Sans Abonnement</option>
+        <option value="Compte non vérifié">Compte non vérifié</option>
+        <option value="Inéligible">Inéligible</option>
+      </select> -->
+    </div>
+  </div>
+</div>
+<button class="text-white rounded-md px-4 py-2 bg-blue-700 transition ml-8">
+  Imprimer
+</button>
+
+<div class="table w-full p-2">
+  <table class="w-full border mb-8">
+    <thead>
+      <tr class="bg-gray-50 border-b">
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">ID</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Nom</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Email</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Téléphone</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Vérifier</div>
+        </th>
+        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+          <div class="flex items-center justify-center">Action</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (client of this.customerResponseArrayFilter; track client.id) {
+      <tr
+        class="bg-gray-100 text-center border-b text-sm text-gray-600 hover:bg-white"
+      >
+        <td class="p-2 border-r">{{ client.id }}</td>
+        <td class="p-2 border-r">{{ client.nonUtilisateur }}</td>
+        <td class="p-2 border-r">{{ client.email }}</td>
+        <td class="p-2 border-r">{{ client.numero }}</td>
+        <td class="p-2 border-r">{{ client.enabled }}</td>
+        <td>
+          <a
+
+            class="cursor-pointer bg-blue-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin"
+            >Voir+</a
+          >
+          <a
+          href="#"
+          class="bg-green-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin"
+          >Modifier</a
+        >
+          <a
+            href="#"
+            class="bg-red-500 m-2 p-2 text-white hover:shadow-lg text-xs font-thin"
+            >Suprimer</a
+          >
+
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <div class="container mx-auto px-4">
+    <nav
+      class="flex flex-row flex-nowrap justify-between md:justify-center items-center"
+      aria-label="Pagination"
+    >
+      <!-- Previous Page Button -->
+      <a
+        class="flex w-10 h-10 mr-1 justify-center items-center rounded-full border border-gray-200 bg-white dark:bg-gray-800 text-black dark:text-white hover:border-gray-300 dark:hover:border-gray-600"
+        href="#"
+        title="Previous Page"
+      >
+        <span class="sr-only">Previous Page</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="block w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
+        </svg>
+      </a>
+      <!-- Page Buttons (1 to 5) -->
+      <a
+        class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white dark:bg-gray-700 text-black dark:text-white hover:border-gray-300 dark:hover:border-gray-600"
+        href="#"
+        title="Page 1"
+        aria-current="page"
+      >
+        1
+      </a>
+      <a
+        class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white dark:bg-gray-700 text-black dark:text-white hover:border-gray-300 dark:hover:border-gray-600"
+        href="#"
+        title="Page 2"
+      >
+        2
+      </a>
+      <a
+        class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-black dark:border-white dark:bg-black dark:text-white pointer-events-none"
+        href="#"
+        title="Page 3"
+      >
+        3
+      </a>
+      <a
+        class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white dark:bg-gray-700 text-black dark:text-white hover:border-gray-300 dark:hover:border-gray-600"
+        href="#"
+        title="Page 4"
+      >
+        4
+      </a>
+      <a
+        class="hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white dark:bg-gray-700 text-black dark:text-white hover:border-gray-300 dark:hover:border-gray-600"
+        href="#"
+        title="Page 5"
+      >
+        5
+      </a>
+      <!-- Next Page Button -->
+      <a
+        class="flex w-10 h-10 ml-1 justify-center items-center rounded-full border border-gray-200 bg-white dark:bg-gray-800 text-black dark:text-white hover:border-gray-300 dark:hover:border-gray-600"
+        href="#"
+        title="Next Page"
+      >
+        <span class="sr-only">Next Page</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="block w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+          />
+        </svg>
+      </a>
+    </nav>
+  </div>
+</div>

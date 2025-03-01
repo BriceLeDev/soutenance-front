@@ -1,1 +1,63 @@
-<p>transaction works!</p>
+
+<div class="min-w-full flex flex-row items-center justify-around mb-4 mt-5">
+  <div class="flex justify-center items-center mt-4">
+    <h4>Filtrer par date </h4>
+  </div>
+
+  <div class="flex flex-row justify-around items-center">
+    <div class="mr-3">
+      <mat-form-field>
+        <mat-label> Du : </mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="ml-3">
+      <mat-form-field>
+        <mat-label> Au : </mat-label>
+        <input matInput [matDatepicker]="picker1" [(ngModel)]="endDate"/>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1 (click)="dateClicked()"></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <button
+    (click)="reserachBetween2Date()"
+    class="flex flex-row items-center justify-center min-w-[10px] px-4 rounded-full border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-gray-800 text-white font-medium tracking-wide border-transparent py-2 h-[38px]"
+  >
+    Rechercher
+  </button>
+</div>
+<div class="w-full flex justify-center items-center">
+  <div class='flex flex-col w-1/2  '>
+
+    @for (transaction of transactions.content; track $index) {
+    <div class="relative border border-gray-200 rounded-lg shadow-lg">
+
+      <div class="flex items-center p-4">
+
+          <span class="object-cover w-12 h-12 rounded-lg" >
+              {{transaction.amount}}
+        </span>
+
+        <div class="ml-3 overflow-hidden">
+          <p class="font-medium text-gray-900">{{transaction.username}}   {{transaction.userEmail}}</p>
+          <p class="max-w-xs text-sm text-gray-500 truncate">
+            {{transaction.status}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+  }
+
+  </div>
+</div>
+
