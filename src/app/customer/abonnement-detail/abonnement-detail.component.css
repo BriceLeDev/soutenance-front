@@ -26,6 +26,14 @@
   background-color: #e53935;
 }
 
+.btn-recalculate {
+  background-color: blue !important;
+  color: white !important;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(100%);

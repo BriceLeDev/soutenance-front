@@ -8,7 +8,7 @@ import { requestInterceptorInterceptor } from './interceptor/request-interceptor
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2'
-
+import { provideToastr } from 'ngx-toastr';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideNativeDateAdapter(),
     provideAnimationsAsync(),
     importProvidersFrom( [SweetAlert2Module.forRoot()]),
+    provideToastr(),
   ],
 
 

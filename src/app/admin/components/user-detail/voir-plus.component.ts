@@ -23,10 +23,12 @@ import { JwtDecodeService } from '../../../jwt/jwt-decode.service';
 export class VoirPlusComponent implements OnInit {
   ActiveRoute = inject(ActivatedRoute);
   public clientget!: Client;
-  ClientId = this.ActiveRoute.snapshot.params['id'];
+  ClientId : string = "";
   customerService = inject(OwnerService);
   decoder = inject(JwtDecodeService);
   theerror = '';
+  isFidel : boolean = false;
+  isBlocked : boolean = false;
    public username : string = ""
    public user : UserResponse={
         accountLocked: false,
@@ -41,19 +43,82 @@ export class VoirPlusComponent implements OnInit {
         updateAt: "",
     }
   ngOnInit(): void {
-    this.getClientById(this.ClientId);
+    this.ClientId = this.ActiveRoute.snapshot.params['id'];
+    console.log(this.ClientId);
+    // this.getUser()
+    this.getClientById(Number.parseInt(this.ClientId) );
   }
 
   //avoir un clien par son id
   getClientById(Id: number) {
-    this.customerService.getUserByEmail(
+    this.customerService.getTheUserById(
       {
-        email : ""
+        userId : Id
       }
     ).subscribe({
       next: (value) => {
-        // this.clientget = value;
-        // console.log(value);
+        this.user = value
+        console.log(value)
+      },
+      error: (er) => {
+        this.theerror = er;
+        // console.log(er);
+      },
+    });
+  }
+  remooveClientFidele(Id: number) {
+    this.customerService.removeUserFidelisation(
+      {
+        'owner-id': Id
+      }
+    ).subscribe({
+      next: (value) => {
+        console.log(value)
+      },
+      error: (er) => {
+        this.theerror = er;
+        // console.log(er);
+      },
+    });
+  }
+  setClientFidele(Id: number) {
+    this.customerService.updateUserFidelisationToFalse(
+      {
+        'owner-id': Id
+      }
+    ).subscribe({
+      next: (value) => {
+        console.log(value)
+      },
+      error: (er) => {
+        this.theerror = er;
+        // console.log(er);
+      },
+    });
+  }
+  ClientBlocked(Id: number) {
+    this.customerService.updateUserBlocked(
+      {
+        'owner-id': Id
+      }
+    ).subscribe({
+      next: (value) => {
+        console.log(value)
+      },
+      error: (er) => {
+        this.theerror = er;
+        // console.log(er);
+      },
+    });
+  }
+  ClientDeblock(Id: number) {
+    this.customerService.updateUserDeBlocked(
+      {
+        'owner-id': Id
+      }
+    ).subscribe({
+      next: (value) => {
+        console.log(value)
       },
       error: (er) => {
         this.theerror = er;

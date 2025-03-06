@@ -314,10 +314,12 @@
   }
 </div>
 
-<button
+<div class="flex flex-row">
+  <button
   (click)="clickOnAbnbtn()"
   [swal]="abonnement"
   (confirm)="saveAbonnement()"
+  (deny)="recalculate()"
   type="button"
   class="py-2.5 pl-6 pr-3.5 text-sm bg-indigo-50 text-indigo-500 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 flex items-center hover:bg-indigo-100"
 >
@@ -339,6 +341,14 @@
     ></path>
   </svg>
 </button>
+<button
+  (click)="recalculate()"
+  type="button"
+  class="py-2.5 pl-6 pr-3.5 text-sm bg-indigo-50 text-indigo-500 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 flex items-center hover:bg-indigo-100"
+>
+  Payer par tranche
+</button>
+</div>
 <!-- <button
   [swal]="{ title: 'Save file as...', input: 'text', showDenyButton: true, denyButtonText: 'Don\'t save', showCancelButton: true }"
 >
@@ -348,7 +358,11 @@ My Test
 <swal
   #abonnement
   title="Validation"
-  [html]="htmlContent"
+  title="Validation"
+  text="Le coût total de votre abonnement, calculé en fonction de la durée définie, s'élève à {{
+    finalAbnAmount() + totalPrintPrice()
+  }}"
+
   icon="info"
   [showCancelButton]="true"
   [focusCancel]="true"
@@ -356,7 +370,8 @@ My Test
   [allowOutsideClick]="false"
   [customClass]="{
     confirmButton: 'btn-confirm',
-    cancelButton: 'btn-cancel'
+    cancelButton: 'btn-cancel',
+    denyButton: 'btn-recalculate'
   }"
   [confirmButtonText]="
     '<span style=\'color: white; background-color: green; padding: 10px; border-radius: 5px;margin:10px;\'>Procéder</span>'
@@ -364,6 +379,11 @@ My Test
   [cancelButtonText]="
     '<span style=\'color: white; background-color: red; padding: 10px; border-radius: 5px; margin:10px;\'>Annuler</span>'
   "
+  [denyButtonText]="
+    '<span style=\'color: white; background-color: blue; padding: 10px; border-radius: 5px; margin:10px;\'>Recalculer</span>'
+  "
+  (deny)="recalculate()"
 >
+
   >
 </swal>

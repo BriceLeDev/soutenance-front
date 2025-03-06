@@ -10,6 +10,7 @@ import { SaveImae$Params } from '../../openapi/services/fn/image/save-imae';
 import { SharedServiceService } from '../../admin/admin-services/shared-service.service';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2'
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-abonnement-detail',
   standalone: true,
@@ -25,7 +26,8 @@ export class AbonnementDetailComponent implements OnInit {
     private transactionService : TransactionControlerService,
     private sharedService : SharedServiceService,
     private router : Router,
-    private chandDetect : ChangeDetectorRef
+    private chandDetect : ChangeDetectorRef,
+    private toastr: ToastrService
 
   ){}
 
@@ -48,6 +50,7 @@ export class AbonnementDetailComponent implements OnInit {
   private transactionRequest : TransactionRequest={}
   public paymentLink : string | undefined = ""
   public finalAbnAmount= signal(0)
+  public isFidel : boolean = false
 
   private abonnementRequest: AbonnementRequest ={
     Panneau : [],
@@ -75,43 +78,7 @@ export class AbonnementDetailComponent implements OnInit {
     }
   }
 
-  htmlContent = `
-  <p>Le coût total de votre abonnement, calculé en fonction de la durée définie, s'élève à ${
-    this.finalAbnAmount() + this.totalPrintPrice()
-  }</p>
-  <button  id="customButton" style="color: white; background-color: blue; padding: 10px; border-radius: 5px; margin:10px;">Voir Détails</button>
-`;
 
-  onSwalOpen() {
-    setTimeout(() => {
-      const btn = document.getElementById('customButton');
-      if (btn) {
-        btn.addEventListener('click', () => {
-          this.onThirdButtonClick();
-        });
-      }
-    }, 0);
-  }
-
-
-  onThirdButtonClick() {
-    // 🔢 Exécuter ton calcul ici
-    const newTotal = this.recalculateTotal();
-
-    // 💬 Afficher le résultat dans une alerte ou dans la console
-    Swal.fire({
-      title: 'Nouveau montant',
-      text: `Le nouveau coût après reduction est : ${newTotal}`,
-      icon: 'success',
-      confirmButtonText: 'OK'
-    });
-  }
-
-  // ✅ Méthode pour recalculer le total
-recalculateTotal(): number {
-  // ⚙️ Ajoute ton propre calcul ici
-  return (this.finalAbnAmount() + this.totalPrintPrice() )/2; // Exemple : ajout de 100
-}
 
   public addPrintPrice(panneau: PanneauResponse, event: any) {
     const prix = panneau.printPrice || 0; // Prix du panneau
@@ -247,26 +214,159 @@ public showAmount() : number{
 }
 
 public clickOnAbnbtn(){
-  this.finalAbnAmount.set(this.totalAmount*Math.ceil(this.calculateAbnAmount(this.startDate,this.endDate)))
+  if (this.startDate == null || this.endDate == null) {
+    this.toastr.error(
+      'Veuillez définir les dates début et fin.',
+      'Conflit',
+      {
+        positionClass: 'toast-top-center',
+        timeOut: 5000,
+        closeButton: true,
+        progressBar: true
+      }
+    );
+    return
+  }
 
+  if (this.startDate > this.endDate) {
+    this.toastr.error(
+      'La date de début ne peut pas être supérieure à la date de fin.',
+      'Conflit',
+      {
+        positionClass: 'toast-top-center',
+        timeOut: 5000,
+        closeButton: true,
+        progressBar: true
+      }
+    );
+    return;
+  }
+  if (this.isFidel) {
+  this.finalAbnAmount.set((this.totalAmount*Math.ceil(this.calculateAbnAmount(this.startDate,this.endDate)))/2)
+  this.chandDetect.detectChanges()
+  return
+  }
+  this.finalAbnAmount.set(this.totalAmount*Math.ceil(this.calculateAbnAmount(this.startDate,this.endDate)))
   //talk to angular to update my sweetalert pupop after the update of finalAbnAmount
   this.chandDetect.detectChanges()
 
 }
 
 public saveAbonnement(){
-  console.log("doing abonnement")
-  console.log("date debut : " + this.formatDate(this.startDate))
-  console.log("date fin : " + this.formatDate(this.startDate))
-  console.log("price : "  + this.finalAbnAmount())
+
+  // console.log("doing abonnement")
+  // console.log("date debut : " + this.formatDate(this.startDate))
+  // console.log("date fin : " + this.formatDate(this.startDate))
+  // console.log("price : "  + this.finalAbnAmount())
+  if (this.startDate == null || this.endDate == null) {
+    this.toastr.error(
+      'Veuillez définir la date de début et la date de fin de votre abonnement.',
+      'Conflit',
+      {
+        positionClass: 'toast-top-center',
+        timeOut: 5000,
+        closeButton: true,
+        progressBar: true
+      }
+    );
+    return
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Réinitialiser l'heure pour comparer uniquement les dates
+
+  const oneWeekLater = new Date(today);
+  oneWeekLater.setDate(oneWeekLater.getDate() + 7); // Ajouter 7 jours
+
+  if (this.startDate < today) {
+    this.toastr.error(
+      'La date de début ne peut pas être antérieure à la date du jour.',
+      'Erreur de date',
+      {
+        positionClass: 'toast-top-center',
+        timeOut: 5000,
+        closeButton: true,
+        progressBar: true
+      }
+    );
+    return;
+  }
+
+  if (this.endDate < today) {
+    this.toastr.error(
+      'La date de fin ne peut pas être antérieure à la date du jour.',
+      'Erreur de date',
+      {
+        positionClass: 'toast-top-center',
+        timeOut: 5000,
+        closeButton: true,
+        progressBar: true
+      }
+    );
+    return;
+  }
+
+  // Vérifier si les dates sont au moins une semaine après aujourd'hui
+  if (this.startDate < oneWeekLater) {
+    this.toastr.error(
+      'La date de début doit être au moins une semaine après la date du jour.',
+      'Date invalide',
+      {
+        positionClass: 'toast-top-center',
+        timeOut: 5000,
+        closeButton: true,
+        progressBar: true
+      }
+    );
+    return;
+  }
+
+  if (this.endDate < oneWeekLater) {
+    this.toastr.error(
+      'La date de fin doit être au moins une semaine après la date du jour.',
+      'Date invalide',
+      {
+        positionClass: 'toast-top-center',
+        timeOut: 5000,
+        closeButton: true,
+        progressBar: true
+      }
+    );
+    return;
+  }
+
+  if (this.startDate > this.endDate) {
+    this.toastr.error(
+      'La date de début ne peut pas être supérieure à la date de fin.',
+      'Conflit',
+      {
+        positionClass: 'toast-top-center',
+        timeOut: 5000,
+        closeButton: true,
+        progressBar: true
+      }
+    );
+    return;
+  }
+
+
   this.abonnementRequest.Panneau = this.selectedPanneauAray.flatMap(pan => pan.id != undefined ? [pan.id]:[])
   this.abonnementRequest.dateDebut = this.formatDate(this.startDate);
   this.abonnementRequest.dateFin = this.formatDate(this.endDate);
   this.abonnementRequest.dateAbn = this.formatDate(new Date());
-  this.abonnementRequest.prix = this.finalAbnAmount() + this.totalPrintPrice()
+  if(this.isFidel){
+    this.abonnementRequest.prix = (this.finalAbnAmount() + this.totalPrintPrice())*2
+  }else{
+    this.abonnementRequest.prix = this.finalAbnAmount() + this.totalPrintPrice()
+  }
+
   this.abonnementRequest.description =this.description
   this.addAbonnement();
 
+}
+
+public recalculate(){
+  this.isFidel = true
 }
 
 private addAbonnement(){

@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Boulevard } from '../../model/Boulevard';
 import { Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-boulevard',
   standalone: true,
@@ -46,7 +46,8 @@ export class BoulevardComponent implements OnInit {
   constructor(
     private boulevardService: BoulevardService,
     private panneauService: PanneauService,
-    private route: Router
+    private route: Router,
+    private toastr: ToastrService
   ) {}
   public boulevardsState = inject(SharedServiceService);
 
@@ -62,6 +63,27 @@ export class BoulevardComponent implements OnInit {
       alert(" Veuillez Choisir d'abord la date début!");
     }
   }
+  // public addBoulevard() {
+  //   this.myerrore = [];
+  //   this.boulevardService
+  //     .saveBoulevard({
+  //       body: this.boulevarRequest,
+  //     })
+  //     .subscribe({
+  //       next: (resp) => {
+  //         this.getAllBoulevard();
+  //         this.toastr.success('Boulevard ajouté avec succès !!', 'Succès');
+  //         this.open = false;
+  //       },
+  //       error: (err) => {
+
+  //         if (err.error.validationError) {
+  //           this.myerrore = err.error.validationError;
+  //           console.log('Mon erreurs :', err);
+  //         }
+  //       },
+  //     });
+  // }
   public addBoulevard() {
     this.myerrore = [];
     this.boulevardService
@@ -71,18 +93,51 @@ export class BoulevardComponent implements OnInit {
       .subscribe({
         next: (resp) => {
           this.getAllBoulevard();
-          console.log(this.getAllBoulevard());
-          console.log('good!');
+          this.toastr.success('Boulevard ajouté avec succès !!', 'Succès');
           this.open = false;
         },
         error: (err) => {
-          if (err.error.validationError) {
+          console.log('Erreur reçue :', err);
+
+          if (err.status === 409) {
+            this.toastr.error(
+              'Ce boulevard existe déjà. Veuillez vérifier les données.',
+              'Conflit',
+              {
+                positionClass: 'toast-top-center',
+                timeOut: 5000,
+                closeButton: true,
+                progressBar: true
+              }
+            );
+          } else if (err.error.validationError) {
             this.myerrore = err.error.validationError;
-            console.log('Mon erreurs :', err);
+            this.toastr.error(
+              'Une erreur de validation est survenue.',
+              'Erreur de validation',
+              {
+                positionClass: 'toast-top-center',
+                timeOut: 5000,
+                closeButton: true,
+                progressBar: true
+              }
+            );
+          } else {
+            this.toastr.error(
+              'Une erreur inattendue est survenue.',
+              'Erreur',
+              {
+                positionClass: 'toast-top-center',
+                timeOut: 5000,
+                closeButton: true,
+                progressBar: true
+              }
+            );
           }
         },
       });
   }
+
 
   public getAllBoulevard() {
     this.boulevardService

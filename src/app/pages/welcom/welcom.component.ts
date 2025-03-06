@@ -1,6 +1,7 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import AOS from 'aos';
+import { Swiper, SwiperOptions } from 'swiper/types';
 
 @Component({
   selector: 'app-welcom',
@@ -11,6 +12,14 @@ import AOS from 'aos';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class WelcomComponent implements OnInit{
+
+  images: string[] = [
+    'https://picsum.photos/id/1015/600/300',
+    'https://picsum.photos/id/1020/600/300',
+    'https://picsum.photos/id/1025/600/300',
+    'https://picsum.photos/id/1030/600/300',
+    'https://picsum.photos/id/1040/600/300'
+  ];
 
   ngOnInit(): void {
           AOS.init(
@@ -29,4 +38,18 @@ export class WelcomComponent implements OnInit{
     delay: 3000,  // Temps entre chaque slide (en ms)
     disableOnInteraction: false  // Permet de continuer après interaction
   };
+
+  // @ViewChild('swiperRef', { static: false }) swiperRef: any;
+  // swiperConfig: SwiperOptions = {
+  //   slidesPerView: 1,
+  //   loop: true,
+  //   autoplay: {
+  //     delay: 2000, // Temps en millisecondes
+  //     disableOnInteraction: false
+  //   }
+  // };
+
+  // ngAfterViewInit() {
+  //   new Swiper(this.swiperRef.nativeElement, this.swiperConfig);
+  // }
 }

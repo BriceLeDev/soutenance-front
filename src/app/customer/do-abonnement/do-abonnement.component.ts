@@ -5,7 +5,7 @@ import { BoulevardResponse, PageResponseBoulevardResponse, PageResponsePanneauRe
 import { BoulevardService, PanneauService } from '../../openapi/services/services';
 import { GetAllPanneauxLibreByBoulevard$Params } from '../../openapi/services/fn/panneau/get-all-panneaux-libre-by-boulevard';
 import { Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-do-abonnement',
   standalone: true,
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class DoAbonnementComponent implements OnInit{
   public boulevardService = inject(BoulevardService);
   public PanneauService = inject(PanneauService);
+  constructor(private toastr: ToastrService){}
   public router = inject(Router);
   public changeDetect = inject(ChangeDetectorRef);
   public boulevards : PageResponseBoulevardResponse ={}
@@ -37,6 +38,7 @@ export class DoAbonnementComponent implements OnInit{
       this.getAllBoulevard()
 
     }
+
 
     public updateLocalStorage(){
       const savedPanneaux = localStorage.getItem('selectedPanneaux');
@@ -80,8 +82,22 @@ export class DoAbonnementComponent implements OnInit{
           ).subscribe({
             next:(response)=>{
               this.panneaux = response
-              console.log('Panneaux sélectionnés:', Array.from(this.selectedPanneauAray));
-              console.log('Panneau dans la réponse:', response.content);
+              if (this.panneaux.content?.length ==0) {
+                this.toastr.info(
+                  'Aucun panneau disponible sur ce boulevard.',
+                  'Info',
+                  {
+                    positionClass: 'toast-top-center',
+                    timeOut: 5000,
+                    closeButton: true,
+                    progressBar: true
+
+                  }
+                );
+                return
+              }
+              // console.log('Panneaux sélectionnés:', Array.from(this.selectedPanneauAray));
+              // console.log('Panneau dans la réponse:', response.content);
             },
             error:(error)=>{
               console.log(error)
@@ -126,6 +142,19 @@ export class DoAbonnementComponent implements OnInit{
       }
     }
     public getDetail(){
+      if (this.totalAmount == 0) {
+        this.toastr.error(
+          'Veuillez choisir au moins un panneau publicitaire.',
+          'Conflit',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
+        return
+      }
       // alert("detail")
       this.router.navigate(["customer/abonnement-detail"])
       // console.log(this.selectedPanneaux);
