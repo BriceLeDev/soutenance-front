@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   AbonnementResponse,
   BoulevardResponse,
   Facture,
   ImageResponse,
   LigneAbonnementResponse,
+  TransactionResponse,
   UserResponse,
 } from '../../openapi/services/models';
 import {
@@ -14,19 +15,22 @@ import {
   ImageService,
   LigneAbonnmentService,
   OwnerService,
+  TransactionControlerService,
 } from '../../openapi/services/services';
 import { GetAbonnementById$Params } from '../../openapi/services/fn/abonnement/get-abonnement-by-id';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InvoiceService } from '../services/invoice.service';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
+import { InvoiceService } from '../../customer/services/invoice.service';
 @Component({
-  selector: 'app-show-more-abonnement',
+  selector: 'app-admin-abn-detail',
   standalone: true,
   imports: [],
-  templateUrl: './show-more-abonnement.component.html',
-  styleUrl: './show-more-abonnement.component.css',
+  templateUrl: './admin-abn-detail.component.html',
+  styleUrl: './admin-abn-detail.component.css'
 })
-export class ShowMoreAbonnementComponent implements OnInit {
+export class AdminAbnDetailComponent implements OnInit {
+
+
   constructor(
     private imageService: ImageService,
     private abnService: AbonnementService,
@@ -37,14 +41,17 @@ export class ShowMoreAbonnementComponent implements OnInit {
     private decoder: JwtDecodeService,
     private userService: OwnerService,
     private boulevardService : BoulevardService,
+    private transactionService : TransactionControlerService,
 
   ) {}
   public _image: ImageResponse[] = [];
   public idAbn: number = 0;
   public abonnement: AbonnementResponse = {};
+  public transaction: TransactionResponse = {};
   public lignAbn: LigneAbonnementResponse[] = [];
   public transactionId: string | null = '';
   public abonnementId: string | null = '';
+  public userId: string | null = '';
   private boulResp: Array<BoulevardResponse>= [];
 
   private facture: Facture = {
@@ -74,7 +81,10 @@ export class ShowMoreAbonnementComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.abonnementId = this.activatedRoute.snapshot.params['id'];
+    this.abonnementId = this.activatedRoute.snapshot.params['abonnementId']
+    this.userId = this.activatedRoute.snapshot.params['userId']
+    this.getAbonnementById()
+    this.getAllLigneAbn()
   }
 
   private getUser(){
@@ -91,6 +101,22 @@ export class ShowMoreAbonnementComponent implements OnInit {
       }
     })
   }
+
+  // public getAllTransactions(){
+
+  //   this.transactionService.getAllTransaction()
+  //   .subscribe({
+  //     next : (data)=>{
+  //       this.transaction = data
+  //     },
+  //     error : (err)=>{
+
+  //       console.log(err)
+  //     }
+
+  //   })
+
+  // }
 
   public getFacture() {
     this.factureService
@@ -112,7 +138,7 @@ export class ShowMoreAbonnementComponent implements OnInit {
   public getImage() {
     this.imageService
       .findAllImages({
-        abonnementId: this.idAbn,
+        abonnementId: Number(this.abonnementId),
       })
       .subscribe({
         next: (data) => {
@@ -131,7 +157,7 @@ export class ShowMoreAbonnementComponent implements OnInit {
 
   getAbonnementById() {
     const abnParam: GetAbonnementById$Params = {
-      'abonnement-id': this.idAbn,
+      'abonnement-id': Number(this.abonnementId),
     };
     this.abnService.getAbonnementById(abnParam).subscribe({
       next: (data) => {
@@ -146,15 +172,15 @@ export class ShowMoreAbonnementComponent implements OnInit {
 
   public getAllLigneAbn() {
     this.ligneAbnService
-      .getAllLigneAbn({
+      .getAllLigneAbn1({
         abonnementId: Number(this.abonnementId),
       })
       .subscribe({
         next: (resp) => {
           this.lignAbn = resp;
-          console.log('this.lignAbn');
-          console.log(this.lignAbn);
-          console.log('this.setBoulevard()');
+          // console.log('this.lignAbn');
+          // console.log(this.lignAbn);
+          // console.log('this.setBoulevard()');
           // this.setBoulevard()
         },
         error: (err) => {

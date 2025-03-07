@@ -1,0 +1,118 @@
+<div class="p-4">
+  <div class="w-full">
+    <h1>Cet abonnement à été effecter le : {{abonnement.dateAbn}}</h1>
+    <h4>Nombre de jours : {{abonnement.nbrJrs}}</h4>
+    </div>
+  <div class="relative flex flex-col items-center max-w-screen-xl px-4 mx-auto md:flex-row sm:px-6 p-8">
+
+    <div class="flex items-center py-5 md:w-1/2 md:pb-20 md:pt-10 md:pr-10">
+        <div class="text-left">
+            <h2
+                class="text-4xl  leading-10 tracking-tight text-gray-800 sm:text-5xl sm:leading-none md:text-6xl">
+               Du {{abonnement.dateDebut}}
+                <span class="text-gray-800"> au </span>
+                <span class="text-xl rounded-full text-gray-800"> {{abonnement.dateFin}}</span>
+            </h2>
+            <p class="max-w-md mx-auto mt-3 text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                 {{abonnement.description}}
+            </p>
+            <div class="mt-5 sm:flex md:mt-8">
+                <button class="rounded-md shadow" (click)="getInvoice()"><span
+                        class="disabled cursor-pointer flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue md:py-4 md:text-lg md:px-10">
+                        Voir la facture
+                </span></button>
+                <!-- <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
+                    <a href=""
+                        class="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-blue-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-blue-600 focus:outline-none focus:shadow-outline-blue md:py-4 md:text-lg md:px-10">
+                        Contribute
+                    </a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center py-5 md:w-1/2 md:pb-20 md:pt-10 md:pl-10">
+        <div class="relative w-full p-3 rounded  md:p-8">
+            <div class="rounded-lg bg-white text-black w-full">
+              @for (image of _image; track $index) {
+                <div
+                  class="w-40 border border-indigo-300 hover:shadow-xl flex flex-col items-center"
+
+                >
+                  <img
+                    height="100%"
+                    width="100%"
+                    [src]="'data:image/jpg;base64,' + image.picture"
+                    class="shadow rounded-lg overflow-hidden border w-full object-cover"
+                  />
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="container p-2 mx-auto sm:p-4 dark:text-gray-800">
+    <h2 class="mb-4 text-2xl font-semibold leading-tight">Panneaux</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-xs">
+        <colgroup>
+          <col>
+          <col>
+          <col>
+          <col>
+          <col>
+          <col class="w-24">
+        </colgroup>
+        <thead class="dark:bg-gray-300">
+          <tr class="text-left">
+            <th class="p-3">Panneau</th>
+            <th class="p-3">Boulevard</th>
+            <th class="p-3">Localisation</th>
+            <th class="p-3">Type</th>
+            <th class="p-3">Taille</th>
+            <th class="p-3">Face</th>
+            <th class="p-3">Prix/Ms</th>
+            <th class="p-3 text-right">Prix Impression</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (panneau of lignAbn; track $index) {
+            <tr class="border-b border-opacity-20 dark:border-gray-300 dark:bg-gray-50">
+              <td class="p-3">
+                <p>{{panneau.panneauId}}</p>
+              </td>
+              <td class="p-3">
+                <p>{{panneau.boulevardName}}</p>
+              </td>
+              <td class="p-3">
+                <p>{{panneau.emplacement}}</p>
+              </td>
+              <td class="p-3">
+                <p>{{panneau.type}}</p>
+              </td>
+              <td class="p-3 text-right">
+                <p>{{panneau.taille}}</p>
+              </td>
+              <td class="p-3 text-right">
+                <span class="px-3 py-1 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">
+                  <span>{{panneau.nbrFace}}</span>
+                </span>
+              </td>
+              <td class="p-3 text-right">
+                <span class="px-3 py-1 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">
+                  <span>{{panneau.price}}</span>
+                </span>
+              </td>
+              <td class="p-3 text-right">
+                <span class="px-3 py-1 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">
+                  <span>{{panneau.printPrice}}</span>
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

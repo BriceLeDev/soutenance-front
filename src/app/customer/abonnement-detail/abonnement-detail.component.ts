@@ -51,7 +51,7 @@ export class AbonnementDetailComponent implements OnInit {
   public paymentLink : string | undefined = ""
   public finalAbnAmount= signal(0)
   public isFidel : boolean = false
-
+  public formData = new FormData()
   private abonnementRequest: AbonnementRequest ={
     Panneau : [],
     dateAbn : "",
@@ -348,6 +348,22 @@ public saveAbonnement(){
     );
     return;
   }
+if(this.haveImagePan() == true){
+  if (!this.fileBobl || this.fileBobl === '') {
+    this.toastr.error(
+      'Veuillez définir l\'image de l\'abonnement.',
+      'Conflit',
+      {
+        positionClass: 'toast-top-center',
+        timeOut: 5000,
+        closeButton: true,
+        progressBar: true
+      }
+    );
+    return;
+  }
+}
+
 
 
   this.abonnementRequest.Panneau = this.selectedPanneauAray.flatMap(pan => pan.id != undefined ? [pan.id]:[])
@@ -370,7 +386,20 @@ public recalculate(){
 }
 
 private addAbonnement(){
-  console.log("dand do abn")
+  // console.log("dand do abn")
+  if (this.abonnementRequest.description ==="") {
+    this.toastr.error(
+      'Veuillez donner une description ou autres informations sur votre abonnement.',
+      'Conflit',
+      {
+        positionClass: 'toast-top-center',
+        timeOut: 5000,
+        closeButton: true,
+        progressBar: true
+      }
+    );
+    return;
+  }
   this.abonnementService.doAbonnement({
     body:this.abonnementRequest
   }).subscribe({
@@ -386,8 +415,22 @@ private addAbonnement(){
     }
   })
 }
- formData = new FormData()
+
+
 private addImage(id:number){
+  // if (!this.fileBobl || this.fileBobl === '') {
+  //   this.toastr.error(
+  //     'Veuillez choisir une image ou décoché la case imprimé',
+  //     'Conflit',
+  //     {
+  //       positionClass: 'toast-top-center',
+  //       timeOut: 5000,
+  //       closeButton: true,
+  //       progressBar: true
+  //     }
+  //   );
+  //   return;
+  // }
   this.formData.append("abonnement-id", id.toString())
   this.formData.append("file", this.fileBobl ? this.fileBobl:"")
 

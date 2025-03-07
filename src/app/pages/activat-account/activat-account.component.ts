@@ -54,6 +54,24 @@ export class ActivatAccountComponent implements OnInit {
     });
   }
 
+
+
+  public resendeOtp(){
+
+    this.authService.resendToken(
+      {email : this.registerEmail}
+    ).subscribe(
+      {
+        next : resp=>{
+          console.log(resp)
+        },
+        error : err =>{
+          console.log(err)
+        }
+      }
+    )
+  }
+
   private extractErrorMessages(jsonString: string) {
     // Parse the JSON string into an object
     const jsonObject = JSON.parse(jsonString);

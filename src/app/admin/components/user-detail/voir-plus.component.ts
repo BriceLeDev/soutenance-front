@@ -12,15 +12,21 @@ import { error } from 'console';
 import { OwnerService } from '../../../openapi/services/services';
 import { UserResponse } from '../../../openapi/services/models';
 import { JwtDecodeService } from '../../../jwt/jwt-decode.service';
-
+import {MatTabsModule} from '@angular/material/tabs';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-voir-plus',
   standalone: true,
-  imports: [],
+  imports: [MatTabsModule],
   templateUrl: './voir-plus.component.html',
   styleUrl: './voir-plus.component.css',
 })
 export class VoirPlusComponent implements OnInit {
+
+  constructor( private toastr: ToastrService){
+
+ }
+
   ActiveRoute = inject(ActivatedRoute);
   public clientget!: Client;
   ClientId : string = "";
@@ -46,14 +52,14 @@ export class VoirPlusComponent implements OnInit {
     this.ClientId = this.ActiveRoute.snapshot.params['id'];
     console.log(this.ClientId);
     // this.getUser()
-    this.getClientById(Number.parseInt(this.ClientId) );
+    this.getClientById();
   }
 
   //avoir un clien par son id
-  getClientById(Id: number) {
+  getClientById() {
     this.customerService.getTheUserById(
       {
-        userId : Id
+        userId :  Number(this.ClientId)
       }
     ).subscribe({
       next: (value) => {
@@ -66,14 +72,24 @@ export class VoirPlusComponent implements OnInit {
       },
     });
   }
-  remooveClientFidele(Id: number) {
+  remooveClientFidele() {
     this.customerService.removeUserFidelisation(
       {
-        'owner-id': Id
+        'owner-id':  Number(this.ClientId)
       }
     ).subscribe({
       next: (value) => {
         console.log(value)
+        this.toastr.success(
+          'Le droit de fidélité a été retiré pour ce client.',
+          'Fidélisation',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
       },
       error: (er) => {
         this.theerror = er;
@@ -81,14 +97,24 @@ export class VoirPlusComponent implements OnInit {
       },
     });
   }
-  setClientFidele(Id: number) {
+  setClientFidele() {
     this.customerService.updateUserFidelisationToFalse(
       {
-        'owner-id': Id
+        'owner-id': Number(this.ClientId)
       }
     ).subscribe({
       next: (value) => {
         console.log(value)
+        this.toastr.success(
+          'Le droit de fidélité a été ajouté pour ce client.',
+          'Fidélisation',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
       },
       error: (er) => {
         this.theerror = er;
@@ -99,11 +125,21 @@ export class VoirPlusComponent implements OnInit {
   ClientBlocked(Id: number) {
     this.customerService.updateUserBlocked(
       {
-        'owner-id': Id
+        'owner-id':  Number(this.ClientId)
       }
     ).subscribe({
       next: (value) => {
         console.log(value)
+        this.toastr.success(
+          'Ce client est bloqué avec succès.',
+          'Fidélisation',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
       },
       error: (er) => {
         this.theerror = er;
@@ -114,7 +150,7 @@ export class VoirPlusComponent implements OnInit {
   ClientDeblock(Id: number) {
     this.customerService.updateUserDeBlocked(
       {
-        'owner-id': Id
+        'owner-id':  Number(this.ClientId)
       }
     ).subscribe({
       next: (value) => {

@@ -38,6 +38,11 @@ export class AbonnementsComponent implements OnInit {
     this.getAbonByAll();
   }
 
+
+  public voirPlus(id:number | undefined, userId:string | undefined){
+    this.route.navigate(["admin/abonnement/detail/"+id+"/"+userId])
+  }
+
   public dateClicked() {
     if (this.startDate === null) {
       alert(" Veuillez Choisir d'abord la date début!");

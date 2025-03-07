@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-payment',
   standalone: true,
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css',
 })

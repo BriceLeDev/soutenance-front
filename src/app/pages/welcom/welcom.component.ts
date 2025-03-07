@@ -39,6 +39,8 @@ export class WelcomComponent implements OnInit{
     disableOnInteraction: false  // Permet de continuer après interaction
   };
 
+  
+
   // @ViewChild('swiperRef', { static: false }) swiperRef: any;
   // swiperConfig: SwiperOptions = {
   //   slidesPerView: 1,

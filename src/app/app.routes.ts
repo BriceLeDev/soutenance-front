@@ -32,6 +32,7 @@ import { AbonnementDetailsComponent } from './admin/voirPlusComponents/abonnemen
 import { BoulevardsDetailsComponent } from './admin/voirPlusComponents/boulevards-details/boulevards-details.component';
 import { ShowMoreAbonnementComponent } from './customer/show-more-abonnement/show-more-abonnement.component';
 import { TransactionComponent } from './admin/transaction/transaction.component';
+import { AdminAbnDetailComponent } from './admin/admin-abn-detail/admin-abn-detail.component';
 
 export const routes: Routes = [
   {
@@ -80,8 +81,8 @@ export const routes: Routes = [
         component: PanneauDetailsComponent,
       },
       {
-        path: 'abonnement/detail/:id',
-        component: AbonnementDetailsComponent,
+        path: 'abonnement/detail/:abonnementId/:userId',
+        component: AdminAbnDetailComponent,
       },
       {
         path: 'boulevard/detail/:id',
@@ -126,13 +127,12 @@ export const routes: Routes = [
         path: 'payment',
         component: PaymentComponent,
       },
+      {
+        path: 'abonnement/:id',
+        component: ShowMoreAbonnementComponent,
+      },
 
     ]
-  },
-  {
-    path: 'abonnement/:abonnementId',
-    component: ShowMoreAbonnementComponent,
-    canActivate: [authAdminGuard],
   },
   {
     path: 'login',

@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { NgOptimizedImage } from '@angular/common';
 import AOS from 'aos';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { SharedServiceService } from '../../admin/admin-services/shared-service.service';
+import { JwtDecodeService } from '../../jwt/jwt-decode.service';
+import { AuthenticationService } from '../../openapi/services/services';
+import { TokenService } from '../../token/token.service';
 
 @Component({
   selector: 'app-header',
@@ -21,5 +27,7 @@ export class HeaderComponent  implements OnInit{
      }
     )
   }
+
+
 
 }

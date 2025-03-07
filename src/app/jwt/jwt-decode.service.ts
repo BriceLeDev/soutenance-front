@@ -64,6 +64,14 @@ export class JwtDecodeService {
     this.decoderJwt();
     return this.decode['exp'];
   }
+  getAccountLocked(): string[] | undefined {
+    this.decoderJwt();
+    return this.decode['isBlocked'];
+  }
+  getAccountNotActive():string[] | undefined {
+    this.decoderJwt();
+    return this.decode['isNotActiveAccount'];
+  }
 
   /**
    * Obtenir les rôles utilisateur (`authorities`).
@@ -77,6 +85,22 @@ export class JwtDecodeService {
    * Vérifier si le token est expiré.
    */
   isTokenExpired(): boolean {
+    const expiration = this.getExpiration();
+    if (!expiration) {
+      return true; // Si `exp` n'existe pas, considérer comme expiré
+    }
+    const currentTime = Math.floor(Date.now() / 1000); // Convertir la date actuelle en secondes
+    return expiration < currentTime;
+  }
+  isAccountLocked(): boolean {
+    const expiration = this.getExpiration();
+    if (!expiration) {
+      return true; // Si `exp` n'existe pas, considérer comme expiré
+    }
+    const currentTime = Math.floor(Date.now() / 1000); // Convertir la date actuelle en secondes
+    return expiration < currentTime;
+  }
+  isAccountNotActive(): boolean {
     const expiration = this.getExpiration();
     if (!expiration) {
       return true; // Si `exp` n'existe pas, considérer comme expiré
@@ -101,7 +125,7 @@ export class JwtDecodeService {
         },
       });
 
-    
+
   }
 
 

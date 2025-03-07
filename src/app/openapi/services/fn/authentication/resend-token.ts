@@ -10,7 +10,7 @@ import { RequestBuilder } from '../../request-builder';
 
 
 export interface ResendToken$Params {
-  email: string;
+  email: string | null;
 }
 
 export function resendToken(http: HttpClient, rootUrl: string, params: ResendToken$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {

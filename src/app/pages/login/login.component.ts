@@ -1,5 +1,5 @@
 import { authGuard } from './../../guards/auth.guard';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LoginFormRequest } from '../../openapi/services/models';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -36,6 +36,8 @@ export class LoginComponent {
   public isOkay: boolean = false;
   private isAuthenticate : boolean =false
   private profile : string[] | undefined
+  private isLocked : string | undefined
+  private isActive : string | undefined
 //   public login() {
 
 //     this.myerrore = []
@@ -78,6 +80,7 @@ export class LoginComponent {
 //     })
 // }
 public login() {
+
   this.myerrore = [];
   this.AuthService.login({
     body: this.AuthReques
@@ -87,6 +90,36 @@ public login() {
       this.myservices.isAuthenticate = true;
       this.profile = this.jwtService.getAuthorities();
 
+      if(this.isActive ==="false"){
+
+        this.router.navigate(['activate-account']);
+        this.toastr.error(
+          'Compte non activé impossible de se connecter.Veuillez vérifier votre boite mail et saisir le code envoyé pour activer votre compte.',
+          'Compte non activé',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 100000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
+        localStorage.removeItem('registerEmail');
+        return;
+      }
+      if(this.isLocked ==="false"){
+        this.toastr.error(
+          'Ce compte est bloqué, veuillez contacter All-Communication.',
+          'Compte bloqué',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
+        this.router.navigate(['activate-account']);
+        return;
+      }
       const redirectUrl = localStorage.getItem('redirectUrl') ||
                           (this.profile?.some(p => p === "USER")
                           ? '/customer/do-abonnement'
