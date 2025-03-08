@@ -1,0 +1,45 @@
+.attente-selected.mat-button-toggle-checked {
+  background-color: #ffc107 !important; /* Jaune */
+  color: black !important;
+}
+
+.valid-selected.mat-button-toggle-checked {
+  background-color: #4caf50 !important; /* Vert */
+  color: white !important;
+}
+
+.invalid-selected.mat-button-toggle-checked {
+  background-color: #f44336 !important; /* Rouge */
+  color: white !important;
+}
+section {
+  display: table;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 140px;
+}

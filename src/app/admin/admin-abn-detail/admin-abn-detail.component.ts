@@ -1,8 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import {
+  Abonnement,
   AbonnementResponse,
   BoulevardResponse,
-  Facture,
+  FactureResponse,
   ImageResponse,
   LigneAbonnementResponse,
   TransactionResponse,
@@ -21,10 +22,13 @@ import { GetAbonnementById$Params } from '../../openapi/services/fn/abonnement/g
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
 import { InvoiceService } from '../../customer/services/invoice.service';
+import {ChangeDetectionStrategy} from '@angular/core';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-admin-abn-detail',
   standalone: true,
-  imports: [],
+  imports: [MatButtonToggleModule],
   templateUrl: './admin-abn-detail.component.html',
   styleUrl: './admin-abn-detail.component.css'
 })
@@ -42,6 +46,8 @@ export class AdminAbnDetailComponent implements OnInit {
     private userService: OwnerService,
     private boulevardService : BoulevardService,
     private transactionService : TransactionControlerService,
+     private toastr: ToastrService,
+     private cdr: ChangeDetectorRef
 
   ) {}
   public _image: ImageResponse[] = [];
@@ -53,8 +59,9 @@ export class AdminAbnDetailComponent implements OnInit {
   public abonnementId: string | null = '';
   public userId: string | null = '';
   private boulResp: Array<BoulevardResponse>= [];
-
-  private facture: Facture = {
+  public imageUrl: string = '';
+  private facture: FactureResponse = {
+    abonnementId: 0,
     dateAbn: '',
     dateDebAbn: '',
     dateFinAbn: '',
@@ -80,12 +87,58 @@ export class AdminAbnDetailComponent implements OnInit {
         updateAt: "",
     }
 
+  isAreadyChecked?: boolean = true; // Cette variable contrôle la sélection
+  isValidAbn? : boolean = true
+  selectedValue: string ='';
+  isModalOpen = false;
   ngOnInit(): void {
-    this.abonnementId = this.activatedRoute.snapshot.params['abonnementId']
-    this.userId = this.activatedRoute.snapshot.params['userId']
-    this.getAbonnementById()
-    this.getAllLigneAbn()
+
+
+    this.activatedRoute.params.subscribe(params => {
+      this.abonnementId = params['abonnementId'];
+      this.userId = params['userId'];
+      if (this.abonnementId && this.userId) {
+        console.log("initialisation");
+        this.getAbonnementById();
+        this.getAllLigneAbn();
+        this.getImage()
+      }
+    });
   }
+
+  ngOnChanges() {
+    this.checkValidation();  // Met à jour automatiquement en cas de changement
+  }
+
+  public checkValidation(){
+
+    console.log("this.isAreadyChecked")
+    console.log(this.isAreadyChecked)
+    console.log("this.isValidAbn")
+    console.log(this.isValidAbn)
+
+    if (this.isAreadyChecked === false) {
+      this.selectedValue = "attente"
+    }else  {
+      if (this.isValidAbn === true) {
+        this.selectedValue = "valid"
+      }else{
+        this.selectedValue = "invalid"
+      }
+
+    }
+  }
+
+    // Fonction pour ouvrir la modale
+    openModal(imageUrl: string) {
+      this.imageUrl = imageUrl;
+      this.isModalOpen = true;
+    }
+
+    // Fonction pour fermer la modale
+    closeModal() {
+      this.isModalOpen = false;
+    }
 
   private getUser(){
     const email : string  = this.decoder.getEmail()
@@ -94,7 +147,7 @@ export class AdminAbnDetailComponent implements OnInit {
     }).subscribe({
       next : (data) =>{
         this.user = data
-        console.log(this.user)
+        // console.log(this.user)
       },
       error: (error)=>{
         console.log(error)
@@ -126,8 +179,8 @@ export class AdminAbnDetailComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.facture = data;
-          console.log('la facture');
-          console.log(this.facture);
+          // console.log('la facture');
+          // console.log(this.facture);
         },
         error: (error) => {
           console.log(error);
@@ -135,19 +188,38 @@ export class AdminAbnDetailComponent implements OnInit {
       });
   }
 
+  // public getImage() {
+  //   this.imageService
+  //     .findAllImages({
+  //       abonnementId: Number(this.abonnementId),
+  //     })
+  //     .subscribe({
+  //       next: (data) => {
+  //         this._image = data;
+  //         // console.log('this._image[0].picture');
+  //         // console.log(this._image[0].picture);
+  //         // this.imageUrl = 'data:image/jpg;base64,' + this._image[0].picture;
+  //         // console.log('this.imageUrl');
+  //         // console.log(this.imageUrl);
+  //       },
+  //       error: (err) => {
+  //         console.log(err);
+  //       },
+  //     });
+  // }
   public getImage() {
     this.imageService
-      .findAllImages({
-        abonnementId: Number(this.abonnementId),
+      .getImageByAbonnement({
+        abonnementId:  Number(this.abonnementId),
       })
       .subscribe({
         next: (data) => {
           this._image = data;
-          // console.log('this._image[0].picture');
-          // console.log(this._image[0].picture);
-          // this.imageUrl = 'data:image/jpg;base64,' + this._image[0].picture;
-          // console.log('this.imageUrl');
-          // console.log(this.imageUrl);
+          console.log('this._image[0].picture');
+          console.log(this._image[0].picture);
+          this.imageUrl = 'data:image/jpg;base64,' + this._image[0].picture;
+          console.log('this.imageUrl');
+          console.log(this.imageUrl);
         },
         error: (err) => {
           console.log(err);
@@ -162,12 +234,17 @@ export class AdminAbnDetailComponent implements OnInit {
     this.abnService.getAbonnementById(abnParam).subscribe({
       next: (data) => {
         this.abonnement = data;
+        this.isAreadyChecked = this.abonnement.alreadyCheck
+        this.isValidAbn = this.abonnement.valid
+        this.checkValidation();
         console.log(data);
       },
       error: (error) => {
         console.log(error);
       },
     });
+
+    this.cdr.detectChanges();
   }
 
   public getAllLigneAbn() {
@@ -187,6 +264,7 @@ export class AdminAbnDetailComponent implements OnInit {
           console.log(err);
         },
       });
+      this.cdr.detectChanges();
   }
 
   public getBoulevard(id: number | undefined){
@@ -198,13 +276,38 @@ export class AdminAbnDetailComponent implements OnInit {
       next: (data) => {
     console.log("my boulevard responses in methode")
         this.boulResp.push(data);
-        console.log("facture boulevard")
-        console.log(data)
+        // console.log("facture boulevard")
+        // console.log(data)
       },
       error: (err) => {
         console.log(err);
       },
     });
+  }
+
+  public ValidAbn() {
+    this.abnService.validate({
+      abonnementId:  Number(this.abonnementId),
+    }).subscribe({
+      next : rep =>{
+        this.toastr.success('Abonnement validé avec succès !!', 'Succès');
+      },
+      error : err =>{
+        console.log(err);
+      }
+    })
+  }
+  public InvalidAbn() {
+    this.abnService.invalidate({
+      abonnementId:  Number(this.abonnementId),
+    }).subscribe({
+      next : rep =>{
+        this.toastr.success('Abonnement invalidé avec succès !!', 'Succès');
+      },
+      error : err =>{
+        console.log(err);
+      }
+    })
   }
   public getInvoice() {
     // console.log(this.lignAbn)

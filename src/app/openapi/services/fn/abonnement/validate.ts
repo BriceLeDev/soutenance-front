@@ -10,7 +10,7 @@ import { RequestBuilder } from '../../request-builder';
 
 
 export interface Validate$Params {
-  abonnementId: number;
+  abonnementId?: number;
 }
 
 export function validate(http: HttpClient, rootUrl: string, params: Validate$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {

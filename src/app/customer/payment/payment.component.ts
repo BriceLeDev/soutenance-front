@@ -42,6 +42,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   public navigateTo() {
     if (this.paymentLink) {
+    this.chandDetect.detectChanges();
       window.location.href = this.paymentLink;
       localStorage.removeItem('selectedPanneaux');
       localStorage.removeItem('totalAmount');

@@ -1843,7 +1843,38 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Facture"
+                  "$ref": "#/components/schemas/FactureResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/facture/get-facture-by-abonnement": {
+      "get": {
+        "tags": [
+          "facture-controler"
+        ],
+        "operationId": "getFactureByAbonnementid",
+        "parameters": [
+          {
+            "name": "abonnementId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactureResponse"
                 }
               }
             }
@@ -2739,15 +2770,6 @@
           "name": {
             "type": "string"
           },
-          "accountNonLocked": {
-            "type": "boolean"
-          },
-          "accountNonExpired": {
-            "type": "boolean"
-          },
-          "credentialsNonExpired": {
-            "type": "boolean"
-          },
           "username": {
             "type": "string"
           },
@@ -2756,6 +2778,15 @@
             "items": {
               "$ref": "#/components/schemas/GrantedAuthority"
             }
+          },
+          "accountNonLocked": {
+            "type": "boolean"
+          },
+          "accountNonExpired": {
+            "type": "boolean"
+          },
+          "credentialsNonExpired": {
+            "type": "boolean"
           }
         }
       },
@@ -3119,6 +3150,9 @@
           "description": {
             "type": "string"
           },
+          "isAlreadyCheck": {
+            "type": "boolean"
+          },
           "niveauAbn": {
             "type": "string",
             "enum": [
@@ -3150,13 +3184,13 @@
               "$ref": "#/components/schemas/Image"
             }
           },
-          "montantTotalAbonnement": {
-            "type": "integer",
-            "format": "int64"
-          },
           "dureeAbonnement": {
             "type": "integer",
             "format": "int32"
+          },
+          "montantTotalAbonnement": {
+            "type": "integer",
+            "format": "int64"
           },
           "createdBy": {
             "type": "integer",
@@ -3640,13 +3674,6 @@
           "printPrice": {
             "type": "integer",
             "format": "int64"
-          },
-          "picture": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "byte"
-            }
           }
         }
       },
@@ -3674,7 +3701,7 @@
           }
         }
       },
-      "Facture": {
+      "FactureResponse": {
         "type": "object",
         "properties": {
           "id": {
@@ -3714,6 +3741,10 @@
           },
           "transaction": {
             "type": "string"
+          },
+          "abonnementId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -3801,6 +3832,10 @@
           "user": {
             "type": "string"
           },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
           "picture": {
             "type": "array",
             "items": {
@@ -3810,6 +3845,9 @@
                 "format": "byte"
               }
             }
+          },
+          "alreadyCheck": {
+            "type": "boolean"
           }
         }
       },

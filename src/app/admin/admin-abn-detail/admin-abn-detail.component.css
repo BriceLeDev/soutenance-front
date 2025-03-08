@@ -1,0 +1,14 @@
+.attente-selected.mat-button-toggle-checked {
+  background-color: #ffc107 !important; /* Jaune */
+  color: black !important;
+}
+
+.valid-selected.mat-button-toggle-checked {
+  background-color: #4caf50 !important; /* Vert */
+  color: white !important;
+}
+
+.invalid-selected.mat-button-toggle-checked {
+  background-color: #f44336 !important; /* Rouge */
+  color: white !important;
+}

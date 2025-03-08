@@ -5,7 +5,7 @@ import * as QRCode from 'qrcode';
 import autoTable, { CellInput } from 'jspdf-autotable';
 import {
   BoulevardResponse,
-  Facture,
+  FactureResponse,
   LigneAbonnement,
   LigneAbonnementResponse,
   Panneau,
@@ -271,7 +271,7 @@ export class InvoiceService {
 
   async generateInvoice(
     user: UserResponse,
-    facture: Facture,
+    facture: FactureResponse,
     boulevards: BoulevardResponse[],
     lignAbnne: LigneAbonnementResponse[]
   ) {

@@ -58,7 +58,7 @@
       </button>
   </div>
   @for (abonnement of lesAbonnements.content; track $index) {
-  <app-abonnement-card  [abonnement]="abonnement"></app-abonnement-card>
+  <app-abonnement-card (click)="voirPlus(abonnement.id)" class="cursor-pointer"  [abonnement]="abonnement"></app-abonnement-card>
   }
   <!-- https://play.tailwindcss.com/eCfibrSI2X -->
 </div>

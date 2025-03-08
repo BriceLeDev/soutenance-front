@@ -4,6 +4,7 @@ import { JwtDecodeService } from '../../jwt/jwt-decode.service';
 import { MessageResponse } from '../../openapi/services/models';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-inbox',
   standalone: true,
@@ -14,7 +15,8 @@ import { fr } from 'date-fns/locale';
 export class InboxComponent implements OnInit{
   constructor(
     private messageService: MessageControllerService,
-    private jwtService: JwtDecodeService
+    private jwtService: JwtDecodeService,
+     private route : Router
   ) {}
 
   public messages: Array<MessageResponse> = [];
@@ -23,6 +25,16 @@ export class InboxComponent implements OnInit{
   ngOnInit(): void {
       this.getAllMessage()
   }
+
+  public voirPlus(id: number | undefined) {
+    // Vérifiez si les valeurs ne sont pas undefined avant de naviguer
+    if (id) {
+      this.route.navigate(['customer', 'abonnement', 'detail', id]);
+    } else {
+      console.error('Les paramètres sont manquants !');
+    }
+  }
+
   transformDate(dateString: string ): string {
     const date = new Date(dateString);
     console.log(formatDistanceToNow(date, { locale: fr }))

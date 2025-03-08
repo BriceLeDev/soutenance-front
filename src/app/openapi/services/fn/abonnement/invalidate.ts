@@ -10,7 +10,7 @@ import { RequestBuilder } from '../../request-builder';
 
 
 export interface Invalidate$Params {
-  abonnementId: number;
+  abonnementId?: number;
 }
 
 export function invalidate(http: HttpClient, rootUrl: string, params: Invalidate$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {

@@ -11,7 +11,7 @@ import { RequestBuilder } from '../../request-builder';
 import { ImageResponse } from '../../models/image-response';
 
 export interface GetImageByAbonnement$Params {
-  abonnementId: number;
+  abonnementId: number | undefined;
 }
 
 export function getImageByAbonnement(http: HttpClient, rootUrl: string, params: GetImageByAbonnement$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ImageResponse>>> {

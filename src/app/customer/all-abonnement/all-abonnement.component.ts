@@ -59,6 +59,14 @@ export class AllAbonnementComponent implements OnInit {
     }
   }
 
+  public voirPlus(id: number | undefined) {
+    // Vérifiez si les valeurs ne sont pas undefined avant de naviguer
+    if (id) {
+      this.route.navigate(['customer', 'abonnement', 'detail', id]);
+    } else {
+      console.error('Les paramètres sont manquants !');
+    }
+  }
 
   private getUser() {
     const email: string = this.decoderService.getEmail();

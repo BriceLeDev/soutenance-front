@@ -6,7 +6,7 @@ export interface TransactionRequest {
   abonnementId?: number;
   amount?: number;
   chanel?: 'ALL' | 'MOBILE_MONEY' | 'CREDIT_CARD' | 'WALLET';
-  currency?: 'XOF' | 'XAF' | 'CDF' | 'GNF (Guinean Franc)' | 'USD (United States Dollar)';
+  currency?: 'XOF' | 'XAF' | 'CDF (Congolese Franc)' | 'GNF' | 'USD';
   dateTrans?: string;
   description?: string;
 }

@@ -76,7 +76,7 @@
 
   <div class="relative flex top-5 flex-wrap " >
     @for (abonnement of abonnementArray; track $index) {
-      <app-abonnement-card [abonnement]="abonnement" (click)="voirPlus(abonnement.id, abonnement.user)" class="w-1/2"></app-abonnement-card>
+      <app-abonnement-card [abonnement]="abonnement" (click)="voirPlus(abonnement.id, abonnement.user)" class="w-1/2 cursor-pointer"></app-abonnement-card>
       }
   </div>
 

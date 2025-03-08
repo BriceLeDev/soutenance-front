@@ -128,7 +128,7 @@ export const routes: Routes = [
         component: PaymentComponent,
       },
       {
-        path: 'abonnement/:id',
+        path: 'abonnement/detail/:id',
         component: ShowMoreAbonnementComponent,
       },
 

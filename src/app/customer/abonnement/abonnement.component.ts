@@ -3,18 +3,19 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, inject, OnInit } from '@angular/core';
 import { InvoiceService } from '../services/invoice.service';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
-import { AbonnementResponse, BoulevardResponse, Facture, ImageResponse, LigneAbonnementResponse, Role, User, UserResponse } from '../../openapi/services/models';
+import { AbonnementResponse, BoulevardResponse, FactureResponse, ImageResponse, LigneAbonnementResponse, Role, User, UserResponse } from '../../openapi/services/models';
 import { AbonnementService, BoulevardService, FactureControlerService, ImageService, LigneAbonnmentService, OwnerService } from '../../openapi/services/services';
 import { error } from 'console';
 import { publicDecrypt } from 'crypto';
 import { GetAbonnementById$Params } from '../../openapi/services/fn/abonnement/get-abonnement-by-id';
 import { DatePipe } from '@angular/common';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 @Component({
   selector: 'app-abonnement',
   standalone: true,
-  imports: [],
+  imports: [MatButtonToggleModule],
   templateUrl: './abonnement.component.html',
   styleUrl: './abonnement.component.css'
 })
@@ -37,7 +38,10 @@ export class AbonnementComponent implements OnInit {
   public code : string = ""
   public imageUrl: string = '';
   public _image: ImageResponse[] = [];
-
+  isAreadyChecked?: boolean = true; // Cette variable contrôle la sélection
+  isValidAbn? : boolean = true
+  selectedValue: string ='';
+  isModalOpen = false;
   private user : UserResponse ={
       accountLocked: false,
       createdAT: "",
@@ -50,7 +54,8 @@ export class AbonnementComponent implements OnInit {
       roleList: [],
       updateAt: "",
   }
-  private facture : Facture ={
+  private facture : FactureResponse ={
+    abonnementId:0,
     dateAbn: "",
     dateDebAbn: "",
     dateFinAbn: "",
@@ -73,14 +78,25 @@ ngOnInit(): void {
   // console.log("ActivatedRoute snapshot:", this.activatedRoute.snapshot);
   // console.log("Route params:", this.activatedRoute.snapshot.params);
 
-  // this.transactionId =this.activatedRoute.snapshot.params["transactionId"]
-  this.transactionId = this.activatedRoute.snapshot.queryParamMap.get('transactionId');
-  this.abonnementId = this.activatedRoute.snapshot.queryParamMap.get('abonnement');
-  this.getUser();
-  this.getFacture();
-  this.getAbonnement()
-  this.getAllLigneAbn()
-  this.getImage()
+  //  this.transactionId =this.activatedRoute.snapshot.params["transactionId"]
+  // this.transactionId = this.activatedRoute.snapshot.queryParamMap.get('transactionId');
+  // this.abonnementId = this.activatedRoute.snapshot.queryParamMap.get('abonnement');
+
+  this.activatedRoute.queryParams.subscribe(params => {
+    this.abonnementId =  params['abonnement'] ; // Assigne correctement l'ID de l'URL
+    this.transactionId = params['transactionId']; // Assigne la transactionId
+    console.log('Abonnement dans ngOnInit :', this.abonnement);
+    console.log('TransactionId dans ngOnInit :', this.transactionId);
+
+    // Appelle getImage() ici pour s'assurer que abonnement.id est bien défini
+    this.getUser();
+    this.getFacture();
+    this.getAbonnement()
+    this.getAllLigneAbn()
+    this.getImage();
+  });
+
+  // this.getImage()
   // this.setBoulevard()
   console.log("my boulevard responses in init")
   // console.log(this.transactionId)
@@ -95,6 +111,17 @@ ngOnInit(): void {
 //   return this.datePipe.transform(date, 'EEEE le dd MMMM yyyy', 'fr');
 // }
 
+  // Fonction pour ouvrir la modale
+  openModal(imageUrl: string) {
+    this.imageUrl = imageUrl;
+    this.isModalOpen = true;
+  }
+
+  // Fonction pour fermer la modale
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
 private getUser(){
   const email : string  = this.decoder.getEmail()
   this.userService.getUserByEmail({
@@ -102,7 +129,7 @@ private getUser(){
   }).subscribe({
     next : (data) =>{
       this.user = data
-      console.log(this.user)
+      // console.log(this.user)
     },
     error: (error)=>{
       console.log(error)
@@ -116,8 +143,8 @@ public getFacture(){
   }).subscribe({
     next:(data)=>{
       this.facture =data
-      console.log("la facture")
-      console.log(this.facture)
+      // console.log("la facture")
+      // console.log(this.facture)
     },
     error:(error)=>{
       console.log(error)
@@ -134,9 +161,9 @@ public getAllLigneAbn(){
   ).subscribe({
     next: (resp)=>{
       this.lignAbn = resp
-      console.log("this.lignAbn")
-      console.log(this.lignAbn)
-      console.log("this.setBoulevard()")
+      // console.log("this.lignAbn")
+      // console.log(this.lignAbn)
+      // console.log("this.setBoulevard()")
       // this.setBoulevard()
     },
     error:(err)=>{
@@ -149,17 +176,14 @@ private toNumber(value: string | null): number {
   return value !== null ? Number(value) : 0;
 }
 
-private abnParam : GetAbonnementById$Params ={
-  'abonnement-id' : this.toNumber(this.abonnementId)
-}
-
-
 public getAbonnement(){
-  this.abnParam['abonnement-id'] = this.toNumber(this.abonnementId)
-  console.log("dans get")
-  console.log(this.toNumber(this.abonnementId))
+  // this.abnParam['abonnement-id'] = this.toNumber(this.abonnementId)
+  // // console.log("dans get")
+  // // console.log(this.toNumber(this.abonnementId))
   this.abonnementService.getAbonnementById(
-    this.abnParam
+    {
+      'abonnement-id' : this.toNumber(this.abonnementId)
+    }
   ).subscribe({
     next:(data)=>{
       this.abonnement = data
@@ -179,10 +203,10 @@ public getBoulevard(id: number | undefined){
   })
   .subscribe({
     next: (data) => {
-  console.log("my boulevard responses in methode")
+  // console.log("my boulevard responses in methode")
       this.boulResp.push(data);
-      console.log("facture boulevard")
-      console.log(data)
+      // console.log("facture boulevard")
+      // console.log(data)
     },
     error: (err) => {
       console.log(err);
@@ -205,17 +229,17 @@ public getBoulevard(id: number | undefined){
 // }
 public getImage() {
   this.imageService
-    .findAllImages({
-      abonnementId: this.abonnement.id,
+    .getImageByAbonnement({
+      abonnementId: this.toNumber(this.abonnementId)
     })
     .subscribe({
       next: (data) => {
         this._image = data;
         console.log('this._image[0].picture');
         console.log(this._image[0].picture);
-        // this.imageUrl = 'data:image/jpg;base64,' + this._image[0].picture;
-        // console.log('this.imageUrl');
-        // console.log(this.imageUrl);
+        this.imageUrl = 'data:image/jpg;base64,' + this._image[0].picture;
+        console.log('this.imageUrl');
+        console.log(this.imageUrl);
       },
       error: (err) => {
         console.log(err);

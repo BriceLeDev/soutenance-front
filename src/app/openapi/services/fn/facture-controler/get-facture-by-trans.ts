@@ -8,13 +8,13 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { Facture } from '../../models/facture';
+import { FactureResponse } from '../../models/facture-response';
 
 export interface GetFactureByTrans$Params {
   transId: string | null;
 }
 
-export function getFactureByTrans(http: HttpClient, rootUrl: string, params: GetFactureByTrans$Params, context?: HttpContext): Observable<StrictHttpResponse<Facture>> {
+export function getFactureByTrans(http: HttpClient, rootUrl: string, params: GetFactureByTrans$Params, context?: HttpContext): Observable<StrictHttpResponse<FactureResponse>> {
   const rb = new RequestBuilder(rootUrl, getFactureByTrans.PATH, 'get');
   if (params) {
     rb.query('transId', params.transId, {});
@@ -25,7 +25,7 @@ export function getFactureByTrans(http: HttpClient, rootUrl: string, params: Get
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Facture>;
+      return r as StrictHttpResponse<FactureResponse>;
     })
   );
 }

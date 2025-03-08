@@ -39,9 +39,15 @@ export class AbonnementsComponent implements OnInit {
   }
 
 
-  public voirPlus(id:number | undefined, userId:string | undefined){
-    this.route.navigate(["admin/abonnement/detail/"+id+"/"+userId])
+  public voirPlus(id: number | undefined, userId: string | undefined) {
+    // Vérifiez si les valeurs ne sont pas undefined avant de naviguer
+    if (id && userId) {
+      this.route.navigate(['admin', 'abonnement', 'detail', id, userId]);
+    } else {
+      console.error('Les paramètres sont manquants !');
+    }
   }
+
 
   public dateClicked() {
     if (this.startDate === null) {
@@ -97,7 +103,5 @@ export class AbonnementsComponent implements OnInit {
     }
   }
 
-  public onClickAbonnement(abonnement: Abonnement) {
-    this.route.navigateByUrl(`abonnement/${abonnement.id}`);
-  }
+
 }
