@@ -102,6 +102,7 @@ export class AdminAbnDetailComponent implements OnInit {
         this.getAbonnementById();
         this.getAllLigneAbn();
         this.getImage()
+        this.getFacture()
       }
     });
   }
@@ -173,8 +174,8 @@ export class AdminAbnDetailComponent implements OnInit {
 
   public getFacture() {
     this.factureService
-      .getFactureByTrans({
-        transId: this.transactionId,
+      .getFactureByAbonnementid({
+        abonnementId: Number(this.abonnementId)
       })
       .subscribe({
         next: (data) => {

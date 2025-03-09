@@ -1,6 +1,6 @@
 import { Panneau } from './../../openapi/services/models/panneau';
 import { ActivatedRoute } from '@angular/router';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnChanges, OnInit } from '@angular/core';
 import { InvoiceService } from '../services/invoice.service';
 import { JwtDecodeService } from '../../jwt/jwt-decode.service';
 import { AbonnementResponse, BoulevardResponse, FactureResponse, ImageResponse, LigneAbonnementResponse, Role, User, UserResponse } from '../../openapi/services/models';
@@ -42,6 +42,10 @@ export class AbonnementComponent implements OnInit {
   isValidAbn? : boolean = true
   selectedValue: string ='';
   isModalOpen = false;
+  public format: string  = "";
+  public fileBobl: any ;
+  public _imageUrl: any = "";
+  public videoUrl: any = '';
   private user : UserResponse ={
       accountLocked: false,
       createdAT: "",
@@ -96,6 +100,9 @@ ngOnInit(): void {
     this.getImage();
   });
 
+
+
+
   // this.getImage()
   // this.setBoulevard()
   console.log("my boulevard responses in init")
@@ -110,7 +117,24 @@ ngOnInit(): void {
 //   const date = new Date(dates);
 //   return this.datePipe.transform(date, 'EEEE le dd MMMM yyyy', 'fr');
 // }
+public checkValidation(){
 
+  console.log("this.isAreadyChecked")
+  console.log(this.isAreadyChecked)
+  console.log("this.isValidAbn")
+  console.log(this.isValidAbn)
+
+  if (this.isAreadyChecked === false) {
+    this.selectedValue = "attente"
+  }else  {
+    if (this.isValidAbn === true) {
+      this.selectedValue = "valid"
+    }else{
+      this.selectedValue = "invalid"
+    }
+
+  }
+}
   // Fonction pour ouvrir la modale
   openModal(imageUrl: string) {
     this.imageUrl = imageUrl;
@@ -187,6 +211,10 @@ public getAbonnement(){
   ).subscribe({
     next:(data)=>{
       this.abonnement = data
+      this.isAreadyChecked = this.abonnement.alreadyCheck
+      this.isValidAbn = this.abonnement.valid
+      this.checkValidation()
+      // console.log("abonnement"))
       console.log(data)
     },
     error:(error)=>{
@@ -247,6 +275,26 @@ public getImage() {
     });
 }
 
+onSelectFile(event:any) {
+  const file = event.target.files && event.target.files[0];
+  this.fileBobl = event.target.files && event.target.files[0];
+  if (file) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    if(file.type.indexOf('image')> -1){
+      this.format = 'image';
+      reader.onload = (event) => {
+        this._imageUrl = (<FileReader>event.target).result;
+      }
+    } else if(file.type.indexOf('video')> -1){
+      this.format = 'video';
+      reader.onload = (event) => {
+        this.videoUrl = (<FileReader>event.target).result;
+      }
+    }
+
+  }
+}
 public getInvoice(){
   // console.log(this.lignAbn)
   this.invoiceService.generateInvoice(this.user,this.facture,this.boulResp,this.lignAbn)

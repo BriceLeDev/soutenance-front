@@ -4,7 +4,7 @@
  *****************************************************************
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Client } from '../../../model/Client';
 import { AdministrationService } from '../../admin-services/administration-service.service';
@@ -23,7 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class VoirPlusComponent implements OnInit {
 
-  constructor( private toastr: ToastrService){
+  constructor( private toastr: ToastrService,private cdr: ChangeDetectorRef){
 
  }
 
@@ -33,8 +33,8 @@ export class VoirPlusComponent implements OnInit {
   customerService = inject(OwnerService);
   decoder = inject(JwtDecodeService);
   theerror = '';
-  isFidel : boolean = false;
-  isBlocked : boolean = false;
+  isFidel : boolean = true;
+  isBlocked : boolean = true;
    public username : string = ""
    public user : UserResponse={
         accountLocked: false,
@@ -80,6 +80,7 @@ export class VoirPlusComponent implements OnInit {
     ).subscribe({
       next: (value) => {
         console.log(value)
+        this.isFidel = false;
         this.toastr.success(
           'Le droit de fidélité a été retiré pour ce client.',
           'Fidélisation',
@@ -93,9 +94,20 @@ export class VoirPlusComponent implements OnInit {
       },
       error: (er) => {
         this.theerror = er;
+        this.toastr.error(
+          'Le droit de fidélité a été  déjà retiré pour ce client.',
+          'Fidélisation',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
         // console.log(er);
       },
     });
+    this.cdr.detectChanges();
   }
   setClientFidele() {
     this.customerService.updateUserFidelisationToFalse(
@@ -105,8 +117,9 @@ export class VoirPlusComponent implements OnInit {
     ).subscribe({
       next: (value) => {
         console.log(value)
+        this.isFidel = true;
         this.toastr.success(
-          'Le droit de fidélité a été ajouté pour ce client.',
+          'Ce client a été fidélisé avec succès.',
           'Fidélisation',
           {
             positionClass: 'toast-top-center',
@@ -118,11 +131,22 @@ export class VoirPlusComponent implements OnInit {
       },
       error: (er) => {
         this.theerror = er;
+        this.toastr.error(
+          'Ce client a été déjà fidélisé.',
+          'Fidélisation',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
         // console.log(er);
       },
     });
+    this.cdr.detectChanges();
   }
-  ClientBlocked(Id: number) {
+  ClientBlocked() {
     this.customerService.updateUserBlocked(
       {
         'owner-id':  Number(this.ClientId)
@@ -130,6 +154,7 @@ export class VoirPlusComponent implements OnInit {
     ).subscribe({
       next: (value) => {
         console.log(value)
+        this.isBlocked = true;
         this.toastr.success(
           'Ce client est bloqué avec succès.',
           'Fidélisation',
@@ -143,11 +168,22 @@ export class VoirPlusComponent implements OnInit {
       },
       error: (er) => {
         this.theerror = er;
+        this.toastr.error(
+          'Ce client est déjà bloqué avec succès.',
+          'Fidélisation',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
         // console.log(er);
       },
     });
+    this.cdr.detectChanges();
   }
-  ClientDeblock(Id: number) {
+  ClientDeblock() {
     this.customerService.updateUserDeBlocked(
       {
         'owner-id':  Number(this.ClientId)
@@ -155,12 +191,34 @@ export class VoirPlusComponent implements OnInit {
     ).subscribe({
       next: (value) => {
         console.log(value)
+        this.isBlocked = false;
+        this.toastr.success(
+          'Ce client est débloqué.',
+          'Fidélisation',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
       },
       error: (er) => {
         this.theerror = er;
+        this.toastr.error(
+          'Ce client est déjà débloqué..',
+          'Fidélisation',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
         // console.log(er);
       },
     });
+    this.cdr.detectChanges();
   }
 
   private getUser(){

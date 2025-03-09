@@ -1,21 +1,35 @@
 <div
-*ngIf="abonnement"
-(click)="onClickAbonnement(abonnement)"
-  class="w-96 group h-auto  bg-slate-50  m-5 relative overflow-hidden px-6 pt-10 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10"
+  *ngIf="abonnement"
+  (click)="onClickAbonnement(abonnement)"
+  class="w-96 group h-auto bg-slate-50 m-5 relative overflow-hidden px-6 pt-10 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10"
 >
-  <span
-    class="relative -top-8 right-4 p-2.5 border-none rounded-full bg-green-100 text-xs text-green-800 font-medium"
-    class="{{statutAbonnement ==='Expiré' ? 'bg-red-100':statutAbonnement === 'À venir' ? 'bg-orange-100' :''}}"
-    >{{statutAbonnement}}</span
-  >
+  <div class="flex flex-row items-center justify-between">
+    <span
+      class="relative -top-8 right-4 p-2.5 border-none rounded-full bg-green-100 text-xs text-green-800 font-medium"
+      class="{{
+        statutAbonnement === 'Expiré'
+          ? 'bg-red-100'
+          : statutAbonnement === 'À venir'
+          ? 'bg-orange-100'
+          : ''
+      }}"
+      >{{ statutAbonnement }}</span
+    >
 
-  <span
-    class="absolute top-1  z-0 h-20 w-20 rounded-full bg-gray-100 transition-all duration-300 group-hover:scale-[10]"
-  >
+    <span
+      class="relative -top-8 right-4 p-2.5 border-none rounded-full bg-green-100 text-xs text-green-800 font-medium"
+      class="{{
+        this.validiteAbonnement === 'Valide'
+          ? 'bg-red-100'
+          : this.validiteAbonnement === 'Invalide'
+          ? 'bg-red-500 text-white'
+          : ''
+      }}"
+      >{{ validiteAbonnement }}</span
+    >
+  </div>
 
-</span>
-
-  <div class="relative z-10 mx-auto max-w-md  hover:bg-gray-100">
+  <div class="relative z-10 mx-auto max-w-md ">
     <h1 class="text-center font-bold">Fait le : {{ abonnement.dateAbn }}</h1>
 
     <div class="w-full flex flex-col justify-center items-center">
@@ -66,7 +80,15 @@
     <div
       class="space-y-6 pt-5 text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-gray-400/90"
     >
-      <p class="w-full">Perfect for learning</p>
+      <span
+        class="relative -top-5 right-4 p-2.5 border-none rounded-full bg-green-100 text-xs text-green-800 font-medium"
+      >
+        {{
+          this.abonnement.alreadyCheck
+            ? "Déjà validé"
+            : "En attent de validation"
+        }}
+      </span>
     </div>
     <div class="pt-5 text-base font-semibold leading-7">
       <p>

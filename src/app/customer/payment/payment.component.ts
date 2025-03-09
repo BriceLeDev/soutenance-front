@@ -20,35 +20,35 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public showComponent = false;
   ngOnInit(): void {
     setTimeout(() => {
-      console.info('Lien de payement');
-      console.log(this.paymentLink);
-      console.info(' ici Lien de payement');
+      console.info('Lien de paiement');
       this.paymentLink = localStorage.getItem('paymentUrl');
       this.showComponent = true;
-      this.cdRef.detectChanges();
-    }, 1000); // On ajoute un delai d'une seconde avant de lancer la recuperation du localstorage
-    // this.reloadComponent();
+      this.cdRef.detectChanges(); // Déclenche la détection des changements pour l'affichage
+    }, 1000);
   }
 
   public chargePayment() {
-    this.chandDetect.detectChanges();
     this.paymentLink = localStorage.getItem('paymentUrl');
+    this.cdRef.detectChanges();
   }
 
-  ngOnDestroy(): void {
-    localStorage.removeItem('selectedPanneaux');
-    localStorage.removeItem('totalAmount');
-  }
 
   public navigateTo() {
     if (this.paymentLink) {
-    this.chandDetect.detectChanges();
-      window.location.href = this.paymentLink;
+      console.log('Redirection vers:', this.paymentLink);
       localStorage.removeItem('selectedPanneaux');
       localStorage.removeItem('totalAmount');
+
+      setTimeout(() => {
+        window.location.href = this.paymentLink!;
+      }, 500); // Petit délai pour que Angular détecte les changements avant la redirection
     } else {
       console.error('Payment link is undefined or invalid');
     }
+  }
+  ngOnDestroy(): void {
+    localStorage.removeItem('selectedPanneaux');
+    localStorage.removeItem('totalAmount');
   }
   // reloadComponent(): void {
   //   this.showComponent = false;

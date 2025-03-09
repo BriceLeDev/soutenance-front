@@ -38,6 +38,7 @@ export class AbonnementCardComponent implements OnInit, OnDestroy {
   public isValid: boolean = true;
   public dateDuJour: string = '';
   statutAbonnement: string = '';
+  validiteAbonnement: string = '';
   @Input() abonnement?: AbonnementResponse = {
 
   };
@@ -66,6 +67,7 @@ export class AbonnementCardComponent implements OnInit, OnDestroy {
         this.abonnement.dateDebut,
         this.abonnement.dateFin
       );
+      this.validiteAbonnement = this.getAbonnementValidite();
     }
   }
 
@@ -141,5 +143,19 @@ export class AbonnementCardComponent implements OnInit, OnDestroy {
     } else {
       return 'Expiré'; // L'abonnement est terminé
     }
+  }
+  getAbonnementValidite(): string {
+    if(this.abonnement?.alreadyCheck){
+
+      if (this.abonnement?.valid) {
+        return 'Valide'; // L'abonnement commence dans le futur
+      } else  {
+        return 'Invalide'; // L'abonnement est actuellement actif
+      }
+
+    }else{
+      return '';
+    }
+
   }
 }

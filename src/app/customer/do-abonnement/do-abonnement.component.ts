@@ -45,7 +45,9 @@ export class DoAbonnementComponent implements OnInit{
       const savedAmount = localStorage.getItem('totalAmount');
 
       if (savedPanneaux) {
+        // this.selectedPanneaux.push(...JSON.parse(savedPanneaux));
         this.selectedPanneaux = new Set(JSON.parse(savedPanneaux));
+        // this.selectedPanneauAray) = new Set(JSON.parse(savedPanneaux));
         this.selectedPanneauAray = Array.from(this.selectedPanneaux)
       }
       if (savedAmount) {
@@ -105,46 +107,117 @@ export class DoAbonnementComponent implements OnInit{
           })
     }
 
+    // public addPrice(panneau: PanneauResponse, event: any) {
+    //   const prix = panneau.prixMensuel || 0;
+    //   const isChecked = event.target.checked;
+    //   console.log(isChecked)
+    //   if (isChecked) {
+    //     console.log(isChecked)
+    //     this.totalAmount += prix;
+    //     this.selectedPanneaux.add(panneau);
+    //      console.log(this.selectedPanneaux)
+    //     // Sauvegarder la sélection dans le localStorage
+    //     localStorage.setItem('selectedPanneaux', JSON.stringify(Array.from(this.selectedPanneaux)));
+    //     localStorage.setItem('totalAmount', this.totalAmount.toString());
+    //   } else {
+    //     console.log(isChecked)
+    //     this.totalAmount -= prix;
+    //     this.selectedPanneaux.delete(panneau);
+    //     console.log(this.selectedPanneaux)
+    //     // Mettre à jour le localStorage
+    //     localStorage.setItem('selectedPanneaux', JSON.stringify(Array.from(this.selectedPanneaux)));
+    //     localStorage.setItem('totalAmount', this.totalAmount.toString());
+    //   }
+    // }
+
+    public haveVideoPan() : boolean{
+      return [...this.selectedPanneaux].some((selectPan) => selectPan.typePanneauLibele === "Numérique-vidéo");
+    }
+
+
     public addPrice(panneau: PanneauResponse, event: any) {
+
+      this.haveVideoPan()
+      console.log(this.haveVideoPan())
       const prix = panneau.prixMensuel || 0;
       const isChecked = event.target.checked;
 
       if (isChecked) {
-        this.totalAmount += prix;
-        this.selectedPanneaux.add(panneau);
-        // console.log(this.selectedPanneaux)
-        // Sauvegarder la sélection dans le localStorage
-        localStorage.setItem('selectedPanneaux', JSON.stringify(Array.from(this.selectedPanneaux)));
-        localStorage.setItem('totalAmount', this.totalAmount.toString());
+        if (this.haveVideoPan() && this.selectedPanneaux.size > 1) {
+          console.log(this.haveVideoPan())
+          console.log("this.haveVideoPan() in if")
+
+          this.toastr.error(
+            "Veuillez faire l'abonnement au panneaux de type vidéo séparés des autres types.",
+            'Conflit',
+            {
+              positionClass: 'toast-top-center',
+              timeOut: 5000,
+              closeButton: true,
+              progressBar: true
+            }
+          );
+          return;
+        }
+          console.log("this.haveVideoPan() in else")
+          console.log(this.haveVideoPan())
+        // Vérifier si un panneau avec le même ID est déjà dans le Set
+        if (![...this.selectedPanneaux].some(p => p.id === panneau.id)) {
+          this.totalAmount += prix;
+          this.selectedPanneaux.add(panneau);
+        }
       } else {
+       
+          console.log("this.haveVideoPan() in else")
+          console.log(this.haveVideoPan())
+        // Supprimer le panneau du Set s'il est présent
+        this.selectedPanneaux = new Set([...this.selectedPanneaux].filter(p => p.id !== panneau.id));
         this.totalAmount -= prix;
-        this.selectedPanneaux.delete(panneau);
-        // Mettre à jour le localStorage
-        localStorage.setItem('selectedPanneaux', JSON.stringify(Array.from(this.selectedPanneaux)));
-        localStorage.setItem('totalAmount', this.totalAmount.toString());
       }
+
+      // Sauvegarder la sélection dans le localStorage
+      localStorage.setItem('selectedPanneaux', JSON.stringify([...this.selectedPanneaux]));
+      localStorage.setItem('totalAmount', this.totalAmount.toString());
+
+      console.log(this.selectedPanneaux);
+
     }
 
-    public addPrintPrice(panneau: PanneauResponse, event: any) {
-      const prix = panneau.printPrice || 0; // Prix du panneau
-      const isChecked = event.target.checked;
 
-      if (isChecked) {
-        this.totalAmount += prix;
-        // this.selectedPanneaux.add(panneau);
 
-        // console.log(this.selectedPanneaux);
-      } else {
-        this.totalAmount -= prix;
-        // this.selectedPanneaux.delete(panneau);
-        // console.log("selectedPanneaux");
-        // console.log(this.selectedPanneaux);
-      }
-    }
+    // public addPrintPrice(panneau: PanneauResponse, event: any) {
+    //    const prix = panneau.printPrice || 0; // Prix du panneau
+    //   const isChecked = event.target.checked;
+
+    //   // if (isChecked) {
+    //   //   this.totalAmount += prix;
+    //   //    this.selectedPanneaux.push(panneau);
+
+    //   //   // console.log(this.selectedPanneaux);
+    //   // } else {
+    //   //   this.totalAmount -= prix;
+    //   //   this.selectedPanneaux = this.selectedPanneaux.filter(p => p.id !== panneau.id);
+    //   //   // console.log("selectedPanneaux");
+    //   //   // console.log(this.selectedPanneaux);
+    //   // }
+    // }
     public getDetail(){
       if (this.totalAmount == 0) {
         this.toastr.error(
           'Veuillez choisir au moins un panneau publicitaire.',
+          'Conflit',
+          {
+            positionClass: 'toast-top-center',
+            timeOut: 5000,
+            closeButton: true,
+            progressBar: true
+          }
+        );
+        return
+      }
+      if (this.haveVideoPan() && this.selectedPanneaux.size > 1) {
+        this.toastr.error(
+          "Veuillez faire l'abonnement au panneaux de type vidéo séparés des autres types.",
           'Conflit',
           {
             positionClass: 'toast-top-center',

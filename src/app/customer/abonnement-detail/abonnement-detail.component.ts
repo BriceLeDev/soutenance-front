@@ -3,14 +3,15 @@ import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
 import {MatDatepickerModule} from '@angular/material/datepicker'
-import { AbonnementRequest, PanneauResponse, TransactionRequest } from '../../openapi/services/models';
+import { AbonnementRequest, PanneauResponse, TransactionRequest, UserResponse } from '../../openapi/services/models';
 import { FormsModule } from '@angular/forms';
-import {  AbonnementService, ImageService, TransactionControlerService } from '../../openapi/services/services';
+import {  AbonnementService, ImageService, OwnerService, TransactionControlerService } from '../../openapi/services/services';
 import { SaveImae$Params } from '../../openapi/services/fn/image/save-imae';
 import { SharedServiceService } from '../../admin/admin-services/shared-service.service';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2'
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { JwtDecodeService } from '../../jwt/jwt-decode.service';
 @Component({
   selector: 'app-abonnement-detail',
   standalone: true,
@@ -27,7 +28,10 @@ export class AbonnementDetailComponent implements OnInit {
     private sharedService : SharedServiceService,
     private router : Router,
     private chandDetect : ChangeDetectorRef,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private userService: OwnerService,
+    private decoder: JwtDecodeService,
+    private cdr: ChangeDetectorRef
 
   ){}
 
@@ -61,10 +65,25 @@ export class AbonnementDetailComponent implements OnInit {
     prix: 0
   }
 
+  public user: UserResponse = {
+    accountLocked: false,
+    createdAT: '',
+    email: '',
+    enabled: true,
+    fidelisation: false,
+    id: 0,
+    nonUtilisateur: '',
+    numero: '',
+    roleList: [],
+    updateAt: '',
+  };
 
 
 
   ngOnInit(): void {
+    console.log("dans le init")
+    this.getUser()
+    console.log("dans le init")
     const savedPanneaux = localStorage.getItem('selectedPanneaux');
     const savedAmount = localStorage.getItem('totalAmount');
 
@@ -76,9 +95,28 @@ export class AbonnementDetailComponent implements OnInit {
       this.totalAmount = parseFloat(savedAmount);
       this.totalAmount = this.totalAmount*this.calculateAbnAmount(this.startDate,this.endDate);
     }
+
+
   }
 
-
+  private getUser() {
+    const email: string = this.decoder.getEmail();
+    this.userService
+      .getUserByEmail({
+        email: email,
+      })
+      .subscribe({
+        next: (data) => {
+          this.user = data;
+           console.log("this.user.fidelisation");
+           console.log(this.user.fidelisation);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+      this.cdr.detectChanges();
+  }
 
   public addPrintPrice(panneau: PanneauResponse, event: any) {
     const prix = panneau.printPrice || 0; // Prix du panneau

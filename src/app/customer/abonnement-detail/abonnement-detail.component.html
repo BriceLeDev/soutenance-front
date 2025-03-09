@@ -308,47 +308,48 @@
       ></video>
       <br />
     </div>
-
-
   </div>
   }
 </div>
 
 <div class="flex flex-row">
   <button
-  (click)="clickOnAbnbtn()"
-  [swal]="abonnement"
-  (confirm)="saveAbonnement()"
-  (deny)="recalculate()"
-  type="button"
-  class="py-2.5 pl-6 pr-3.5 text-sm bg-indigo-50 text-indigo-500 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 flex items-center hover:bg-indigo-100"
->
-  Valider votre abonnement
-  <svg
-    class="ml-3"
-    width="6"
-    height="10"
-    viewBox="0 0 6 10"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
+    (click)="clickOnAbnbtn()"
+    [swal]="abonnement"
+    (confirm)="saveAbonnement()"
+    (deny)="recalculate()"
+    type="button"
+    class="py-2.5 pl-6 pr-3.5 text-sm bg-indigo-50 text-indigo-500 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 flex items-center hover:bg-indigo-100"
   >
-    <path
-      d="M1 9L3.58579 6.41421C4.25245 5.74755 4.58579 5.41421 4.58579 5C4.58579 4.58579 4.25245 4.25245 3.58579 3.58579L1 1"
-      stroke="#5551FF"
-      stroke-width="1.6"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    ></path>
-  </svg>
-</button>
-
-<button
+    Valider votre abonnement
+    <svg
+      class="ml-3"
+      width="6"
+      height="10"
+      viewBox="0 0 6 10"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1 9L3.58579 6.41421C4.25245 5.74755 4.58579 5.41421 4.58579 5C4.58579 4.58579 4.25245 4.25245 3.58579 3.58579L1 1"
+        stroke="#5551FF"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></path>
+    </svg>
+  </button>
+@if (this.user.fidelisation===true) {
+  <button
   (click)="recalculate()"
+  class="flex items-center justify-center py-2.5 pl-6 pr-3.5 text-sm bg-indigo-50 text-indigo-500 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500  hover:bg-indigo-100"
   type="button"
-  class="py-2.5 pl-6 pr-3.5 text-sm bg-indigo-50 text-indigo-500 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 flex items-center hover:bg-indigo-100"
+  
 >
   Payer par tranche
 </button>
+}
+
 </div>
 <!-- <button
   [swal]="{ title: 'Save file as...', input: 'text', showDenyButton: true, denyButtonText: 'Don\'t save', showCancelButton: true }"
@@ -363,7 +364,6 @@ My Test
   text="Le coût total de votre abonnement, calculé en fonction de la durée définie, s'élève à {{
     finalAbnAmount() + totalPrintPrice()
   }}"
-
   icon="info"
   [showCancelButton]="true"
   [focusCancel]="true"
@@ -385,6 +385,5 @@ My Test
   "
   (deny)="recalculate()"
 >
-
   >
 </swal>

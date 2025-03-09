@@ -23,9 +23,10 @@
         name="fontStyle"
         aria-label="Font Style"
         [(value)]="selectedValue"
+        [disabled]="true"
       >
         <mat-button-toggle
-          
+
           value="attente"
           [class.attente-selected]="{
             'attente-selected': selectedValue === 'attente'
@@ -34,7 +35,7 @@
           <span
             ><var
               >@if (this.isAreadyChecked) { Abonnement déjà validé }@else { En
-              attente de validation, veuillez valider ou invalider l'abonnement
+              attente de validation
               }
             </var></span
           >:
@@ -47,7 +48,7 @@
             'valid-selected': selectedValue === 'valid'
           }"
         >
-          Valider
+          Valide
         </mat-button-toggle>
 
         <mat-button-toggle
@@ -57,7 +58,7 @@
             'invalid-selected': selectedValue === 'invalid'
           }"
         >
-          Invalider
+          Invalide
         </mat-button-toggle>
       </mat-button-toggle-group>
     </p>
@@ -86,7 +87,7 @@
             </p>
           </div>
 
-          <div class="bg-gray-100 p-6 rounded-lg shadow-lg mt-6">
+          <div class="bg-gray-50 p-6 rounded-lg shadow-lg mt-6">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">
               Description de l'abonnement
             </h2>
@@ -127,6 +128,23 @@
             />
           </div>
         </div>
+        <!-- <div class="font-[sans-serif] max-w-md mx-auto">
+          <input
+            type="file"
+            (change)="onSelectFile($event)"
+            accept="image/*,video/*"
+            class="w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500 rounded"
+          />
+          <p class="text-xs text-gray-400 mt-2 text-center">PNG, JPG, MP4</p>
+
+          <div class="overflow-hidden whitespace-nowrap">
+            <section>
+              <div class="example-button-row">
+                <button mat-raised-button>Modifier l'mage</button>
+              </div>
+            </section>
+          </div>
+        </div> -->
       </div>
       @if (isModalOpen) {
       <div
