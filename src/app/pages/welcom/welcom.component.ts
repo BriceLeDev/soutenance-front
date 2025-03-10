@@ -2,6 +2,7 @@ import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/c
 import { HeaderComponent } from '../../components/header/header.component';
 import AOS from 'aos';
 import { Swiper, SwiperOptions } from 'swiper/types';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-welcom',
@@ -22,15 +23,25 @@ export class WelcomComponent implements OnInit{
   ];
 
   ngOnInit(): void {
+
           AOS.init(
            {
             duration: 1200, // Durée de l'animation en millisecondes
             once: false,
             mirror: true,     // L'animation ne se joue qu'une seule fois
             offset: 200,
-           }
+           },
           )
-
+    setTimeout(() => {
+      Swal.fire({
+        title: 'Bienvenue !',
+        text: 'Découvrez nos solutions pour la gestion de panneaux publicitaires.',
+        icon: 'info',
+        timer: 100000,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }, 2000)
 
   }
 
@@ -39,7 +50,7 @@ export class WelcomComponent implements OnInit{
     disableOnInteraction: false  // Permet de continuer après interaction
   };
 
-  
+
 
   // @ViewChild('swiperRef', { static: false }) swiperRef: any;
   // swiperConfig: SwiperOptions = {

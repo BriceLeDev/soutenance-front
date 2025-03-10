@@ -139,7 +139,7 @@ public login() {
 
       if (err.status === 401) {
         this.toastr.error(
-          'Identifiants incorrects.Veuillez réessayer.Ou créez un compte si vous n\'en avez pas.',
+          'Identifiants incorrects.Veuillez réessayer, ou créez un compte si vous n\'en avez pas. Ou votre compte est bloqué.',
           'Erreur de connexion',
           {
             positionClass: 'toast-top-center',

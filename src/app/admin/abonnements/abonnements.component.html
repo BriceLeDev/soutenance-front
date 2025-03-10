@@ -59,24 +59,25 @@
           </button>
         </div>
         <select
-        [(ngModel)]="selectedPricingType"
+         [(ngModel)]="selectedPricingType"
           id="pricingType"
           name="pricingType"
           class="w-full h-10 border-2 border-sky-500 focus:outline-none focus:border-sky-500 text-sky-500 rounded px-2 md:px-3 py-0 md:py-1 tracking-wider"
         >
-          <option [selected]="true" value="All" selected="">Tout</option>
+          <option [selected]="true" value="Tout" >Tout</option>
           <option value="Freemium">En cours</option>
-          <option value="Free">A venu</option>
-          <option value="Free">A expiré dans une semaine</option>
-          <option value="Paid">Expiré</option>
+          <option value="A venu">A venu</option>
+          <option value="En attente de validation">En attente de validation</option>
+          <option value="A expiré dans une semaine">A expiré dans une semaine</option>
+          <option value="Expiré">Expiré</option>
         </select>
       </form>
     </div>
   </div>
 
-  <div class="relative flex top-5 flex-wrap " >
+  <div class="w-full relative flex top-5 flex-wrap items-center justify-around overflow-hidden py-6 sm:py-2 " >
     @for (abonnement of abonnementArray; track $index) {
-      <app-abonnement-card [abonnement]="abonnement" (click)="voirPlus(abonnement.id, abonnement.user)" class="w-1/2 cursor-pointer"></app-abonnement-card>
+      <app-abonnement-card [abonnement]="abonnement" (click)="voirPlus(abonnement.id, abonnement.user)" class="cursor-pointer"></app-abonnement-card>
       }
   </div>
 

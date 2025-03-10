@@ -34,6 +34,7 @@ export class AbonnementsComponent implements OnInit {
   public startDate: Date | null = null;
   public endDate: Date | null = null;
   public selectedPricingType: string = 'Tout';
+
   ngOnInit(): void {
     this.getAbonByAll();
   }
@@ -64,6 +65,7 @@ export class AbonnementsComponent implements OnInit {
         next: (data) => {
           this.lesAbonnements = data;
           this.abonnementArray = data.content;
+          // this.abonnementArray = [...this.abonnementArray || []].reverse()
           console.log('this.lesAbonnements');
           console.log(this.lesAbonnements);
         },

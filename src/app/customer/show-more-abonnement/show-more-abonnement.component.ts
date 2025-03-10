@@ -234,7 +234,7 @@ export class ShowMoreAbonnementComponent implements OnInit {
 
   public getAllLigneAbn() {
     this.ligneAbnService
-      .getAllLigneAbn({
+      .getAllLigneAbn1({
         abonnementId: Number(this.abonnementId),
       })
       .subscribe({

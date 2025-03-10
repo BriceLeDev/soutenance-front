@@ -10,17 +10,27 @@ export const authGuard: CanActivateFn = () => {
  const jwtService = inject(JwtDecodeService)
 
  const profile = jwtService.getAuthorities()
- if ( jwtService.isTokenExpired() || !jwtService.getNomUtilisateur() ) {
-     route.navigate(["login"]).then(()=> false)
-     return false
 
- }
+ if (jwtService.isTokenExpired()|| !jwtService.getNomUtilisateur()) {
+  const currentUrl = route.url; // Récupérer l'URL actuelle
+  localStorage.setItem('redirectUrl', currentUrl);
+  route.navigateByUrl("/login")
+ return false
+}else if (!profile?.some(p=>p==="USER")) {
+  route.navigateByUrl("/unauthorize")
+ return false
+}
+//  if ( jwtService.isTokenExpired() || !jwtService.getNomUtilisateur() ) {
+//      route.navigate(["login"]).then(()=> false)
+//      return false
 
- if (!profile?.some(p=>p==="USER")) {
-  //  route.navigateByUrl("/unauthorize")
-   route.navigate(["unauthorize"]).then(()=> false)
-   return false
- }
+//  }
+
+//  if (!profile?.some(p=>p==="USER")) {
+//   //  route.navigateByUrl("/unauthorize")
+//    route.navigate(["unauthorize"]).then(()=> false)
+//    return false
+//  }
 
 // if (!auhService.isAuthenticate) {
 //   route.navigate(["login"])
